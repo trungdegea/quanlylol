@@ -7,6 +7,7 @@ use Illuminate\Support\Facades\Hash;
 use App\User;
 use Auth;
 use Validator;
+
 class pagesController extends Controller
 {
     //
@@ -28,12 +29,14 @@ class pagesController extends Controller
             'username.required'=>'ban chua nhap ten nguoi dung'
 
         ]);
-        $user=new User;
-        $user->Username=$request->username;
-        $user->email=$request->email;
-        $user->password=$request->password;
-        $user->quyen=0;
-        $user->save();
+        User::create(
+            [
+            'Username'=>$request->username,
+            'password'=>bcrypt($request->password),
+            'email'=>$request->email,
+            'quyen'=>0
+            ]
+        );
         return redirect('/dangnhap');
     }
 
@@ -54,19 +57,17 @@ class pagesController extends Controller
             'password.min'=>'Password khong duoc nho hon 3 ky tu',
             'password.max'=>'Password khong duoc lon hon 32 ky tu'
         ]);
-            $array=['email' => $request->get('email'), 'password' => $request->get('password')];
-         dd(Auth::attempt($array));
-         
-         exit();
+            $array=['email' => $request->get('email'), 'password' => $request->get('password'), 'quyen'=>1];
+        ;
 
-        // if(Auth::attempt($array)){
-        //     // return  redirect('/home');
+        if(Auth::attempt($array)){
+            return  redirect('/home');
            
-        // }    
-        // else
-        // {
-        //     return  redirect('/dangnhap');
+        }    
+        else
+        {
+            return  redirect('/dangnhap');
             
-        // }
+        }
     }
 }

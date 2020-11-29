@@ -20,7 +20,10 @@ Route::get('/home', function () {
     return view('admin.home');
 });
 
-Route::get('giaidau', function () {
+Route::get('chitietgiaidau', function () {
+    return view('admin.chitietgiaidau');
+});
+Route::get('danhsachdoi', function () {
     return view('admin.giaidau');
 });
 
