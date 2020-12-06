@@ -1,8 +1,7 @@
-
-@extends('layouts.admin')
+@extends('admin.layouts.index')
 
 @section('title')
-    <title>Trang chủ</title>
+    <title>Chi tiết giải đấu</title>
 @endsection
 
 @section('content')
@@ -611,5 +610,74 @@
     <!-- /.content -->
   </div>
   <!-- /.content-wrapper -->
+
+@endsection
+
+@section('siderbar')
+<li class="nav-header">HỒ SƠ GIẢI ĐẤU</li>
+<li class="nav-item">
+  <a href="#" class="nav-link">
+    <i class="nav-icon fas fa-book "></i>
+    <p>
+      Đội tuyển
+      <i class="fas fa-angle-left right"></i>
+    </p>
+  </a>
+  <ul class="nav nav-treeview pl-3">
+    <li class="nav-item ml-1">
+      <a href="pages/examples/invoice.html" class="nav-link">
+        <i class="ion-android-list nav-icon"></i>
+        <p>Danh sách</p>
+      </a>
+    </li>
+    <li class="nav-item">
+      <a href="pages/examples/profile.html" class="nav-link">
+        <i class="far ion-android-add nav-icon"></i>
+        <p>Thêm đội</p>
+      </a>
+    </li>
+  </ul>
+</li>
+<li class="nav-item pl-1">
+  <a href="#" class="nav-link ">
+    <i class="nav-icon ion-android-person"></i>
+    <p>
+      Tuyển thủ
+      <i class="fas fa-angle-left right"></i>
+    </p>
+  </a>
+  <ul class="nav nav-treeview pl-3">
+    <li class="nav-item ml-1">
+      <a href="pages/examples/invoice.html" class="nav-link">
+        <i class="ion-android-list nav-icon "></i>
+        <p>Danh sách</p>
+      </a>
+    </li>
+    <li class="nav-item ">
+      <a href="pages/examples/profile.html" class="nav-link">
+        <i class="far ion-android-add nav-icon  "></i>
+        <p>Thêm thành viên</p>
+      </a>
+    </li>
+  </ul>
+</li>
+<li class="nav-item">
+  <a href="pages/calendar.html" class="nav-link">
+    <i class="nav-icon far fa-calendar-alt"></i>
+    <p>
+      Lịch thi đấu - kết quả
+      <span class="badge badge-info right">2</span>
+    </p>
+  </a>
+</li>
+<li class="nav-item">
+  <a href="pages/gallery.html" class="nav-link">
+    <i class="nav-icon fas fa-file"></i>
+    <p>
+      Điều lệ giải
+    </p>
+  </a>
+</li>
+
 
 @endsection

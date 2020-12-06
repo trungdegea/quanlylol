@@ -84,7 +84,7 @@
 
       
 
-      <a href="dangnhap" class="text-center">I already have a membership</a>
+      <a href="{{asset('dangnhap')}}" class="text-center">I already have a membership</a>
     </div>
     <!-- /.form-box -->
   </div><!-- /.card -->
