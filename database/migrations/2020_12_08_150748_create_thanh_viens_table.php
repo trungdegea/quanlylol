@@ -13,7 +13,7 @@ class CreateThanhViensTable extends Migration
      */
     public function up()
     {
-        Schema::create('thanh_viens', function (Blueprint $table) {
+        Schema::create('thanhviens', function (Blueprint $table) {
             $table->increments('MaTV');
             $table->string('TenTV');
             $table->string('ViTri');
