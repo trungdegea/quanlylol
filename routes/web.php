@@ -38,13 +38,19 @@ Route::prefix('/admin')->group(function () {
     Route::get('/', 'TrangchuController@getTrangchu')->name('trangchu.get');
     Route::prefix('giaidau')->group(function (){
         Route::get('/', 'GiaidauController@getDsGiaidau')->name('ds-giaidau.get');
-        Route::get('/them', 'GiaidauController@getthemGiaidau')->name('them-giaidau.get');
-        Route::post('/them', 'GiaidauController@postthemGiaidau')->name('them-giaidau.post');
+        Route::get('chitiet/{id}', 'GiaidauController@getchitietGiaidau')->name('chitiet-giaidau.get');
+        Route::get('them', 'GiaidauController@getthemGiaidau')->name('them-giaidau.get');
+        Route::post('them', 'GiaidauController@postthemGiaidau')->name('them-giaidau.post');
+        Route::get('sua/{id}', 'GiaidauController@getsuaGiaidau')->name('sua-giaidau.get');
+        Route::post('sua/{id}', 'GiaidauController@postsuaGiaidau')->name('sua-giaidau.post');
     });
     Route::prefix('doi')->group(function (){
-        Route::get('/', 'DoituyenController@getDsdoi')->name('ds-giaidau');
-        Route::get('/them', 'DoituyenController@getthemdoi')->name('them-doi.get');
-        Route::post('/them', 'DoituyenController@postthemdoi')->name('them-doi.post');
+        Route::get('/{MaGD}', 'DoituyenController@getDsdoi')->name('ds-doi.get');
+        Route::get('them/{MaGD}', 'DoituyenController@getthemdoi')->name('them-doi.get');
+        Route::post('them/{MaGD}', 'DoituyenController@postthemdoi')->name('them-doi.post');
+        Route::get('chitiet/{MaGD}&&{MaDoi}', 'DoituyenController@getchitietdoi')->name('chitiet-doi.get');
+        Route::get('sua/{MaGD}', 'DoituyenController@getsuadoi')->name('sua-doi.get');
+        Route::post('sua/{MaGD}', 'DoituyenController@postsuadoi')->name('sua-doi.post');
     });
     
     Route::get('chitietgiaidau', function () {

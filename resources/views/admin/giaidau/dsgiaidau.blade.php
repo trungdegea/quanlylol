@@ -19,7 +19,7 @@
           </div><!-- /.col -->
           <div class="col-sm-6">
             <ol class="breadcrumb float-sm-right">
-              <li class="breadcrumb-item"><a href="#">Trang chủ</a></li>
+              <li class="breadcrumb-item"><a href="{{route('trangchu.get')}}">Trang chủ</a></li>
               <li class="breadcrumb-item active">giải đấu</li>
             </ol>
           </div><!-- /.col -->
@@ -46,40 +46,41 @@
     @endif
     <div class="col-2" style=" text-align: right;">
         
-        <button type="submit" class="btn btn-primary btn-block ">Thêm</button>
+        <a href="{{route('them-giaidau.get')}}"><button type="submit" class="btn btn-primary btn-block ">Thêm</button></a>
       </div>
     <!-- Main content -->
-   
+      
     <section class="content">
-        <?php
-        $dem=0;
-        ?>
-      <div class="container-fluid">
-          <?php
-            $dem=0;
-            ?>
-        <table class=" col-10">
-            @foreach ($dsgiaidau as $gd)
-                @if ($dem%4==0)
-                    <tr ></tr>
-                @endif
-                <td>
-                <div class="giaidau" style="background-image: url('img\{{$gd->img}}')">{{$gd}}</div>
-                <?php
-                   
+     @if (count($dsgiaidau)>0)
+     <div class="container">
+       <table class="DS-giaidau">
+        <?php $dem=0; ?>
+        @foreach ($dsgiaidau as $giaidau)
+            @if ($dem%3==0)
+              <tr></tr>
+            @endif
+            <td>
+                {{-- In anh ho so cua giai dau --}}
+                <img src="{{asset('img/'.$giaidau->img)}}" height="200" width="200px" alt=""><br>
+                {{-- in thông tin của cả giải đấu 
+                    in tên giải đấu {{$giaidau->TenGD}}
 
-                    
-                ?>
-                <img src="#" height="200" width="100px" alt="">
-                </td>
-                <?php
-                $dem++;
-                
-                ?>
-            @endforeach
-        </table>
-      </div>
+                  --}}
+                {{$giaidau}}
+                <br>
+                {{-- nút chi tiết của một giải đấu, sau khi click chuyển đến trang chi tiết của giải đấu đó --}}
+                <a href="{{route("chitiet-giaidau.get",[$giaidau->MaGD])}}" class="btn btn-warning waves-light waves-effect" title="chi tiet">Chi tiết</i></a>
+            </td>
+            <?php $dem++; ?>
+        @endforeach
+
+       </table>
+    
      
+    </div>
+     @endif 
+   
+      
   </div>
   <!-- /.content-wrapper -->
   <link rel="stylesheet" href="{{asset('css/style-giaidau.css')}}">

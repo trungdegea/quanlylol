@@ -3,7 +3,7 @@
 @extends('admin.layouts.index')
 
 @section('title')
-    <title>Thêm giải đấu</title>
+    <title>Sửa giải đấu {{$giaidau->TenGD}}</title>
 @endsection
 
 @section('content')
@@ -15,13 +15,13 @@
       <div class="container-fluid">
         <div class="row mb-2">
           <div class="col-sm-6">
-            <h1 class="m-0">Thêm giải đấu mới</h1>
+            <h1 class="m-0">Sửa thông tin giải đấu</h1>
           </div><!-- /.col -->
           <div class="col-sm-6">
             <ol class="breadcrumb float-sm-right">
               <li class="breadcrumb-item"><a href="{{route('trangchu.get')}}">Trang chủ</a></li>
               <li class="breadcrumb-item active"><a href="{{route('ds-giaidau.get')}}">Giải đấu</a></li>
-              <li class="breadcrumb-item active">Thêm</li>
+              <li class="breadcrumb-item active">Sửa</li>
             </ol>
           </div><!-- /.col -->
         </div><!-- /.row -->
@@ -49,7 +49,7 @@
 @endif
     <section class="content pl-5 pr-5">
       <table class="table table-hover">
-      <form action="{{route('them-giaidau.get')}}" method="post" enctype="multipart/form-data">
+      <form action="{{route('sua-giaidau.post',[$giaidau->MaGD])}}" method="post" enctype="multipart/form-data">
         <input type="hidden" name="_token" value="{{csrf_token()}}">
         <tbody>
           <tr>
@@ -59,26 +59,26 @@
                 <div class="form-group row">
                   <label for="inputEmail3" class="col-sm-3 col-form-label">Tên Giải Đấu:</label>
                   <div class="col-sm-8">
-                    <input type="text" class="form-control" name="tengiai" placeholder="Tên giải đấu">
+                    <input type="text" class="form-control" name="tengiai" value="{{old('tengiai',$giaidau->TenGD)}}" placeholder="Tên giải đấu">
                   </div>
                 </div>
                 <div class="form-group row">
                   <label for="inputPassword3" class="col-sm-3 col-form-label">Số Lượng Đội:</label>
                   <div class="col-sm-4">
-                    <input type="number" class="form-control" name="sldoi" placeholder="số lượng đội tham gia">
+                    <input type="number" class="form-control" name="sldoi" value="{{old('sldoi',$giaidau->SLdoi)}}" placeholder="số lượng đội tham gia">
                   </div>
                 </div>
                 <div class="form-group row">
                   <label for="inputPassword3" class="col-sm-3 col-form-label">Số Lượng Vé:</label>
                   <div class="col-sm-4">
-                    <input type="number" class="form-control" name="slve" placeholder="số lượng vé">
+                    <input type="number" class="form-control" name="slve" value="{{old('slve',$giaidau->SLve)}}" placeholder="số lượng vé">
                   </div>
                 </div>
                 
                   <div class="form-group row">
                     <label for="inputPassword3" class="col-sm-3 col-form-label">Thời Gian Bắt Đầu:</label>
                     <div class="col-sm-4">
-                      <input type="datetime-local" class="form-control" name="tgbd" placeholder="Thời gian bắt đầu">
+                      <input type="datetime-local" class="form-control" name="tgbd" value="" placeholder="Thời gian bắt đầu">
                     </div>
 
                   </div>
@@ -87,7 +87,7 @@
                 <div class="form-group row">
                   <label for="inputPassword3" class="col-sm-3 col-form-label">Thời Gian Kết thúc:</label>
                   <div class="col-sm-4">
-                    <input type="datetime-local" class="form-control" name="tgkt" placeholder="Thời gian kết thúc">
+                    <input type="datetime-local" class="form-control" name="tgkt" value="{{old('tgkt',$giaidau->TGKT)}}" placeholder="Thời gian kết thúc">
                   </div>
 
                 </div>
@@ -96,8 +96,8 @@
             <td>
               <div style="border:2px solid rgb(206, 203, 203);; height:400px; width:500px; text-align: center;" class="float-right">
                 <label for="inputEmail3" class="col-sm-8 col-form-label">Chọn ảnh giải đấu</label>
-                <div style="height: 300px; width:450px; text-align: center;"><img src="" id="avatar" height="200" alt="Image preview..."></div>
-              <input type="file" name="imageshs" onchange="previewFile()">
+                <div style="height: 300px; width:450px; text-align: center;"><img src="{{asset('img/'.$giaidau->img)}}" id="avatar" height="200" alt="Image preview..."></div>
+              <input type="file" name="imageshs"  onchange="previewFile()">
                 </div>
                 
                 
@@ -124,9 +124,9 @@
          <tr>
            
            <td rowspan="2">
-             <div class="col-4">
-            <button type="submit" class="btn btn-primary btn-block">Thêm</button>
-          </div>
+            <div class="form-group">
+              <button class="btn btn-primary" data-style="pull-right">Lưu lại
+              </button>
         </td>
          </tr>
         </tbody>

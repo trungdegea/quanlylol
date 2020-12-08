@@ -26,6 +26,9 @@ class AddImgToGiaidaus extends Migration
      */
     public function down()
     {
-        //
+        Schema::table('giaidaus', function($table)
+        {
+           $table->dropColumn('img');
+        });
     }
 }
