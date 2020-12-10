@@ -49,29 +49,35 @@
         <a href="{{route('them-giaidau.get')}}"><button type="submit" class="btn btn-primary btn-block ">Thêm</button></a>
       </div>
     <!-- Main content -->
-      
+    
+    
     <section class="content">
      @if (count($dsgiaidau)>0)
      <div class="container">
-       <table class="DS-giaidau">
         <?php $dem=0; ?>
         @foreach ($dsgiaidau as $giaidau)
             @if ($dem%3==0)
-              <tr></tr>
+              <div class="row">
             @endif
-            <td>
+            <div class="col-md-4">
+                <h2>{{$giaidau->TenGD}}</h2>
                 {{-- In anh ho so cua giai dau --}}
                 <img src="{{asset('img/'.$giaidau->img)}}" height="200" width="200px" alt=""><br>
                 {{-- in thông tin của cả giải đấu 
                     in tên giải đấu {{$giaidau->TenGD}}
 
                   --}}
+                
                 {{$giaidau}}
                 <br>
                 {{-- nút chi tiết của một giải đấu, sau khi click chuyển đến trang chi tiết của giải đấu đó --}}
                 <a href="{{route("chitiet-giaidau.get",[$giaidau->MaGD])}}" class="btn btn-warning waves-light waves-effect" title="chi tiet">Chi tiết</i></a>
-            </td>
+            </div>
+           
             <?php $dem++; ?>
+            @if ($dem%3==0)
+               </div>
+             @endif
         @endforeach
 
        </table>
@@ -79,11 +85,14 @@
      
     </div>
      @endif 
-   
+    </section>
       
   </div>
   <!-- /.content-wrapper -->
-  <link rel="stylesheet" href="{{asset('css/style-giaidau.css')}}">
+  
 
 
+@endsection
+@section('styleds')
+<link rel="stylesheet" href="{{asset('css/stylegiaidau.css')}}">
 @endsection

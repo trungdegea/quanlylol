@@ -7,5 +7,8 @@ use App\Http\Controllers\Controller;
 
 class ThanhvienController extends Controller
 {
-    //
+    public function getDsThanhVien($MaGD, $MaDoi)
+    {
+        return view('admin.thanhvien.dsthanhvien');
+    }
 }
