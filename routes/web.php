@@ -52,7 +52,14 @@ Route::prefix('/admin')->group(function () {
         Route::get('sua/{MaGD}', 'DoituyenController@getsuadoi')->name('sua-doi.get');
         Route::post('sua/{MaGD}', 'DoituyenController@postsuadoi')->name('sua-doi.post');
     });
-    
+    Route::prefix('thanhvien')->group(function (){
+        Route::get('/{MaGD}&&{MaDoi}', 'ThanhvienController@getDsThanhVien')->name('ds-thanhvien.get');
+        Route::get('them/{MaGD}', 'ThanhvienController@getthemthanhvien')->name('them-thanhvien.get');
+        Route::post('them/{MaGD}', 'ThanhvienController@postthemthanhvien')->name('them-thanhvien.post');
+       
+        Route::get('sua/{MaGD}', 'ThanhvienController@getsuadoi')->name('sua-thanhvien.get');
+        Route::post('sua/{MaGD}', 'ThanhvienController@postsuadoi')->name('sua-thanhvien.post');
+    });
     Route::get('chitietgiaidau', function () {
         return view('admin.giaidau.chitietgiaidau');
     });

@@ -67,7 +67,7 @@
   </ul>
 </li>
 <li class="nav-item pl-1">
-  <a href="" class="nav-link ">
+  <a href="#" class="nav-link ">
     <i class="nav-icon ion-android-person"></i>
     <p>
       Tuyển thủ
@@ -76,7 +76,7 @@
   </a>
   <ul class="nav nav-treeview pl-3">
     <li class="nav-item ml-1">
-      <a href="{{route('ds-thanhvien.get',[1,1])}}" class="nav-link">
+      <a href="#" class="nav-link">
         <i class="ion-android-list nav-icon "></i>
         <p>Danh sách</p>
       </a>

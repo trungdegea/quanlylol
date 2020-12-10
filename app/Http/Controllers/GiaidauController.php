@@ -75,10 +75,9 @@ class GiaidauController extends Controller
         $giaidaus->TGBD=$request->tgbd;
         $giaidaus->TGKT=$request->tgkt;
         $giaidaus->MaUser=Auth::User()->id;
-        if($request->imageshs)
-        {
-            $giaidaus->img=$filenameToStore;
-        }
+      
+        $giaidaus->img=$filenameToStore;
+        
         $giaidaus->save();
         return redirect()->route('them-giaidau.get')->with('success', "Thêm giải đấu thành công."); 
         
