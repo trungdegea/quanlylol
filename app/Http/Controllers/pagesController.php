@@ -13,7 +13,7 @@ class pagesController extends Controller
     //
    public function getDangky()
     {
-        return view('pages.dangky');
+        return view('admin.auth.dangky');
     }
 
     public function postDangky(Request $request)
