@@ -1,5 +1,5 @@
 
-@extends('layouts.admin')
+@extends('admin.layouts.index')
 
 @section('title')
     <title>Trang chủ</title>

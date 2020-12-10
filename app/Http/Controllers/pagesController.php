@@ -37,12 +37,12 @@ class pagesController extends Controller
             'quyen'=>0
             ]
         );
-        return redirect('/dangnhap');
+        return redirect()->route('dangnhap.get');
     }
 
     public function getDangnhap()
     {
-        return view('pages.dangnhap');
+        return view('admin.auth.dangnhap');
     }
      public function postDangnhap(Request $request)
 
@@ -61,13 +61,18 @@ class pagesController extends Controller
         ;
 
         if(Auth::attempt($array)){
-            return  redirect('/home');
-           
+            return  redirect()->route('trangchu.get');
         }    
         else
         {
-            return  redirect('/dangnhap');
+            return  redirect()->route('dangky.get');
             
         }
     }
+    public function getLogout()
+  {
+    Auth::logout();
+    return redirect()->route('dangnhap.get');
+  }
+
 }
