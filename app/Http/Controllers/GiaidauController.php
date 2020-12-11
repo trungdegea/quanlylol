@@ -43,7 +43,7 @@ class GiaidauController extends Controller
         }   
        
         $rules=[
-            'tengiai'=>'required|min:10|max:100',
+            'tengiai'=>'required|min:5|max:100',
             'sldoi'=>'required|integer|min:1|max:20',
             'slve'=>'required|integer|min:0|max:1000',
             'tgbd'=>'required',
@@ -52,6 +52,8 @@ class GiaidauController extends Controller
         ];
         $messages=[
             'tengiai.required'=>"Bạn chưa nhập tên giải đấu.",
+            'tengiai.min'=>"Bạn giải tối thiểu 5 ký tự.",
+            'tengiai.max'=>"Bạn giải tối đa 100 ký tự.",
             'sldoi.required'=>"Bạn chưa nhập số lượng đội tham gia.",
             'sldoi.min'=>'Số đội tham gia ít nhất là 4.',
             'sldoi.max'=>'Số lượng đội tham gia tối đa là 32.',
@@ -162,10 +164,8 @@ class GiaidauController extends Controller
             $giaidaus->SLve=$request->slve;
             $giaidaus->TGBD=$request->tgbd;
             $giaidaus->TGKT=$request->tgkt;
-            if($request->imageshs)
-            {
-                $giaidaus->img=$filenameToStore;
-            }
+             $giaidaus->img=$filenameToStore;
+          
             $giaidaus->save();
             return redirect()->route('sua-giaidau.get',[$id])->with('success', "Sửa giải đấu thành công."); 
         }

@@ -45,20 +45,35 @@ Route::prefix('/admin')->group(function () {
         Route::post('sua/{id}', 'GiaidauController@postsuaGiaidau')->name('sua-giaidau.post');
     });
     Route::prefix('doi')->group(function (){
+        //danh sach doi tham gia giai dau
         Route::get('/{MaGD}', 'DoituyenController@getDsdoi')->name('ds-doi.get');
+        //them mot doi vao giai dau
         Route::get('them/{MaGD}', 'DoituyenController@getthemdoi')->name('them-doi.get');
         Route::post('them/{MaGD}', 'DoituyenController@postthemdoi')->name('them-doi.post');
+        //chi tiet cua mot doi
         Route::get('chitiet/{MaGD}&&{MaDoi}', 'DoituyenController@getchitietdoi')->name('chitiet-doi.get');
+        //delete mot thanh vien trong danh sach thanh vien doi
+        Route::get('chitiet/{MaTV}',     'DoituyenController@xoathanhviendoi')->name('delete-thanhvien-doi.get');
+        //them thanh vien vao danh sach thanh vien
+        Route::post('themthanhvien/{MaGD}&&{MaDoi}', 'DoituyenController@posthemthanhvien')->name('them-thanhviendoi.post');
+        //update table thanh vien cua doi
+        Route::post('chitiet/{MaGD}&&{MaDoi}', 'DoituyenController@postsuaDSThanhVien')->name('sua-thanhvien-doi.post');
+        //sua thong tin cua doi
         Route::get('sua/{MaGD}', 'DoituyenController@getsuadoi')->name('sua-doi.get');
         Route::post('sua/{MaGD}', 'DoituyenController@postsuadoi')->name('sua-doi.post');
     });
     Route::prefix('thanhvien')->group(function (){
-        Route::get('/{MaGD}&&{MaDoi}', 'ThanhvienController@getDsThanhVien')->name('ds-thanhvien.get');
-        Route::get('them/{MaGD}', 'ThanhvienController@getthemthanhvien')->name('them-thanhvien.get');
-        Route::post('them/{MaGD}', 'ThanhvienController@postthemthanhvien')->name('them-thanhvien.post');
+        //danh sach  thanh vien cua tat ca cac doi  trong giai dau
+        Route::get('/{MaGD}', 'ThanhvienController@getDsThanhVien')->name('ds-thanhvien.get');
+        //xoa 1 thanh vien tu bang danh sach thanh vien
+        Route::get('xoa/{MaTV}',     'ThanhvienController@xoathanhvien')->name('delete-thanhvien.get');
        
-        Route::get('sua/{MaGD}', 'ThanhvienController@getsuadoi')->name('sua-thanhvien.get');
-        Route::post('sua/{MaGD}', 'ThanhvienController@postsuadoi')->name('sua-thanhvien.post');
+        Route::post('them', 'ThanhvienController@postthemthanhvien')->name('them-thanhvien.post');
+
+        Route::post('locdoi/{MaGD}', 'ThanhvienController@postLoDoi')->name('xemdoithanhvien.post');
+       
+        
+        Route::post('sua/{MaGD}', 'ThanhvienController@postsuadoi')->name('sua-danhsachTV.post');
     });
     Route::get('chitietgiaidau', function () {
         return view('admin.giaidau.chitietgiaidau');

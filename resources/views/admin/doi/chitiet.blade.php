@@ -1,3 +1,4 @@
+
 @extends('admin.layouts.index')
 
 @section('title')
@@ -24,29 +25,14 @@
         </div><!-- /.row -->
       </div><!-- /.container-fluid -->
     </div>
-    @if (count($errors) > 0 || session('error'))
-    <div class="alert alert-danger" role="alert">
-      <strong>Cảnh báo!</strong><br>
-      @foreach($errors->all() as $err)
-      {{$err}}<br />
-      @endforeach
-      {{session('error')}}
-    </div>
-    @endif
-    @if (session('success'))
-    <div class="alert alert-success">
-      <strong>Thành công!</strong>
-      <button type="button" class="close" data-dismiss="alert">×</button>
-      <br />
-      {!! session('success')!!}
-    </div>
-    @endif
+    
+   
 
     <section class="content">
         {{-- Tên đội tuyển --}}
         <h3>Thông tin đội: {{$doi->TenDoi}}</h3> 
         {{-- Ảnh đại diện của đội --}}
-        <img src="{{asset('img/'.$doi->img)}}" alt="anh dai dien">
+        <img src="{{asset('img/'.$doi->img)}}" alt="anh dai dien" height="200px">
         <h5>Các thành viên:</h5>
         {{-- bảng các thành viên của đội, hiện thị tên thành viên, vị trí --}}
         <table></table>
@@ -54,12 +40,144 @@
         <h5>Trận thắng: {{$doi->TranThang}}</h5>
         <h5>Trận thua: {{$doi->TranThua}} </h5>
         <h5>Tổng điểm: {{$doi->Diem}}</h5>
+        
+       @if (count($errors) > 0 || session('error'))
+       <div class="alert alert-danger" role="alert">
+         <strong>Cảnh báo!</strong><br>
+         @foreach($errors->all() as $err)
+         {{$err}}<br />
+         @endforeach
+         {{session('error')}}
+       </div>
+       @endif
+       @if (session('success'))
+       <div class="alert alert-success">
+         <strong>Thành công!</strong>
+         <button type="button" class="close" data-dismiss="alert">×</button>
+         <br />
+         {!! session('success')!!}
+       </div>
+       @endif
+       @if ($thanhvien->count()<$doi->SLTV)
+       
+        <div class="form-them">
+          <h3>Thêm thành viên mới:</h3>
+          <form  method="post" action="{{route('them-thanhviendoi.post',[$giaidau->MaGD,$doi->MaDoi])}}">
+            <input type="hidden" name="_token" value="{{csrf_token()}}">
+            <div class=" row">
+              <div class="col-md-6">
+                <label for="inputEmail3" class="col-sm-4 col-form-label">Tên thành viên:</label>
+                <input type="text" class="" name="tentv" placeholder="Tên thành viên">
+              </div>
+              
+              <div class="col-md-4">
+                <label for="inputEmail3" class="col-sm-3 col-form-label">Vị trí:</label>
+               <select name="vitri" id="">
+                 <option value="Top">Top</option>
+                 <option value="Jungle">Jungle</option>
+                 <option value="Mid">Mid</option>
+                 <option value="ADC">ADC</option>
+                 <option value="Support">Support</option>
+               </select>
+              </div>
+              <div class="col-md-2">
+                <button type="submit" class="btn btn-primary btn-block " name="themTV" >Thêm thành viên</button>
+              </div>
+            </div>
+          </form>
+         
+            
+        </div>
+       @endif
+       <form action="{{route('sua-thanhvien-doi.post',[$giaidau->MaGD,$doi->MaDoi])}}" method="post">
+        <input type="hidden" name="_token" value="{{csrf_token()}}">
+        <div class="row">
+          <div class="col-sm-12">
+            <div class="card">
+              <div class="card-body">
+                <h4 class="card-title mb-4 font-size-16">Danh sách thành viên:</h4>
+                <div class="card-box table-responsive dvData">
+                  <table id="datatable-responsive" class="table table-striped table-bordered dt-responsive nowrap" cellspacing="0" width="100%">
+                    <thead>
+                      <tr>
+                        <th>STT</th>
+                        <th>Họ tên</th>
+                        <th>Vị trí</th>
+                        <th>Hanh dong</th>
+                      </tr>
+                    </thead>
+        
+                    <tbody>
+                      @foreach($thanhvien as $i => $tv)
+                      <tr>
+                        <td>{{$i+1}}
+                          
+                        </td>
+                        <td>
+                          <input type="text" class="" name="tentv{{$tv->MaTV}}" value="{{old('tentv',$tv->TenTV)}}">
+                        </td>
+                        <td>
+                          <select name="vitri{{$tv->MaTV}}" id="">
+                            <option value="Top">Top</option>
+                            <option value="Jungle">Jungle</option>
+                            <option value="Mid">Mid</option>
+                            <option value="ADC">ADC</option>
+                            <option value="Support">Support</option>
+                            <option value="{{$tv->ViTri}}" selected>{{$tv->ViTri}}</option>
+                          </select>
+                        </td>
+                        <td>
+                         
+                          
+                          &nbsp;
+                          &nbsp;
+                          &nbsp;
+                          <a href="{{route('delete-thanhvien-doi.get',[$tv->MaTV])}}" class="button delete-confirm">Delete</a>
+        
+                        </td>
+                      </tr>
+                      @endforeach
+                    </tbody>
+                  </table>
+                </div>
+                <div class="col-md-2">
+                  <button type="submit" class="btn btn-primary btn-block " name="themTV" >Update</button>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </form>
+       
+        
      </section>
        
 
     
   </div>
   <!-- /.content-wrapper -->
+
+@endsection
+@section('script')
+<script src="https://unpkg.com/sweetalert/dist/sweetalert.min.js"></script>
+
+<script>
+  $('.delete-confirm').on('click', function (event) {
+    event.preventDefault();
+    const url = $(this).attr('href');
+    swal({
+        title: 'Are you sure?',
+        text: 'This record and it`s details will be permanantly deleted!',
+        icon: 'warning',
+        buttons: ["Cancel", "Yes!"],
+    }).then(function(value) {
+        if (value) {
+            window.location.href = url;
+        }
+    });
+});
+</script>
+
 
 @endsection
 
@@ -75,7 +193,7 @@
   </a>
   <ul class="nav nav-treeview pl-3">
     <li class="nav-item ml-1">
-      <a href="#" class="nav-link">
+      <a href="{{route("ds-doi.get",[$giaidau->MaGD])}}" class="nav-link">
         <i class="ion-android-list nav-icon"></i>
         <p>Danh sách</p>
       </a>
@@ -89,27 +207,14 @@
   </ul>
 </li>
 <li class="nav-item pl-1">
-  <a href="#" class="nav-link ">
+  <a href="{{route('ds-thanhvien.get',[$giaidau->MaGD])}}" class="nav-link ">
     <i class="nav-icon ion-android-person"></i>
     <p>
       Tuyển thủ
-      <i class="fas fa-angle-left right"></i>
+    
     </p>
   </a>
-  <ul class="nav nav-treeview pl-3">
-    <li class="nav-item ml-1">
-      <a href="pages/examples/invoice.html" class="nav-link">
-        <i class="ion-android-list nav-icon "></i>
-        <p>Danh sách</p>
-      </a>
-    </li>
-    <li class="nav-item ">
-      <a href="#" class="nav-link">
-        <i class="far ion-android-add nav-icon  "></i>
-        <p>Thêm thành viên</p>
-      </a>
-    </li>
-  </ul>
+  
 </li>
 <li class="nav-item">
   <a href="#" class="nav-link">

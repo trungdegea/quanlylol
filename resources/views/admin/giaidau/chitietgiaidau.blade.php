@@ -67,27 +67,14 @@
   </ul>
 </li>
 <li class="nav-item pl-1">
-  <a href="" class="nav-link ">
+  <a href="{{route('ds-thanhvien.get',[$giaidau->MaGD])}}" class="nav-link ">
     <i class="nav-icon ion-android-person"></i>
     <p>
       Tuyển thủ
-      <i class="fas fa-angle-left right"></i>
+    
     </p>
   </a>
-  <ul class="nav nav-treeview pl-3">
-    <li class="nav-item ml-1">
-      <a href="{{route('ds-thanhvien.get',[1,1])}}" class="nav-link">
-        <i class="ion-android-list nav-icon "></i>
-        <p>Danh sách</p>
-      </a>
-    </li>
-    <li class="nav-item ">
-      <a href="pages/examples/profile.html" class="nav-link">
-        <i class="far ion-android-add nav-icon  "></i>
-        <p>Thêm thành viên</p>
-      </a>
-    </li>
-  </ul>
+
 </li>
 <li class="nav-item">
   <a href="pages/calendar.html" class="nav-link">
