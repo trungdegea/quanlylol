@@ -8,6 +8,7 @@ use Illuminate\Support\Facades\Validator;
 use Illuminate\Support\MessageBag;
 use App\doi;
 use App\giaidau;
+use App\thanhvien;
 class DoituyenController extends Controller
 {
     public function getDsdoi($MaGD)
@@ -82,12 +83,12 @@ class DoituyenController extends Controller
         }   
        
         $rules=[
-            'tendoi'=>'required|min:10|max:100',
+            'tendoi'=>'required|min:5|max:100',
             'sltv'=>'required|integer|min:3|max:10', 
         ];
         $messages=[
             'tendoi.required'=>"Bạn chưa nhập tên đội.",
-            'tendoi.min'=>"Tên đội cần dài hơn 10 ký tự",
+            'tendoi.min'=>"Tên đội cần dài hơn 5 ký tự",
             'tendoi.max'=>"Tên đội không quá 100 ký tự",
             'sltv.required'=>"Bạn chưa nhập số lượng thành viên tham gia.",
             'sltv.min'=>'Số lượng thành viên ít nhất là 3.',
@@ -114,9 +115,77 @@ class DoituyenController extends Controller
     }
     public function getchitietdoi($MaGD,$MaDoi)
     {
+        $errors = new MessageBag();
         $giaidau=giaidau::find($MaGD);
         $doi=doi::find($MaDoi);
-        return view('admin.doi.chitiet', compact('giaidau', 'doi'));
+        $thanhvien=thanhvien::all()->where('MaDoi',$doi->MaDoi);
+        if ($thanhvien->count() == 0) {
+            $errors->add('err', 'Đội chưa có thành viên tham gia.');
+            return view('admin.doi.chitiet', compact('doi','giaidau','thanhvien'))->withErrors($errors);
+        } 
+       
+           
+        return view('admin.doi.chitiet', compact('giaidau', 'doi','thanhvien'));
+    }
+    public function posthemthanhvien(Request $request,$MaGD,$MaDoi)
+    {
+        $errors = new MessageBag();
+        $giaidau=giaidau::find($MaGD);
+        $doi=doi::find($MaDoi);
+        
+        $rules=[
+            'tentv'=>'required|min:2|max:100',
+            'vitri'=>'required', 
+        ];
+        $messages=[
+            'tentv.required'=>"Bạn chưa nhập tên đội.",
+            'tendoi.min'=>"Tên thành viên cần dài hơn 2 ký tự",
+            'tendoi.max'=>"Tên thành viên không quá 100 ký tự",
+            'vitri.required'=>"Bạn chưa nhập tên vị trí.",
+            
+           
+        ];
+        $errors = Validator::make($request->all(), $rules, $messages);
+        if ($errors->fails()) {
+            return redirect()->route('chitiet-doi.get',[$MaGD,$MaDoi])
+                        ->withErrors($errors)
+                        ->withInput();
+        }
+        else
+        {
+         
+            $thanhvien=new thanhvien();
+            $thanhvien->TenTV=$request->tentv;
+            $thanhvien->ViTri=$request->vitri;
+            $thanhvien->MaDoi=$MaDoi;
+            $thanhvien->save();
+            return redirect()->route('chitiet-doi.get',[$MaGD,$MaDoi])->with('success', "Thêm thành viên vào đội thành công."); 
+        }
+    }
+    public function postsuaDSThanhVien(Request $request,$MaGD,$MaDoi)
+    {
+        $errors = new MessageBag();
+        $giaidau=giaidau::find($MaGD);
+        $doi=doi::find($MaDoi);
+        $thanhvien=thanhvien::all()->where('MaDoi',$MaDoi);
+        $SLTV=$thanhvien->count();
+        
+        for($i=0;$i<$SLTV;$i++)
+        {
+            $tentv="tentv";
+            $vitri="vitri";
+            $vitri.=$thanhvien[$i]->MaTV;
+            $tentv.=$thanhvien[$i]->MaTV;
+            thanhvien::where('MaTV',$thanhvien[$i]->MaTV )->update(['TenTV'=>$request->$tentv,'ViTri'=>$request->$vitri]);
+        }
+        return redirect()->route('chitiet-doi.get',[$MaGD,$MaDoi])->with('success', "Update thành công."); 
+       
+       
+    }
+    public function xoathanhviendoi($MaTV)
+    {
+        thanhvien::find($MaTV)->delete();
+        return redirect()->back()->with('success', 'Xóa thành công 1 thành viên.');
     }
    
 }
