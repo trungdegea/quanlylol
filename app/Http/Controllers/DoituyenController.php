@@ -18,8 +18,8 @@ class DoituyenController extends Controller
         $SLdoi=giaidau::find($MaGD)->SLdoi;
         $doi= doi::all()->where('MaGD',$MaGD);//Lay nhung doi tham gia giai dau
         
-       
         $DemSoDoi = doi::where('MaGD', $MaGD)->count();//dem so doi trong giai dau
+        
         if ($DemSoDoi == 0) {
             $errors->add('err', 'Chưa có đội tham gia giải đấu.');
             return view('admin.doi.dsdoi', compact('doi','giaidau'))->withErrors($errors);
@@ -28,7 +28,7 @@ class DoituyenController extends Controller
         {
             if($DemSoDoi==$SLdoi)
             {
-                return redirect()->route('ds-doi.get',[$MaGD])->with('success', "Đã đủ đội tham gia giải đấu, bây giờ bạn có thể xếp lịch thi đấu.");
+                return view('admin.doi.dsdoi', compact('doi','giaidau'))->with('success', "Đã đủ đội tham gia giải đấu, bây giờ bạn có thể xếp lịch thi đấu.");
             }
             else
             {
