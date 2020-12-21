@@ -18,10 +18,12 @@ class CreateThanhViensTable extends Migration
             $table->string('TenTV');
             $table->string('ViTri');
             $table->integer('MaDoi');
+            $table->integer('MaDoi');
             $table->timestamps();
             $table->foreign('MaDoi')
             ->references('MaDoi')->on('dois')
             ->onDelete('cascade');
+
         });
     }
 
