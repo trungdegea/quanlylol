@@ -12,7 +12,7 @@ h1.gd-name {
 .e-gd {
     font-size: 20px;
 }
-.card:hover {
+/* .card:hover {
     box-shadow: -3px -3px 5px rgba(0, 0, 0, 0.2), -3px 3px 5px rgba(0, 0, 0, 0.2),
       3px -3px 5px rgba(0, 0, 0, 0.2), 3px 3px 5px rgba(0, 0, 0, 0.2);
     transform: translate(0.5);
@@ -26,14 +26,18 @@ h1.gd-name {
     margin: 0;
     padding: 0;
 }
-
-.float-right {
-    float: right;
+h1{
+    color:brown;
 }
+/* .float-right {
+    float: right;
+} */
 
 .active {
     color: orangered !important;
     cursor: pointer;
 }
 
-
+.gd-name {
+    color: red;
+}
