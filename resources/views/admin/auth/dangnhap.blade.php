@@ -14,15 +14,15 @@
   <!-- Theme style -->
   <link rel="stylesheet" href="adminlte/dist/css/adminlte.min.css">
 </head>
-<body class="hold-transition login-page">
-<div class="login-box">
+<body class="hold-transition login-page" >
+<div class="login-box" >
   <div class="login-logo">
     <a href="../../index2.html"><b>Your</b>LEAGUE</a>
   </div>
   <!-- /.login-logo -->
   <div class="card">
-    <div class="card-body login-card-body">
-      <p class="login-box-msg">Sign in to start your session</p>
+    <div class="card-body login-card-body" >
+      <p class="login-box-msg">Đăng nhập để sử dụng</p>
        
       <form action="dangnhap" method="post"> 
           <input type="hidden" name="_token" value="{{csrf_token()}}">
@@ -42,15 +42,8 @@
             </div>
           </div>
         </div>
-        <div class="row">
-          <div class="col-8">
-            <div class="icheck-primary">
-              <input type="checkbox" id="remember">
-              <label for="remember">
-                Remember Me
-              </label>
-            </div>
-          </div>
+        <div class="row justify-content-center">
+         
           <!-- /.col -->
           <div class="col-4">
             <button type="submit" class="btn btn-primary btn-block">Sign In</button>
@@ -59,20 +52,10 @@
         </div>
       </form>
 
-      <div class="social-auth-links text-center mb-3">
-        <p>- OR -</p>
-        <a href="#" class="btn btn-block btn-primary">
-          <i class="fab fa-facebook mr-2"></i> Sign in using Facebook
-        </a>
-        <a href="#" class="btn btn-block btn-danger">
-          <i class="fab fa-google-plus mr-2"></i> Sign in using Google+
-        </a>
-      </div>
+      
       <!-- /.social-auth-links -->
 
-      <p class="mb-1">
-        <a href="forgot-password.html">I forgot my password</a>
-      </p>
+     
       <p class="mb-0">
         <a href="{{asset ('dangky')}}" class="text-center">Register a new membership</a>
       </p>

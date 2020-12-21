@@ -8,12 +8,16 @@ use Illuminate\Support\Facades\Validator;
 use Illuminate\Support\MessageBag;
 use App\giaidau;
 use Auth;
+use App\doi;
+use App\thanhvien;
 use Illuminate\Support\Facades\Storage;
 class GiaidauController extends Controller
 {
     public function getDsGiaidau()
     {
-        $dsgiaidau= giaidau::all(); 
+        $user = Auth::user();
+        
+        $dsgiaidau= giaidau::where('MaUser', $user->id)->get(); 
     
         return view('admin.giaidau.dsgiaidau', compact('dsgiaidau'));
     }
@@ -88,13 +92,47 @@ class GiaidauController extends Controller
     {
         $errors = new MessageBag();
         $DemSoGD = giaidau::where('MaGD', $id)->count();
-        if ($DemSoGD == 0) {
-            $errors->add('err', 'Giải đấu không không tồn tại.');
-            return redirect()->route('ds-giaidau.get')->withErrors($errors);
-          } else {
-            $giaidau = giaidau::find($id);
-            return view('admin.giaidau.chitietgiaidau', compact('giaidau'));
-          }
+        $giaidau = giaidau::find($id);
+        //lay danh sach thanh vien cua tat ca cac doi
+        $doi=doi::where('MaGD',$id)->get(['MaDoi','TenDoi']);// lay doi co trong giai dau co MaGD
+        $dsdoi=[];
+        $arrdoi=[];
+        foreach($doi as $d){
+            array_push($dsdoi,$d->MaDoi); 
+            $arrdoi[$d->MaDoi]=$d->TenDoi;//Arraydoi cos key = MaDoi, Value=Tendoi
+        }
+        $thanhvien=thanhvien::whereIn('MaDoi',$dsdoi )->orderBy('MaDoi','asc')->get();
+        return view('admin.giaidau.chitietgiaidau', compact('giaidau','thanhvien', 'arrdoi','doi'));
+        
+    }
+    public function postLoDoi(Request $request, $MaGD)
+    {
+        if($request->locdoi=="#")
+        {
+            $giaidau= giaidau::find($MaGD);
+            $doi=doi::where('MaGD',$MaGD)->get(['MaDoi','TenDoi']);// lay doi co trong giai dau co MaGD
+            
+            $dsdoi=[];
+            $arrdoi=[];
+            foreach($doi as $d){
+                array_push($dsdoi,$d->MaDoi); 
+                $arrdoi[$d->MaDoi]=$d->TenDoi;//Arraydoi cos key = MaDoi, Value=Tendoi
+            }
+            $thanhvien=thanhvien::whereIn('MaDoi',$dsdoi )->orderBy('MaDoi','asc')->get();
+            return view('admin.giaidau.chitietgiaidau', compact('giaidau', 'thanhvien', 'arrdoi','doi'));
+        }
+        else
+        {
+            $giaidau= giaidau::find($MaGD);
+            $doi=doi::where('MaGD',$MaGD)->get(['MaDoi','TenDoi']);// lay doi co trong giai dau co MaGD
+            $dsdoi=[];
+            $arr=doi::find($request->locdoi);
+            $arrdoi[$arr->MaDoi]=$arr->TenDoi;
+            $thanhvien=thanhvien::where('MaDoi',$request->locdoi )->get();
+            return view('admin.thanhvien.dsthanhvien', compact('giaidau', 'thanhvien', 'arrdoi','doi'));
+        }
+        
+            
     }
     public function getsuaGiaidau($id)
     {

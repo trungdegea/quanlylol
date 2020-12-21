@@ -19,8 +19,7 @@ class DoituyenController extends Controller
         $doi= doi::all()->where('MaGD',$MaGD);//Lay nhung doi tham gia giai dau
         
        
-        $DemSoDoi = doi::where('MaGD', $MaGD)->count();
-        // return view('admin.doi.dsdoi', compact('doi','giaidau'));
+        $DemSoDoi = doi::where('MaGD', $MaGD)->count();//dem so doi trong giai dau
         if ($DemSoDoi == 0) {
             $errors->add('err', 'Chưa có đội tham gia giải đấu.');
             return view('admin.doi.dsdoi', compact('doi','giaidau'))->withErrors($errors);
@@ -43,10 +42,10 @@ class DoituyenController extends Controller
     {
         $errors = new MessageBag();
         $giaidau=giaidau::find($MaGD);
-        
         $SLdoi=$giaidau->SLdoi;
         $doi= doi::where('MaGD', $MaGD);//Lay nhung doi tham gia giai dau
         $DemSoDoi = doi::where('MaGD', $MaGD)->count();
+        
         if($DemSoDoi<$SLdoi)
         {   
             return view('admin.doi.themdoi',compact('doi','giaidau'))->with('success', "Hiện tại vẫn chưa đủ đội để bắt đầu giải đấu, bạn có thểm thêm đội tuyển!");
@@ -62,8 +61,18 @@ class DoituyenController extends Controller
     }
     public function postthemdoi(Request $request,$MaGD)
     {
-       
-        //kiểm tra ảnh hồ sơ đội có đc tải hay không
+       if(isset($_POST['themdoi']))
+       {
+            $giaidau=giaidau::find($MaGD);
+            
+            $SLdoi=$giaidau->SLdoi;
+            $doi= doi::where('MaGD', $MaGD);//Lay nhung doi tham gia giai dau
+            $DemSoDoi = doi::where('MaGD', $MaGD)->count();
+            if($DemSoDoi==$SLdoi)
+            {
+                return redirect()->route('them-doi.get',[$MaGD])->with('err', "Đã đủ đội."); 
+            }
+           //kiểm tra ảnh hồ sơ đội có đc tải hay không
         if($request->hasFile('imageshs'))
         {
             $filename=$request->file('imageshs')->getClientOriginalName();
@@ -84,14 +93,14 @@ class DoituyenController extends Controller
        
         $rules=[
             'tendoi'=>'required|min:5|max:100',
-            'sltv'=>'required|integer|min:3|max:10', 
+            'sltv'=>'required|integer|min:5|max:10', 
         ];
         $messages=[
             'tendoi.required'=>"Bạn chưa nhập tên đội.",
             'tendoi.min'=>"Tên đội cần dài hơn 5 ký tự",
             'tendoi.max'=>"Tên đội không quá 100 ký tự",
             'sltv.required'=>"Bạn chưa nhập số lượng thành viên tham gia.",
-            'sltv.min'=>'Số lượng thành viên ít nhất là 3.',
+            'sltv.min'=>'Số lượng thành viên ít nhất là 5.',
             'sltv.max'=>'Số lượng thành viên tối đa là 10.',
            
         ];
@@ -112,6 +121,8 @@ class DoituyenController extends Controller
         $doi->img=$filenameToStore;
         $doi->save();
         return redirect()->route('them-doi.get',[$MaGD])->with('success', "Thêm đội thành công."); 
+       }
+       
     }
     public function getchitietdoi($MaGD,$MaDoi)
     {

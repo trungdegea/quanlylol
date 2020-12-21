@@ -1,5 +1,6 @@
 <?php
 use App\Http\Controllers\PostController;
+use App\Http\Middleware\Login;
 
 /*
 |--------------------------------------------------------------------------
@@ -22,23 +23,12 @@ Route::get('/dangnhap', 'pagesController@getDangnhap')->name('dangnhap.get');
 Route::post('/dangnhap', 'pagesController@postDangnhap')->name('dangnhap.post');
 Route::get('dangxuat', 'pagesController@getLogout')->name('dangxuat.get');
 
-// Route::middleware(['adminLogin'])->group(function () {
-//     Route::prefix('/admin')->group(function () {
-//         Route::get('/home', 'TrangchuController@getTrangchu')->name('trangchu.get');
-        
-//         Route::get('chitietgiaidau', function () {
-//             return view('admin.chitietgiaidau');
-//         });
-//         Route::get('danhsachdoi', function () {
-//             return view('admin.giaidau');
-//         });
-//     });
-// });
-Route::prefix('/admin')->group(function () {
+Route::prefix('/admin')->middleware('adminlogin')->group(function () {
     Route::get('/', 'TrangchuController@getTrangchu')->name('trangchu.get');
     Route::prefix('giaidau')->group(function (){
         Route::get('/', 'GiaidauController@getDsGiaidau')->name('ds-giaidau.get');
         Route::get('chitiet/{id}', 'GiaidauController@getchitietGiaidau')->name('chitiet-giaidau.get');
+        Route::post('Locdoi/{id}', 'GiaidauController@Locdoigiaidau')->name('locdoi-giaidau.post');
         Route::get('them', 'GiaidauController@getthemGiaidau')->name('them-giaidau.get');
         Route::post('them', 'GiaidauController@postthemGiaidau')->name('them-giaidau.post');
         Route::get('sua/{id}', 'GiaidauController@getsuaGiaidau')->name('sua-giaidau.get');
@@ -75,10 +65,9 @@ Route::prefix('/admin')->group(function () {
         
         Route::post('sua/{MaGD}', 'ThanhvienController@postsuadoi')->name('sua-danhsachTV.post');
     });
-    Route::get('chitietgiaidau', function () {
-        return view('admin.giaidau.chitietgiaidau');
+    Route::group(['prefix' => 'lichthidau'], function () {
+        Route::get('/{MaGD}','LichThiDau@getLichThiDau')->name('lichthidau.get');
+            
     });
-    Route::get('danhsachdoi', function () {
-        return view('admin.giaidau');
-    });
+   
 });
