@@ -15,7 +15,9 @@ class GiaidauController extends Controller
 {
     public function getDsGiaidau()
     {
-        $dsgiaidau= giaidau::all(); 
+        $user = Auth::user();
+        
+        $dsgiaidau= giaidau::where('MaUser', $user->id)->get(); 
     
         return view('admin.giaidau.dsgiaidau', compact('dsgiaidau'));
     }
