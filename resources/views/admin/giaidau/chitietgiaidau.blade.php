@@ -86,7 +86,7 @@
                     </div>
                   </div>
                 </form>
-                <form action="{{route('sua-danhsachTV.post',[$giaidau->MaGD])}}" method="post">
+                
                   <input type="hidden" name="_token" value="{{csrf_token()}}">
                 <div class="card-box table-responsive dvData">
                   <table id="datatable-responsive" class="table table-striped table-bordered dt-responsive nowrap" cellspacing="0" width="100%">
@@ -130,7 +130,7 @@
                     </tbody>
                   </table>
                 </div>
-                </form>
+                
                 <div class="col-md-2 float-right">
                   <a href="{{route('ds-thanhvien.get',[$giaidau->MaGD])}}"> <button type="submit" class="btn btn-primary btn-block " name="update" >Sửa danh sách</button></a>
                 </div>
