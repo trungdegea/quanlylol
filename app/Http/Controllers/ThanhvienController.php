@@ -15,7 +15,6 @@ class ThanhvienController extends Controller
        
         $giaidau= giaidau::find($MaGD);
         $doi=doi::where('MaGD',$MaGD)->get(['MaDoi','TenDoi']);// lay doi co trong giai dau co MaGD
-        
         $dsdoi=[];
         $arrdoi=[];
         foreach($doi as $d){
@@ -24,8 +23,7 @@ class ThanhvienController extends Controller
         }
         
         $thanhvien=thanhvien::whereIn('MaDoi',$dsdoi )->orderBy('MaDoi','asc')->get();
-        
-       
+     
         return view('admin.thanhvien.dsthanhvien', compact('giaidau', 'thanhvien', 'arrdoi','doi'));
     }
     public function xoathanhvien($MaTV)
@@ -38,7 +36,7 @@ class ThanhvienController extends Controller
        
         
             $errors = new MessageBag();
-            var_dump($request->doi);
+            
             $sltv=doi::where('MaDoi', $request->doi)->get(['SLTV'])->toArray();// số lượng thành viên mặc định
             $slCo=thanhvien::where('MaDoi',$request->doi)->count();//số lượng thành viên hiện tại
             $tentv=$request->tentv; // ten thành viên

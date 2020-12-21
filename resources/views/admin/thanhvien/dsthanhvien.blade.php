@@ -154,8 +154,6 @@
                           {{$arrdoi[$tv->MaDoi]}}
                         </td>
                         <td>
-                         
-                         
                           <a href="{{route('delete-thanhvien.get',[$tv->MaTV])}}" class="button delete-confirm">Delete</a>
         
                         </td>
@@ -164,7 +162,7 @@
                     </tbody>
                   </table>
                 </div>
-                <div class="col-md-2">
+                <div class="col-md-2 float-right">
                   <button type="submit" class="btn btn-primary btn-block " name="update" >Update</button>
                 </div>
               </div>
@@ -190,8 +188,8 @@
     event.preventDefault();
     const url = $(this).attr('href');
     swal({
-        title: 'Are you sure?',
-        text: 'This record and it`s details will be permanantly deleted!',
+        title: 'Bạn có muốn xóa?',
+        text: 'Xóa tuyển thủ khỏi đội',
         icon: 'warning',
         buttons: ["Cancel", "Yes!"],
     }).then(function(value) {
@@ -241,7 +239,7 @@
   
 </li>
 <li class="nav-item">
-  <a href="#" class="nav-link">
+  <a href="{{route('lichthidau.get',[$giaidau->MaGD])}}" class="nav-link">
     <i class="nav-icon far fa-calendar-alt"></i>
     <p>
       Lịch thi đấu - kết quả
