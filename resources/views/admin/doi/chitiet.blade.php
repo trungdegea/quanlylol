@@ -108,9 +108,12 @@
                     </thead>
         
                     <tbody>
+                      @php
+                          $dem=1;
+                      @endphp
                       @foreach($thanhvien as $i => $tv)
                       <tr>
-                        <td>{{$i+1}}
+                        <td>{{$dem}}
                           
                         </td>
                         <td>
@@ -136,6 +139,9 @@
         
                         </td>
                       </tr>
+                      @php
+                          $dem++;
+                      @endphp
                       @endforeach
                     </tbody>
                   </table>
@@ -217,7 +223,7 @@
   
 </li>
 <li class="nav-item">
-  <a href="#" class="nav-link">
+  <a href="{{route('lichthidau.get',[$giaidau->MaGD])}}" class="nav-link">
     <i class="nav-icon far fa-calendar-alt"></i>
     <p>
       Lịch thi đấu - kết quả

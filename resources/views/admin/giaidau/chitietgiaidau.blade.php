@@ -30,9 +30,14 @@
     <section class="content">
       <div class="container-fluid">
         <div class="row">
+         <div class="card">
           <div class="col-md-6">
             <img src="{{asset('img/'.$giaidau->img)}}" height="400" width="600" alt=""><br>
           </div>
+         </div>
+         <div class="card">
+           
+         </div>
           <div class="col-md-6">
             <h3 class="m-0 pb-5">Giải đấu: {{$giaidau->TenGD}}</h3>
             <b><p>Thông tin giải đấu:</p></b>
@@ -151,7 +156,7 @@
 
 </li>
 <li class="nav-item">
-  <a href="pages/calendar.html" class="nav-link">
+  <a href="{{route('lichthidau.get',[$giaidau->MaGD])}}" class="nav-link">
     <i class="nav-icon far fa-calendar-alt"></i>
     <p>
       Lịch thi đấu - kết quả
