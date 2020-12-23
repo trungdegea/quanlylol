@@ -87,9 +87,6 @@
                </div>
              @endif
         @endforeach
-
-       </table>
-    
      
     </div>
      @endif 
