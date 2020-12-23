@@ -17,9 +17,9 @@
               <li class="breadcrumb-item active">Đội</li>
             </ol>
         </div><!-- /.col -->
-        
+        <div class="gap-md"></div>
           <div class="col-0 t-c">
-            <h1 class="m-0 ">{{$giaidau->TenGD}}</h1>
+            <h1 class="m-0 ">Giải đấu: {{$giaidau->TenGD}}</h1>
          
         </div><!-- /.row -->
       </div><!-- /.container-fluid -->
@@ -52,30 +52,36 @@
     <section class="content">
       @if ($doi->count()>0)
       <div class="container">
-        <table >
+        
          <?php $dem=0; ?>
          @foreach ($doi as $d)
-             @if ($dem%1==0)
-               <tr></tr>
+             @if ($dem%3==0)
+            <div class="row">
              @endif
-             <td>
-                 {{-- In anh ho so cua giai dau --}}
-                 <img src="{{asset('img/'.$d->img)}}" height="200" width="200px" alt=""><br>
-                 {{-- in thông tin của cả giải đấu 
-                     in tên giải đấu {{$giaidau->TenGD}}
- 
-                   --}}
-                 Tên Đội: {{$d->TenDoi}}
-                 <br>
+             <div class="col-sm-12 col-md-5 col-lg-4 ">
+                <div class="card bg-cl">
+                  <div class="card-header" > {{-- In anh ho so cua doi dau --}}
+                  <img src="{{asset('img/'.$d->img)}}" height="100%" width="100%" alt=""><br>
+                  </div>
+                  <div class="card-body">
+                    <h2 class="gd-name" >Tên Đội: {{$d->TenDoi}}</h2>
+                  </div>
+                  <div class="card-footer" >
+                  <br>
                  {{-- nút chi tiết của một giải đấu, sau khi click chuyển đến trang chi tiết của giải đấu đó --}}
                  <a href="{{route("chitiet-doi.get",[$giaidau->MaGD,$d->MaDoi])}}" class="btn btn-warning waves-light waves-effect" title="chi tiet">Thông tin Đội</i></a>
-                 <div class="gap-md"></div>
-             </td>
-             <?php $dem++; ?>
-
+                  </div>
+                
+                </div>
+            </div>
+        <?php $dem++; ?>
+            @if ($dem%3==0)
+               </div>
+             @endif
+          
          @endforeach
  
-        </table>
+        
      </div>
       @endif 
      </section>
@@ -142,5 +148,5 @@
 
 @endsection
 @section('styleds')
-<link rel="stylesheet" href="{{asset('css/styledoi.css')}}">
+<link rel="stylesheet" href="{{asset('css/stylegiaidau.css')}}">
 @endsection
