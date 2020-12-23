@@ -58,7 +58,7 @@
          {!! session('success')!!}
        </div>
        @endif
-       @if ($thanhvien->count()<$doi->SLTV)
+       
        
         <div class="form-them">
           <h3>Thêm thành viên mới:</h3>
@@ -88,7 +88,7 @@
          
             
         </div>
-       @endif
+     
        <form action="{{route('sua-thanhvien-doi.post',[$giaidau->MaGD,$doi->MaDoi])}}" method="post">
         <input type="hidden" name="_token" value="{{csrf_token()}}">
         <div class="row">

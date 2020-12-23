@@ -46,7 +46,7 @@
             <a href="{{route('them-doi.get',[$giaidau->MaGD])}}"><button type="submit" class="btn btn-primary btn-block ">Thêm</button></a>
          </div>
          
-           <!-- Main content -->
+          
   
     @endif
     <section class="content">

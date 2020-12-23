@@ -59,7 +59,11 @@
         </div>
         
        
-        {{-- nút chi tiết của một giải đấu, sau khi click chuyển đến trang chi tiết của giải đấu đó --}}
+    @if ($doi->count()<$giaidau->SLdoi)
+        <div class="col-2" style=" text-align: right;"> 
+            <a href="{{route('them-doi.get',[$giaidau->MaGD])}}"><button type="submit" class="btn btn-primary btn-block ">Thêm</button></a>
+         </div>
+    @endif
         
         <div class="row">
           
@@ -74,29 +78,29 @@
                     <thead>
                       <tr>
                         <th>STT</th>
-                        <th>Họ tên</th>
-                        <th>Vị trí</th>
-                        <th>Đội</th>
+                        <th>Tên đội</th>
+                        <th>Số lượng</th>
+                        <th>Chi tiết</th>
                         
                       </tr>
                     </thead>
         
                     <tbody>
-                      @foreach($thanhvien as $i => $tv)
+                      @foreach($doi as $i=>$d)
                       <tr>
-                        <td>{{$i+1}}
-                          
+                        <td>
+                          {{$i+1}}
                         </td>
                         <td>
-                          {{$tv->TenTV}}
+                          {{$d->TenDoi}}
                         
                         </td>
                         <td>
-                          {{$tv->ViTri}}
+                         {{$arrSl[$d->MaDoi]}}
                          
                         </td>
                         <td>
-                          {{$arrdoi[$tv->MaDoi]}}
+                          <a href="{{route("chitiet-doi.get",[$giaidau->MaGD,$d->MaDoi])}}" class="btn btn-warning waves-light waves-effect" title="chi tiet"><i class="ion-eye"></i></i></a>
                         </td>
                        
                       </tr>
