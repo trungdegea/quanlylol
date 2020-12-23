@@ -46,7 +46,7 @@
             <a href="{{route('them-doi.get',[$giaidau->MaGD])}}"><button type="submit" class="btn btn-primary btn-block ">Thêm</button></a>
          </div>
          
-           <!-- Main content -->
+          
   
     @endif
     <section class="content">
@@ -120,7 +120,7 @@
   </a>
 </li>
 <li class="nav-item">
-  <a href="#" class="nav-link">
+  <a href="{{route('lichthidau.get',[$giaidau->MaGD])}}" class="nav-link">
     <i class="nav-icon far fa-calendar-alt"></i>
     <p>
       Lịch thi đấu - kết quả

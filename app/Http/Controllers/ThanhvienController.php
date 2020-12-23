@@ -29,42 +29,52 @@ class ThanhvienController extends Controller
     public function xoathanhvien($MaTV)
     {
         thanhvien::find($MaTV)->delete();
+        
         return redirect()->back()->with('success', 'Xóa thành công 1 thành viên.');
     }
     public function postthemthanhvien(Request $request)
     {
-       
+             $errors = new MessageBag();
+            if($_POST['tentv']!=='')
+            {
+                
+                $sltv=doi::where('MaDoi', $request->doi)->get(['SLTV'])->toArray();// số lượng thành viên mặc định
+                $slCo=thanhvien::where('MaDoi',$request->doi)->count();//số lượng thành viên hiện tại
+                $tentv=$request->tentv; // ten thành viên
+                $KtTen=thanhvien::where('TenTV', 'LIKE',$tentv);
         
-            $errors = new MessageBag();
-            
-            $sltv=doi::where('MaDoi', $request->doi)->get(['SLTV'])->toArray();// số lượng thành viên mặc định
-            $slCo=thanhvien::where('MaDoi',$request->doi)->count();//số lượng thành viên hiện tại
-            $tentv=$request->tentv; // ten thành viên
-            $KtTen=thanhvien::where('TenTV', 'LIKE',$tentv);
-    
-            if($slCo>=$sltv[0]['SLTV']) // kiem tra so luong thanh vien hien co voi so luong thanh vien quy dinh
-            {
-                $errors->add('err', 'Không thể thêm thành viên, đội đã đủ thành viên.');
-            }
-            if($KtTen->count()!=0)
-            {
-                $errors->add('err', 'Đặt lại tên thành viên bị trùng.');
-            }
-            if(count($errors)>0)
-            {
-                return redirect()->back()
-                ->withErrors($errors)
-                ->withInput();
+                if($slCo>=$sltv[0]['SLTV']) // kiem tra so luong thanh vien hien co voi so luong thanh vien quy dinh
+                {
+                    $errors->add('err', 'Không thể thêm thành viên, đội đã đủ thành viên.');
+                }
+                if($KtTen->count()!=0)
+                {
+                    $errors->add('err', 'Đặt lại tên thành viên bị trùng.');
+                    return redirect()->back()->withErrors($errors);
+                }
+                if(count($errors)>0)
+                {
+                    return redirect()->back()
+                    ->withErrors($errors)
+                    ->withInput();
+                }
+                else
+                {
+                    $thanhvien=new thanhvien();
+                    $thanhvien->TenTV=$tentv;
+                    $thanhvien->ViTri=$request->vitri;
+                    $thanhvien->MaDoi=$request->doi;
+                    $thanhvien->save();
+                    return redirect()->back()->with('success', 'Thêm mới thành công một thành viên');
+                }
             }
             else
             {
-                $thanhvien=new thanhvien();
-                $thanhvien->TenTV=$tentv;
-                $thanhvien->ViTri=$request->vitri;
-                $thanhvien->MaDoi=$request->doi;
-                $thanhvien->save();
-                return redirect()->back()->with('success', 'Thêm mới thành công một thành viên');
+                $errors->add('err', 'Chưa nhập tên thành viên.');
+                return redirect()->back()->withErrors($errors);
             }
+        
+            
     
         
       
@@ -83,6 +93,7 @@ class ThanhvienController extends Controller
                 $arrdoi[$d->MaDoi]=$d->TenDoi;//Arraydoi cos key = MaDoi, Value=Tendoi
             }
             $thanhvien=thanhvien::whereIn('MaDoi',$dsdoi )->orderBy('MaDoi','asc')->get();
+           
             return view('admin.thanhvien.dsthanhvien', compact('giaidau', 'thanhvien', 'arrdoi','doi'));
         }
         else
@@ -93,6 +104,7 @@ class ThanhvienController extends Controller
             $arr=doi::find($request->locdoi);
             $arrdoi[$arr->MaDoi]=$arr->TenDoi;
             $thanhvien=thanhvien::where('MaDoi',$request->locdoi )->get();
+           
             return view('admin.thanhvien.dsthanhvien', compact('giaidau', 'thanhvien', 'arrdoi','doi'));
         }
         
