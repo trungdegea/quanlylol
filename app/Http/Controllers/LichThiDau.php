@@ -40,22 +40,52 @@ class LichThiDau extends Controller
         }
         
         $thanhvien=thanhvien::whereIn('MaDoi',$dsdoi )->orderBy('MaDoi','asc')->get();
-        for($i=0; $i<count($doi); $i++)
+        if(count($errors)==0)
         {
-            for($j=$i+1; $j<count($doi); $j++)
+            for($i=0; $i<count($doi); $i++)
             {
-                echo"cap dau:\n";
-                echo $doi[$i]->MaDoi,"+", $doi[$j]->MaDoi;
-                array_push($arrCap, [$doi[$i]->MaDoi, $doi[$j]->MaDoi]);
+                for($j=$i+1; $j<count($doi); $j++)
+                {
+                    
+                    array_push($arrCap, [$doi[$i]->MaDoi, $doi[$j]->MaDoi]);
+                }
             }
+            $keys=array_keys($arrCap);
+            shuffle($keys);
+            $random=[];
+            foreach ($keys as $key) {
+                # code...
+                $random[$key]=$arrCap[$key];
+            }
+            $arrCap=$random;
+           
+            
+            $tgbd=date_parse($giaidau->TGBD);
+            $tgkt=date_parse($giaidau->TGKT);
+            $soNgay=$tgkt['day']-$tgbd['day'];
+            if($soNgay*4<count($arrCap))
+            {
+                $errors->add('err', 'Đặt lại ngày bắt đầu và kết thúc giải đấu để đảm bảo số lượng trận trong ngày nhỏ hơn 4.');
+              
+            }
+            $dem=0;
+            $arrgio=['8','10','14','16'];
+             foreach($arrCap as $r)
+            {
+                if($dem%4==0)
+                {
+                    $tgbd['day']++;
+                    $dem=0;
+                }
+                $date_string = date('Y-m-d H:i:s', mktime($arrgio[$dem], 0, 0, $tgbd['month'], $tgbd['day'], $tgbd['year'])); 
+                array_push($r, $date_string);
+               
+                $dem++;
+            }
+            
+
         }
-        echo count($arrCap);
-        foreach($arrCap as $c)
-        {
-            var_dump( $c);
-        }
-        
-        exit();
-        return view('admin.thidau.lichthidau', compact('giaidau', 'thanhvien', 'arrdoi','doi'))->withErrors($errors);
+       
+        return view('admin.thidau.lichthidau', compact('giaidau', 'thanhvien', 'arrdoi','doi', 'arrCap'))->withErrors($errors);
     }
 }
