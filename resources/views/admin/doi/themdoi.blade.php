@@ -65,42 +65,10 @@
                     <input type="number" class="form-control" name="sltv" id="sltv" placeholder="số lượng Thành viên" value="5">
                   </div>
                 </div>
-                <div class="form-group row">
-                  <label for="inputPassword3" class="col-sm-4 col-form-label">Thêm Thành Viên:</label>
-                </div>
-                  <div class="form-group row">
-                      <input type="hidden" name="_token" value="{{csrf_token()}}">
-                        <div class="col-md-6">
-                          <input type="text" class="" name="tentv" id="tentv"  placeholder="Tên thành viên">
-                        </div>
-                        <div class="col-md-4">
-                         <select name="vitri" id="vitri"  style="height: 30px;" >
-                           <option value="Top" >Top</option>
-                           <option value="Jungle">Jungle</option>
-                           <option value="Mid">Mid</option>
-                           <option value="ADC">ADC</option>
-                           <option value="Support">Support</option>
-                         </select>
-                        </div>
-                        <div class="col-md-2">
-                          <button type="button" class="btn btn-primary btn-block " onclick="addThanhvien()" name="themTV" style="line-height: 20px;">Thêm</button>
-                        </div>
-                  </div>
-                  <div class="form-group row" >
-                    <div class="card-box table-responsive dvData">
-                      <table id="datatable-responsive" class="table table-striped table-bordered dt-responsive nowrap" cellspacing="0" width="100%">
-                        <thead>
-                          <tr>
-                            <th>Họ tên</th>
-                            <th>Vị trí</th>
-                            <th>Xóa</th>
-                          </tr>
-                        </thead>
-                        <tbody>
-                        </tbody>
-                      </table>
-                    </div>
-                  </div>
+                
+                  
+                 
+                  
             </td>
             <td>
               <div style="border:2px solid rgb(206, 203, 203);; height:400px; width:500px; text-align: center;" class="float-right">
@@ -111,45 +79,7 @@
                 
                 
               <script type="text/javascript">
-                function removeTv(x)
-                {
-                  let table=document.getElementById('datatable-responsive');
-                  var a= $(x).parent().parent().index()-1;
-                  table.deleteRow(a);
-                  
-                  
-                }
-               function addThanhvien() {
-                  var sltv=document.getElementById('sltv').value;
-                  var oRows=document.getElementById('datatable-responsive').getElementsByTagName('tr').length-1;
-                 
-                  if(sltv>oRows)
-                  {
-                    let table=document.getElementById('datatable-responsive');
-                    var tentv=document.getElementById('tentv').value;
-                    var vitri=document.getElementById('vitri').value;
-                    if(tentv!=='')
-                    { 
-                        
-                        var row = document.createElement("tr");
-                        let html='<td><input type="text"  name="ten"   value="'+tentv+'"></td>'+
-                                '<td> <select name="VT" value="'+vitri+'" id="vitri"  style="height: 30px;" >'+                          
-                                '<option value="Top" >Top</option>'+
-                                '<option value="Jungle">Jungle</option>'+
-                                '<option value="Mid">Mid</option>'+
-                                '<option value="ADC">ADC</option>'+
-                                '<option value="Support">Support</option></select></td>'+
-                                '<td><button type = "button" class = "btn btn-danger" style=" line-height:20px;" onclick="removeTv(this)" >Xóa</button></td>';
-                        row.innerHTML = html;
-                        table.appendChild(row);
-                                   
-                    }
-                  }
-                  else
-                  {
-                    alert('Đã thêm đủ thành viên vào đội!');
-                  }                 
-              }
+               
                 function previewFile() {
                 var preview = document.querySelector('#avatar');
                 var file    = document.querySelector('input[type=file]').files[0];
@@ -225,7 +155,7 @@
 
 </li>
 <li class="nav-item">
-  <a href="#" class="nav-link">
+  <a href="{{route('lichthidau.get',[$giaidau->MaGD])}}" class="nav-link">
     <i class="nav-icon far fa-calendar-alt"></i>
     <p>
       Lịch thi đấu - kết quả

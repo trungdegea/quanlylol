@@ -4,9 +4,14 @@
     cursor: pointer;
 }
 
+<<<<<<< HEAD
 .card-header {
     padding: 0;
     height: 200px;
+=======
+h1.gd-name {
+    color: rgb(103, 41, 122) !important;
+>>>>>>> 615ac5efd0bd3db1a34643391554b8f90f7744ff
 }
 
 .e-gd {
@@ -38,10 +43,15 @@
     color: orangered !important;
     cursor: pointer;
 }
+<<<<<<< HEAD
 
 h2 {
     font-size: 26px;
     overflow: hidden;
     height: 60px;
+=======
+#h1{
+    color: rgb(196, 26, 26);
+>>>>>>> 615ac5efd0bd3db1a34643391554b8f90f7744ff
 }
 

@@ -65,12 +65,14 @@
                      in tên giải đấu {{$giaidau->TenGD}}
  
                    --}}
-                 {{$d}}
+                 Tên Đội: {{$d->TenDoi}}
                  <br>
                  {{-- nút chi tiết của một giải đấu, sau khi click chuyển đến trang chi tiết của giải đấu đó --}}
-                 <a href="{{route("chitiet-doi.get",[$giaidau->MaGD,$d->MaDoi])}}" class="btn btn-warning waves-light waves-effect" title="chi tiet">Chi tiết</i></a>
+                 <a href="{{route("chitiet-doi.get",[$giaidau->MaGD,$d->MaDoi])}}" class="btn btn-warning waves-light waves-effect" title="chi tiet">Thông tin Đội</i></a>
+                 <div class="gap-md"></div>
              </td>
              <?php $dem++; ?>
+
          @endforeach
  
         </table>
@@ -120,7 +122,7 @@
   </a>
 </li>
 <li class="nav-item">
-  <a href="#" class="nav-link">
+  <a href="{{route('lichthidau.get',[$giaidau->MaGD])}}" class="nav-link">
     <i class="nav-icon far fa-calendar-alt"></i>
     <p>
       Lịch thi đấu - kết quả

@@ -44,7 +44,7 @@
 
     <div>
     <div class="col-sm-6">
-            <h1 class="m-0">Danh sách giải đấu</h1>
+            <h1 id="h1">Danh sách giải đấu</h1>
           </div><!-- /.col -->
     </div>
     <div class="col-4 col-lg-2 float-right">
@@ -101,5 +101,5 @@
 
 @endsection
 @section('styleds')
-<link rel="stylesheet" href="{{asset('css/stylegiaidau.css')}}">
+<link rel="stylesheet" href="{{URL::asset('css/stylegiaidau.css')}}"  type="text/css">
 @endsection

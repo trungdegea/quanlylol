@@ -58,7 +58,7 @@
          {!! session('success')!!}
        </div>
        @endif
-       @if ($thanhvien->count()<$doi->SLTV)
+       
        
         <div class="form-them">
           <h3>Thêm thành viên mới:</h3>
@@ -88,7 +88,7 @@
          
             
         </div>
-       @endif
+     
        <form action="{{route('sua-thanhvien-doi.post',[$giaidau->MaGD,$doi->MaDoi])}}" method="post">
         <input type="hidden" name="_token" value="{{csrf_token()}}">
         <div class="row">
@@ -108,9 +108,12 @@
                     </thead>
         
                     <tbody>
+                      @php
+                          $dem=1;
+                      @endphp
                       @foreach($thanhvien as $i => $tv)
                       <tr>
-                        <td>{{$i+1}}
+                        <td>{{$dem}}
                           
                         </td>
                         <td>
@@ -136,6 +139,9 @@
         
                         </td>
                       </tr>
+                      @php
+                          $dem++;
+                      @endphp
                       @endforeach
                     </tbody>
                   </table>
@@ -217,7 +223,7 @@
   
 </li>
 <li class="nav-item">
-  <a href="#" class="nav-link">
+  <a href="{{route('lichthidau.get',[$giaidau->MaGD])}}" class="nav-link">
     <i class="nav-icon far fa-calendar-alt"></i>
     <p>
       Lịch thi đấu - kết quả
