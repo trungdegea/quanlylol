@@ -17,7 +17,7 @@ Route::get('viewer', 'pagesController@gettrangchu')->name('trangchu.get');
 
 
 Route::get('dangky', 'pagesController@getDangky')->name('dangky.get');
-Route::post('dangky', 'pagesController@postDangky');
+Route::post('dangky', 'pagesController@postDangky')->name('dangky.post');
 
 Route::get('/dangnhap', 'pagesController@getDangnhap')->name('dangnhap.get');
 Route::post('/dangnhap', 'pagesController@postDangnhap')->name('dangnhap.post');
@@ -61,7 +61,7 @@ Route::prefix('/admin')->middleware('adminlogin')->group(function () {
        
         Route::post('them', 'ThanhvienController@postthemthanhvien')->name('them-thanhvien.post');
 
-        Route::post('locdoi/{MaGD}', 'ThanhvienController@postLoDoi')->name('xemdoithanhvien.post');
+        Route::post('/{MaGD}', 'ThanhvienController@postLoDoi')->name('xemdoithanhvien.post');
        
         
         Route::post('sua/{MaGD}', 'ThanhvienController@postsuadoi')->name('sua-danhsachTV.post');

@@ -19,17 +19,27 @@ class pagesController extends Controller
 
     public function postDangky(Request $request)
     {
-        $this->validate($request,[
+       
+        $rules=[
             'username'=>'required|min:3',
             'email'=>'required|email|unique:users,email',
             'password'=>'required|min:3|max:32',
             'repassword'=>'required|same:password'
             
+        ];
+        $messages=[
+            'username.required'=>"Bạn chưa nhập tên giải đấu.",
+            'email.required'=>"Bạn chưa nhập tên giải đấu.",
+            
+        ];
 
-        ],[
-            'username.required'=>'ban chua nhap ten nguoi dung'
-
-        ]);
+        $errors = Validator::make($request->all(), $rules, $messages);
+        if ($errors->fails()) {
+            return redirect()->route('dangky.get')
+                        ->withErrors($errors)
+                        ->withInput();
+            
+        }
         User::create(
             [
             'Username'=>$request->username,

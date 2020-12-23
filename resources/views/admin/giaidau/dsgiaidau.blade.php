@@ -44,7 +44,7 @@
 
     <div>
     <div class="col-sm-6">
-            <h1 class="m-0">Danh sách giải đấu</h1>
+            <h1 id="h1">Danh sách giải đấu</h1>
           </div><!-- /.col -->
     </div>
     <div class="col-4 col-lg-2 float-right">
@@ -67,12 +67,11 @@
             @endif
             <div class="col-sm-12 col-md-5 col-lg-4 ">
                 <div class="card bg-cl">
-                  <div class="card-header">{{-- In anh ho so cua giai dau --}}
-                    <img src="{{asset('img/'.$giaidau->img)}}" height="200" width="200px" alt="">
+                  <div class="card-header" > {{-- In anh ho so cua giai dau --}}
+                    <img src="{{asset('img/'.$giaidau->img)}}" height="100%" width="100%" alt="">
                   </div>
                   <div class="card-body">
-                    <h1 class="gd-name">{{$giaidau->TenGD}}</h1>
-                    <p class="e-gd">Số lượng đội: {{$giaidau->SLdoi}}</p>
+                    <h2 class="gd-name">{{$giaidau->TenGD}}</h2>
                   </div>
                   <div class="card-footer">
                     {{-- nút chi tiết của một giải đấu, sau khi click chuyển đến trang chi tiết của giải đấu đó --}}
@@ -87,7 +86,7 @@
                </div>
              @endif
         @endforeach
-     
+
     </div>
      @endif 
     </section>
@@ -99,5 +98,5 @@
 
 @endsection
 @section('styleds')
-<link rel="stylesheet" href="{{asset('css/stylegiaidau.css')}}">
+<link rel="stylesheet" href="{{URL::asset('css/stylegiaidau.css')}}"  type="text/css">
 @endsection

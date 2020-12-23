@@ -94,15 +94,17 @@ class GiaidauController extends Controller
         $DemSoGD = giaidau::where('MaGD', $id)->count();
         $giaidau = giaidau::find($id);
         //lay danh sach thanh vien cua tat ca cac doi
-        $doi=doi::where('MaGD',$id)->get(['MaDoi','TenDoi']);// lay doi co trong giai dau co MaGD
+        $doi=doi::where('MaGD',$id)->get();// lay doi co trong giai dau co MaGD
         $dsdoi=[];
-        $arrdoi=[];
+        $arrSl=[];
         foreach($doi as $d){
             array_push($dsdoi,$d->MaDoi); 
-            $arrdoi[$d->MaDoi]=$d->TenDoi;//Arraydoi cos key = MaDoi, Value=Tendoi
+            $sltv=thanhvien::where('MaDoi',$d->MaDoi)->count();
+            $arrSl[$d->MaDoi]=$sltv;//Arraydoi cos key = MaDoi, Value=Tendoi
         }
-        $thanhvien=thanhvien::whereIn('MaDoi',$dsdoi )->orderBy('MaDoi','asc')->get();
-        return view('admin.giaidau.chitietgiaidau', compact('giaidau','thanhvien', 'arrdoi','doi'));
+        
+        // $thanhvien=thanhvien::whereIn('MaDoi',$dsdoi )->orderBy('MaDoi','asc')->get();
+        return view('admin.giaidau.chitietgiaidau', compact('giaidau', 'arrSl','doi'));
         
     }
     public function postLoDoi(Request $request, $MaGD)

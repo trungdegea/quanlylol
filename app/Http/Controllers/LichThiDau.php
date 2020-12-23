@@ -20,6 +20,7 @@ class LichThiDau extends Controller
             $errors->add('err', 'Chưa đủ số lượng đội để bắt đầu giải đấu.');
         }
         $dsdoi=[];
+        $arrCap=[];
         $arrdoi=[];
         foreach($doi as $d){
             array_push($dsdoi,$d->MaDoi); 
@@ -37,12 +38,24 @@ class LichThiDau extends Controller
                 $errors->add('err', 'Đội '.$doi1->TenDoi.' còn thiếu '.$sltthieu.' thành viên mới có thể tham gia.');
             }
         }
+        
         $thanhvien=thanhvien::whereIn('MaDoi',$dsdoi )->orderBy('MaDoi','asc')->get();
-        foreach ($doi as $d) {
-            # code...
-            echo $d->MaDoi;
+        for($i=0; $i<count($doi); $i++)
+        {
+            for($j=$i+1; $j<count($doi); $j++)
+            {
+                echo"cap dau:\n";
+                echo $doi[$i]->MaDoi,"+", $doi[$j]->MaDoi;
+                array_push($arrCap, [$doi[$i]->MaDoi, $doi[$j]->MaDoi]);
+            }
         }
-        // exit();
+        echo count($arrCap);
+        foreach($arrCap as $c)
+        {
+            var_dump( $c);
+        }
+        
+        exit();
         return view('admin.thidau.lichthidau', compact('giaidau', 'thanhvien', 'arrdoi','doi'))->withErrors($errors);
     }
 }

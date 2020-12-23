@@ -10,17 +10,17 @@
     <!-- Content Header (Page header) -->
     <div class="content-header">
       <div class="container-fluid">
-        <div class="row mb-2">
-          <div class="col-sm-6">
-            <h1 class="m-0">{{$giaidau->TenGD}}</h1>
-          </div><!-- /.col -->
-          <div class="col-sm-6">
-            <ol class="breadcrumb float-sm-right">
+        <div class="col-0">
+            <ol class="breadcrumb float-sm-left">
               <li class="breadcrumb-item"><a href="{{route('trangchu.get')}}">Trang chủ</a></li>
               <li class="breadcrumb-item active"><a href="{{route('ds-giaidau.get')}}">Giải đấu</a></li>
               <li class="breadcrumb-item active">Đội</li>
             </ol>
-          </div><!-- /.col -->
+        </div><!-- /.col -->
+        <div class="gap-md"></div>
+          <div class="col-0 t-c">
+            <h1 class="m-0 ">Giải đấu: {{$giaidau->TenGD}}</h1>
+         
         </div><!-- /.row -->
       </div><!-- /.container-fluid -->
     </div>
@@ -42,38 +42,46 @@
     </div>
     @endif
     @if ($doi->count()<$giaidau->SLdoi)
-        <div class="col-2" style=" text-align: right;"> 
-            <a href="{{route('them-doi.get',[$giaidau->MaGD])}}"><button type="submit" class="btn btn-primary btn-block ">Thêm</button></a>
+        <div class="col-4 col-lg-2 float-right" style=" text-align: right;"> 
+            <a class="float-right" href="{{route('them-doi.get',[$giaidau->MaGD])}}"><button type="submit" class="btn btn-primary btn-block ">Thêm Đội</button></a>
          </div>
          
            <!-- Main content -->
-  
+    <div class="gap-md"></div>
     @endif
     <section class="content">
       @if ($doi->count()>0)
       <div class="container">
-        <table >
+        
          <?php $dem=0; ?>
          @foreach ($doi as $d)
              @if ($dem%3==0)
-               <tr></tr>
+            <div class="row">
              @endif
-             <td>
-                 {{-- In anh ho so cua giai dau --}}
-                 <img src="{{asset('img/'.$d->img)}}" height="200" width="200px" alt=""><br>
-                 {{-- in thông tin của cả giải đấu 
-                     in tên giải đấu {{$giaidau->TenGD}}
- 
-                   --}}
-                 {{$d}}
-                 <br>
+             <div class="col-sm-12 col-md-5 col-lg-4 ">
+                <div class="card bg-cl">
+                  <div class="card-header" > {{-- In anh ho so cua doi dau --}}
+                  <img src="{{asset('img/'.$d->img)}}" height="100%" width="100%" alt=""><br>
+                  </div>
+                  <div class="card-body">
+                    <h2 class="gd-name" >Tên Đội: {{$d->TenDoi}}</h2>
+                  </div>
+                  <div class="card-footer" >
+                  <br>
                  {{-- nút chi tiết của một giải đấu, sau khi click chuyển đến trang chi tiết của giải đấu đó --}}
-                 <a href="{{route("chitiet-doi.get",[$giaidau->MaGD,$d->MaDoi])}}" class="btn btn-warning waves-light waves-effect" title="chi tiet">Chi tiết</i></a>
-             </td>
-             <?php $dem++; ?>
+                 <a href="{{route("chitiet-doi.get",[$giaidau->MaGD,$d->MaDoi])}}" class="btn btn-warning waves-light waves-effect" title="chi tiet">Thông tin Đội</i></a>
+                  </div>
+                
+                </div>
+            </div>
+        <?php $dem++; ?>
+            @if ($dem%3==0)
+               </div>
+             @endif
+          
          @endforeach
  
-        </table>
+        
      </div>
       @endif 
      </section>
@@ -120,7 +128,7 @@
   </a>
 </li>
 <li class="nav-item">
-  <a href="#" class="nav-link">
+  <a href="{{route('lichthidau.get',[$giaidau->MaGD])}}" class="nav-link">
     <i class="nav-icon far fa-calendar-alt"></i>
     <p>
       Lịch thi đấu - kết quả
@@ -138,4 +146,7 @@
 </li>
 
 
+@endsection
+@section('styleds')
+<link rel="stylesheet" href="{{asset('css/stylegiaidau.css')}}">
 @endsection
