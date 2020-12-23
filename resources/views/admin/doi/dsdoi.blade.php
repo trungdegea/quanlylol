@@ -10,17 +10,17 @@
     <!-- Content Header (Page header) -->
     <div class="content-header">
       <div class="container-fluid">
-        <div class="row mb-2">
-          <div class="col-sm-6">
-            <h1 class="m-0">{{$giaidau->TenGD}}</h1>
-          </div><!-- /.col -->
-          <div class="col-sm-6">
-            <ol class="breadcrumb float-sm-right">
+        <div class="col-0">
+            <ol class="breadcrumb float-sm-left">
               <li class="breadcrumb-item"><a href="{{route('trangchu.get')}}">Trang chủ</a></li>
               <li class="breadcrumb-item active"><a href="{{route('ds-giaidau.get')}}">Giải đấu</a></li>
               <li class="breadcrumb-item active">Đội</li>
             </ol>
-          </div><!-- /.col -->
+        </div><!-- /.col -->
+        
+          <div class="col-0 t-c">
+            <h1 class="m-0 ">{{$giaidau->TenGD}}</h1>
+         
         </div><!-- /.row -->
       </div><!-- /.container-fluid -->
     </div>
@@ -42,12 +42,12 @@
     </div>
     @endif
     @if ($doi->count()<$giaidau->SLdoi)
-        <div class="col-2" style=" text-align: right;"> 
-            <a href="{{route('them-doi.get',[$giaidau->MaGD])}}"><button type="submit" class="btn btn-primary btn-block ">Thêm</button></a>
+        <div class="col-4 col-lg-2 float-right" style=" text-align: right;"> 
+            <a class="float-right" href="{{route('them-doi.get',[$giaidau->MaGD])}}"><button type="submit" class="btn btn-primary btn-block ">Thêm Đội</button></a>
          </div>
          
            <!-- Main content -->
-  
+    <div class="gap-md"></div>
     @endif
     <section class="content">
       @if ($doi->count()>0)
@@ -55,7 +55,7 @@
         <table >
          <?php $dem=0; ?>
          @foreach ($doi as $d)
-             @if ($dem%3==0)
+             @if ($dem%1==0)
                <tr></tr>
              @endif
              <td>
@@ -138,4 +138,7 @@
 </li>
 
 
+@endsection
+@section('styleds')
+<link rel="stylesheet" href="{{asset('css/styledoi.css')}}">
 @endsection

@@ -67,12 +67,11 @@
             @endif
             <div class="col-sm-12 col-md-5 col-lg-4 ">
                 <div class="card bg-cl">
-                  <div class="card-header">{{-- In anh ho so cua giai dau --}}
-                    <img src="{{asset('img/'.$giaidau->img)}}" height="200" width="200px" alt="">
+                  <div class="card-header" > {{-- In anh ho so cua giai dau --}}
+                    <img src="{{asset('img/'.$giaidau->img)}}" height="100%" width="100%" alt="">
                   </div>
                   <div class="card-body">
-                    <h1 class="gd-name">{{$giaidau->TenGD}}</h1>
-                    <p class="e-gd">Số lượng đội: {{$giaidau->SLdoi}}</p>
+                    <h2 class="gd-name">{{$giaidau->TenGD}}</h2>
                   </div>
                   <div class="card-footer">
                     {{-- nút chi tiết của một giải đấu, sau khi click chuyển đến trang chi tiết của giải đấu đó --}}
