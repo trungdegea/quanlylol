@@ -7,6 +7,7 @@ use Illuminate\Support\Facades\Hash;
 use App\User;
 use Auth;
 use Validator;
+use Illuminate\Support\Facades\DB;
 
 class pagesController extends Controller
 {
@@ -84,5 +85,16 @@ class pagesController extends Controller
     Auth::logout();
     return redirect()->route('dangnhap.get');
   }
+  public function gettrangchu()
+  {
+    
+    $dsgiaidau=DB::table('giaidaus')->get();
 
+   
+    return view('viewer.index', compact('dsgiaidau'));
+  }
+  public function getLienhe()
+  {
+    return view('admin.about.about');
+  }
 }

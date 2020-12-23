@@ -87,9 +87,6 @@
              @endif
         @endforeach
 
-       
-    
-     
     </div>
      @endif 
     </section>
