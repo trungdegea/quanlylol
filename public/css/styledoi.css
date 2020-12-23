@@ -1,0 +1,16 @@
+.active {
+    color: red !important;
+    cursor: pointer;
+}
+
+.gap-md {
+    display: block;
+    height: 50px;
+    width: 100%;
+    margin: 0;
+    padding: 0;
+}
+
+.t-c {
+    text-align: center;
+}

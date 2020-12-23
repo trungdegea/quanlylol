@@ -1,23 +1,29 @@
 .bg-cl{
-    background-color: rgb(0, 102, 255, 0.2);
+    background-color: rgb(0, 102, 255, 0.2); 
     text-align: center;
     cursor: pointer;
-
 }
 
+<<<<<<< HEAD
+.card-header {
+    padding: 0;
+    height: 200px;
+=======
 h1.gd-name {
     color: rgb(103, 41, 122) !important;
+>>>>>>> 615ac5efd0bd3db1a34643391554b8f90f7744ff
 }
 
 .e-gd {
     font-size: 20px;
 }
+
 .card:hover {
     box-shadow: -3px -3px 5px rgba(0, 0, 0, 0.2), -3px 3px 5px rgba(0, 0, 0, 0.2),
       3px -3px 5px rgba(0, 0, 0, 0.2), 3px 3px 5px rgba(0, 0, 0, 0.2);
     transform: translate(0.5);
     border: 1px solid black;
-  }
+} 
 
 .gap-md {
     display: block;
@@ -27,15 +33,25 @@ h1.gd-name {
     padding: 0;
 }
 
+
+
 .float-right {
     float: right;
-}
+} 
 
 .active {
     color: orangered !important;
     cursor: pointer;
 }
+<<<<<<< HEAD
+
+h2 {
+    font-size: 26px;
+    overflow: hidden;
+    height: 60px;
+=======
 #h1{
     color: rgb(196, 26, 26);
+>>>>>>> 615ac5efd0bd3db1a34643391554b8f90f7744ff
 }
 
