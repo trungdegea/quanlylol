@@ -9,6 +9,7 @@ use App\giaidau;
 use Auth;
 use Validator;
 use Illuminate\Support\Facades\DB;
+
 class pagesController extends Controller
 {
     //
@@ -95,5 +96,5 @@ class pagesController extends Controller
   {
     return view('admin.about.about');
   }
-
+ 
 }

@@ -13,7 +13,7 @@ use App\Http\Middleware\Login;
 |
 */
 
-
+Route::get('viewer', 'pagesController@gettrangchu')->name('trangchu.get');
 
 
 Route::get('dangky', 'pagesController@getDangky')->name('dangky.get');
@@ -25,6 +25,7 @@ Route::get('dangxuat', 'pagesController@getLogout')->name('dangxuat.get');
 Route::get('viewer', 'pagesController@gettrangchu')->name('trangchu.get');
 Route::prefix('/admin')->middleware('adminlogin')->group(function () {
     Route::get('/', 'TrangchuController@getTrangchu')->name('trangchu.get');
+    Route::get('/lienhe', 'pagesController@getLienhe')->name('lienhe.get');
     Route::prefix('giaidau')->group(function (){
         Route::get('/', 'GiaidauController@getDsGiaidau')->name('ds-giaidau.get');
         Route::get('chitiet/{id}', 'GiaidauController@getchitietGiaidau')->name('chitiet-giaidau.get');
@@ -68,6 +69,7 @@ Route::prefix('/admin')->middleware('adminlogin')->group(function () {
         
         Route::post('sua/{MaGD}', 'ThanhvienController@postsuadoi')->name('sua-danhsachTV.post');
     });
+   
     Route::group(['prefix' => 'lichthidau'], function () {
         Route::get('/{MaGD}','LichthidauController@getLichThiDau')->name('lichthidau.get');
         Route::post('Xếp/{MaGD}','LichthidauController@postXepLichThiDau')->name('xeplichthidau.post');
