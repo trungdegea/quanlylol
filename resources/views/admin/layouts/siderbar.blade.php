@@ -14,11 +14,11 @@
           <img style="background-color: white;" src="{{asset('adminlte/dist/img/0c3b3adb1a7530892e55ef36d3be6cb8.png')}}" class="img-circle elevation-2" alt="User Image">
         </div>
         <div class="info">
-          <a href="#" class="d-block">{{Auth::User()->Username}}</a>
+          <p class="ml-2" style="color:white">{{Auth::User()->Username}}</p>
         </div>
       </div>
 
-
+    
       <!-- Sidebar Menu -->
       <nav class="mt-2">
         <ul class="nav nav-pills nav-sidebar flex-column" data-widget="treeview" role="menu" data-accordion="false">
@@ -30,37 +30,20 @@
               <i class="nav-icon fas fa-th"></i>
               <p>
                 Danh sách giải đấu
+               
               </p>
             </a>
           </li>
-             @yield('siderbar')
-        
-
+      
+        @yield('siderbar')
           
         </ul>
       </nav>
-      <nav class="mt-2">
-        <ul class="nav nav-pills nav-sidebar flex-column" data-widget="treeview" role="menu" data-accordion="false">
-          <!-- Add icons to the links using the .nav-icon class
-               with font-awesome or any other icon font library -->
-        
-          <li class="nav-item">
-            <a href="{{route('lienhe.get')}}" class="nav-link">
-              <i class="nav-icon fa fa-address-card"></i>
-              <p>
-                Liên Hệ Chúng Tôi
-              </p>
-            </a>
-          </li>
-
-          
-        </ul>
-      </nav>
-      <!-- /.sidebar-menu -->
+    
     </div>
-    <!-- /.sidebar -->
+  
   </aside>
-    <!-- Control Sidebar -->
+   
     <aside class="control-sidebar control-sidebar-dark">
       <!-- Control sidebar content goes here -->
     </aside>

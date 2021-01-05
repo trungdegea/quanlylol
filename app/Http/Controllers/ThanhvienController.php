@@ -24,7 +24,7 @@ class ThanhvienController extends Controller
         
         $thanhvien=thanhvien::whereIn('MaDoi',$dsdoi )->orderBy('MaDoi','asc')->get();
      
-        return view('admin.thanhvien.dsthanhvien', compact('giaidau', 'thanhvien', 'arrdoi','doi'));
+        return view('admin.thanhvien.dsthanhvien', compact('giaidau', 'thanhvien', 'arrdoi','doi','dsdoi'));
     }
     public function xoathanhvien($MaTV)
     {

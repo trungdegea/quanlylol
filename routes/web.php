@@ -22,7 +22,7 @@ Route::post('dangky', 'pagesController@postDangky')->name('dangky.post');
 Route::get('/dangnhap', 'pagesController@getDangnhap')->name('dangnhap.get');
 Route::post('/dangnhap', 'pagesController@postDangnhap')->name('dangnhap.post');
 Route::get('dangxuat', 'pagesController@getLogout')->name('dangxuat.get');
-
+Route::get('viewer', 'pagesController@gettrangchu')->name('trangchu.get');
 Route::prefix('/admin')->middleware('adminlogin')->group(function () {
     Route::get('/', 'TrangchuController@getTrangchu')->name('trangchu.get');
     Route::get('/lienhe', 'pagesController@getLienhe')->name('lienhe.get');
@@ -52,6 +52,9 @@ Route::prefix('/admin')->middleware('adminlogin')->group(function () {
         //sua thong tin cua doi
         Route::get('sua/{MaGD}', 'DoituyenController@getsuadoi')->name('sua-doi.get');
         Route::post('sua/{MaGD}', 'DoituyenController@postsuadoi')->name('sua-doi.post');
+        // Xóa đội , gồm xóa tất cả thành viên.
+        Route::get('xoa/{MaDoi}',     'DoituyenController@xoaDoi')->name('delete-doi.get');
+
     });
     Route::prefix('thanhvien')->group(function (){
         //danh sach  thanh vien cua tat ca cac doi  trong giai dau
@@ -68,8 +71,9 @@ Route::prefix('/admin')->middleware('adminlogin')->group(function () {
     });
    
     Route::group(['prefix' => 'lichthidau'], function () {
-        Route::get('/{MaGD}','LichThiDau@getLichThiDau')->name('lichthidau.get');
-            
+        Route::get('/{MaGD}','LichthidauController@getLichThiDau')->name('lichthidau.get');
+        Route::post('Xếp/{MaGD}','LichthidauController@postXepLichThiDau')->name('xeplichthidau.post');
+        Route::post('Lưu/{MaGD}','LichthidauController@postCapNhatKetQua' )->name('capnhatketqua.post');
     });
    
 });
