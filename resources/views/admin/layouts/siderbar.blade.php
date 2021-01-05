@@ -14,22 +14,11 @@
           <img src="{{asset('adminlte/dist/img/user2-160x160.jpg')}}" class="img-circle elevation-2" alt="User Image">
         </div>
         <div class="info">
-          <a href="#" class="d-block">Alexander Pierce</a>
+          <p class="ml-2" style="color:white">{{Auth::User()->Username}}</p>
         </div>
       </div>
 
-      <!-- SidebarSearch Form -->
-      <div class="form-inline">
-        <div class="input-group" data-widget="sidebar-search">
-          <input class="form-control form-control-sidebar" type="search" placeholder="Search" aria-label="Search">
-          <div class="input-group-append">
-            <button class="btn btn-sidebar">
-              <i class="fas fa-search fa-fw"></i>
-            </button>
-          </div>
-        </div>
-      </div>
-
+    
       <!-- Sidebar Menu -->
       <nav class="mt-2">
         <ul class="nav nav-pills nav-sidebar flex-column" data-widget="treeview" role="menu" data-accordion="false">
@@ -41,19 +30,20 @@
               <i class="nav-icon fas fa-th"></i>
               <p>
                 Danh sách giải đấu
-                <span class="right badge badge-danger">New</span>
+               
               </p>
             </a>
           </li>
+      
         @yield('siderbar')
           
         </ul>
       </nav>
-      <!-- /.sidebar-menu -->
+    
     </div>
-    <!-- /.sidebar -->
+  
   </aside>
-    <!-- Control Sidebar -->
+   
     <aside class="control-sidebar control-sidebar-dark">
       <!-- Control sidebar content goes here -->
     </aside>

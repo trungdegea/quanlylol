@@ -9,6 +9,7 @@ use Illuminate\Support\MessageBag;
 use App\doi;
 use App\giaidau;
 use App\thanhvien;
+use app\lichthidau;
 class DoituyenController extends Controller
 {
     public function getDsdoi($MaGD)
@@ -134,8 +135,7 @@ class DoituyenController extends Controller
             $errors->add('err', 'Đội chưa có thành viên tham gia.');
             return view('admin.doi.chitiet', compact('doi','giaidau','thanhvien'))->withErrors($errors);
         } 
-       
-           
+        
         return view('admin.doi.chitiet', compact('giaidau', 'doi','thanhvien'));
     }
     public function posthemthanhvien(Request $request,$MaGD,$MaDoi)
@@ -179,14 +179,13 @@ class DoituyenController extends Controller
         $giaidau=giaidau::find($MaGD);
         $doi=doi::find($MaDoi);
         $thanhvien=thanhvien::all()->where('MaDoi',$MaDoi);
-        $SLTV=$thanhvien->count();
-        
-        for($i=0;$i<$SLTV;$i++)
+       
+       foreach($thanhvien as $key=>$TV)
         {
             $tentv="tentv";
             $vitri="vitri";
-            $vitri.=$thanhvien[$i]->MaTV;
-            $tentv.=$thanhvien[$i]->MaTV;
+            $vitri.=$TV->MaTV;
+            $tentv.=$TV->MaTV;
             thanhvien::where('MaTV',$thanhvien[$i]->MaTV )->update(['TenTV'=>$request->$tentv,'ViTri'=>$request->$vitri]);
         }
         return redirect()->route('chitiet-doi.get',[$MaGD,$MaDoi])->with('success', "Update thành công."); 
@@ -198,5 +197,14 @@ class DoituyenController extends Controller
         thanhvien::find($MaTV)->delete();
         return redirect()->back()->with('success', 'Xóa thành công 1 thành viên.');
     }
+    public function xoaDoi($MaDoi)
+    {   
+        $MaGD=doi::find($MaDoi)->MaGD;
+        giaidau::find($MaGD)->lichthidau()->delete();
+        $thanhvien=doi::find($MaDoi)->thanhvien()->delete();
+        doi::find($MaDoi)->delete();
+        return redirect()->back()->with('success', 'Xóa thành công 1 đội.');
+    }
+    
    
 }

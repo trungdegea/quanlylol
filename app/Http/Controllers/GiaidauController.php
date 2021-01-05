@@ -204,8 +204,7 @@ class GiaidauController extends Controller
             $giaidaus->SLve=$request->slve;
             $giaidaus->TGBD=$request->tgbd;
             $giaidaus->TGKT=$request->tgkt;
-             $giaidaus->img=$filenameToStore;
-          
+            $giaidaus->img=$filenameToStore;
             $giaidaus->save();
             return redirect()->route('sua-giaidau.get',[$id])->with('success', "Sửa giải đấu thành công."); 
         }

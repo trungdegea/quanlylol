@@ -12,7 +12,7 @@
       <div class="container-fluid">
         <div class="col-0">
             <ol class="breadcrumb float-sm-left">
-              <li class="breadcrumb-item"><a href="{{route('trangchu.get')}}">Trang chủ</a></li>
+             <li class="breadcrumb-item"><a href="{{route('ds-giaidau.get')}}">Trang chủ</a></li>
               <li class="breadcrumb-item active"><a href="{{route('ds-giaidau.get')}}">Giải đấu</a></li>
               <li class="breadcrumb-item active">Đội</li>
             </ol>
@@ -70,6 +70,9 @@
                   <br>
                  {{-- nút chi tiết của một giải đấu, sau khi click chuyển đến trang chi tiết của giải đấu đó --}}
                  <a href="{{route("chitiet-doi.get",[$giaidau->MaGD,$d->MaDoi])}}" class="btn btn-warning waves-light waves-effect" title="chi tiet">Thông tin Đội</i></a>
+                 @if (date_parse ($giaidau->TGBD)>date_parse(date('Y-m-d H:i:s')))
+                 <a href="{{route('delete-doi.get',[$d->MaDoi])}}" onclick="del({{$d->MaDoi}})" class="btn btn-danger waves-light waves-effect delete-confirm " title="Xóa"> <i class="fas fa-trash-alt" style="color:white"></i></a>
+                 @endif
                   </div>
                 
                 </div>
@@ -94,7 +97,16 @@
 @endsection
 
 @section('siderbar')
-<li class="nav-header">HỒ SƠ GIẢI ĐẤU</li>
+<li class="nav-header" style="text-align: center;"><h5>HỒ SƠ GIẢI ĐẤU</h5></li>
+<li class="nav-item " style="color"><hr style="width:200px; background-color:white; height:1.5; "></li>
+<li class="nav-item pl-1">
+  <a href="{{route('chitiet-giaidau.get',[$giaidau->MaGD])}}" class="nav-link ">
+    <i class="nav-icon ion-android-home"></i>
+    <p>
+      Trang chủ
+    </p>
+  </a>
+</li>
 <li class="nav-item">
   <a href="#" class="nav-link">
     <i class="nav-icon fas fa-book "></i>
@@ -132,7 +144,7 @@
     <i class="nav-icon far fa-calendar-alt"></i>
     <p>
       Lịch thi đấu - kết quả
-      <span class="badge badge-info right">2</span>
+    
     </p>
   </a>
 </li>
@@ -149,4 +161,25 @@
 @endsection
 @section('styleds')
 <link rel="stylesheet" href="{{asset('css/stylegiaidau.css')}}">
+@endsection
+@section('script')
+
+ <script src="https://unpkg.com/sweetalert/dist/sweetalert.min.js"></script>
+
+<script>
+  $('.delete-confirm').on('click', function (event) {
+    event.preventDefault();
+    const url = $(this).attr('href');
+    swal({
+        title: 'Bạn có muốn xóa?',
+        text: 'Xóa toàn bộ thông tin của đội bao gồm các thành viên.',
+        icon: 'warning',
+        buttons: ["Cancel", "Yes!"],
+    }).then(function(value) {
+        if (value) {
+            window.location.href = url;
+        }
+    });
+});
+</script>
 @endsection

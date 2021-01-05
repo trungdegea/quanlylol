@@ -16,7 +16,7 @@
         <div class="row mb-2">          
           <div class="col-sm-6">
             <ol class="breadcrumb ">
-              <li class="breadcrumb-item"><a href="{{route('trangchu.get')}}">Trang chủ</a></li>
+             <li class="breadcrumb-item"><a href="#">Trang chủ</a></li>
               <li class="breadcrumb-item active">giải đấu</li>
             </ol>
           </div><!-- /.col -->
@@ -45,10 +45,11 @@
     <div>
     <div class="col-sm-6">
             <h1 id="h1">Danh sách giải đấu</h1>
-          </div><!-- /.col -->
+    </div><!-- /.col -->
     </div>
+   
+  
     <div class="col-4 col-lg-2 float-right">
-        
         <a href="{{route('them-giaidau.get')}}"><button type="submit" class="btn btn-primary btn-block ">Thêm giải</button></a>
     </div>
 
@@ -58,14 +59,16 @@
     
     
     <section class="content">
+    
      @if (count($dsgiaidau)>0)
+     
      <div class="container">
         <?php $dem=0; ?>
         @foreach ($dsgiaidau as $giaidau)
             @if ($dem%3==0)
               <div class="row">
             @endif
-            <div class="col-sm-12 col-md-5 col-lg-4 ">
+            <div class="col-sm-12 col-md-5 col-lg-4 " id="myDiv">
                 <div class="card bg-cl">
                   <div class="card-header" > {{-- In anh ho so cua giai dau --}}
                     <img src="{{asset('img/'.$giaidau->img)}}" height="100%" width="100%" alt="">

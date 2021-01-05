@@ -5,9 +5,10 @@ use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Hash;
 use App\User;
+use App\giaidau;
 use Auth;
 use Validator;
-
+use Illuminate\Support\Facades\DB;
 class pagesController extends Controller
 {
     //
@@ -71,7 +72,7 @@ class pagesController extends Controller
         ;
 
         if(Auth::attempt($array)){
-            return  redirect()->route('trangchu.get');
+            return  redirect()->route('ds-giaidau.get');
         }    
         else
         {
@@ -83,6 +84,16 @@ class pagesController extends Controller
   {
     Auth::logout();
     return redirect()->route('dangnhap.get');
+  }
+  public function gettrangchu()
+  {
+    
+    $dsgiaidau=DB::table('giaidaus')->get();
+    return view('viewer.index', compact('dsgiaidau'));
+  }
+  public function getLienhe()
+  {
+    return view('admin.about.about');
   }
 
 }
