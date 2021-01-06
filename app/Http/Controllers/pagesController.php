@@ -4,8 +4,14 @@ namespace App\Http\Controllers;
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Hash;
+use Illuminate\Support\MessageBag;
 use App\User;
 use App\giaidau;
+use App\lichthidau;
+use App\bangxephang;
+use App\doi;
+use App\thanhvien;
+use App\thongtinve;
 use Auth;
 use Validator;
 use Illuminate\Support\Facades\DB;
@@ -84,7 +90,7 @@ class pagesController extends Controller
     public function getLogout()
   {
     Auth::logout();
-    return redirect()->route('dangnhap.get');
+    return redirect()->route('trangchu.get');
   }
   public function gettrangchu()
   {
@@ -112,6 +118,68 @@ class pagesController extends Controller
     // }
     // exit();
     return view('viewer.index', compact('giaidauCurrent','giaidauAlready'));
+  }
+  public function getchitietGD($MaGD)
+  {
+     
+    $errors = new MessageBag();
+    $DemSoGD = giaidau::where('MaGD', $MaGD)->count();
+    $giaidau = giaidau::find($MaGD);
+    $lichthidau=lichthidau::where('MaGD', $MaGD)->orderBy('ThoiGian', 'asc')->get();
+    $doi=doi::where('MaGD',$MaGD)->get();// lay doi co trong giai dau co MaGD
+    $dsdoi=[];
+    $arrSl=[];
+    $tenDoi=[];
+    foreach($doi as $d){
+        array_push($dsdoi,$d->MaDoi); 
+        $sltv=thanhvien::where('MaDoi',$d->MaDoi)->count();
+        $arrSl[$d->MaDoi]=$sltv;//Arraydoi cos key = MaDoi, Value=Tendoi
+        $tenDoi[$d->MaDoi]=$d->TenDoi;//Arraydoi cos key = MaDoi, Value=Tendoi
+    }
+    
+    $bxh=bangxephang::where('MaGD',$MaGD)->orderBy('Diem', 'desc')->orderBy('HieuSo', 'desc')->get();
+    return view('viewer.chitietGD', compact('giaidau', 'arrSl','doi','bxh','tenDoi','lichthidau'));
+     
+  }
+  public function postDatVe($MaGD, Request $request)
+  {
+      if($request->sove===null||$request->tenkhach===null||$request->sdt===null)
+      {
+        echo "<script>
+        alert('Vui lòng nhập đầy đủ thông tin!');
+        window.location.href='../chitiet/".$MaGD."';
+        </script>";  
+      }
+      else
+      {
+          
+          $giaidau=giaidau::find($MaGD);
+          if($giaidau->SLve<$request->sove)
+          {
+            echo "<script>
+            alert('Giải đấu ".$giaidau->TenGD." chỉ còn ".$giaidau->SLve." vé!');
+            window.location.href='../chitiet/".$MaGD."';
+            </script>";  
+          }
+          else
+          {
+            $giaidau->SLve=$giaidau->SLve-$request->sove;
+            $thongtin=new thongtinve();
+            $thongtin->TenKhach=$request->tenkhach;
+            $thongtin->SDT=$request->sdt;
+            $thongtin->SoVe=$request->sove;
+            $thongtin->TongTien=50000*$request->sove;
+            $thongtin->MaGD=$MaGD;
+            $giaidau->save();
+            $thongtin->save();  
+            echo "<script>
+            alert('Bạn đã đặt vé thành công!');
+            window.location.href='../chitiet/".$MaGD."';
+            </script>";
+     
+          }
+                        
+      }
   }
   public function getLienhe()
   {

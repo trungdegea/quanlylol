@@ -12,7 +12,7 @@ class ThanhvienController extends Controller
 {
     public function getDsThanhVien($MaGD)
     {   
-       
+        $tendoi="";
         $giaidau= giaidau::find($MaGD);
         $doi=doi::where('MaGD',$MaGD)->get(['MaDoi','TenDoi','SLTV']);// lay doi co trong giai dau co MaGD
         $dsSL=[];
@@ -25,8 +25,7 @@ class ThanhvienController extends Controller
         }
         
         $thanhvien=thanhvien::whereIn('MaDoi',$dsdoi )->orderBy('MaDoi','asc')->get();
-        // var_dump($arrdoi); exit();
-        return view('admin.thanhvien.dsthanhvien', compact('giaidau', 'thanhvien', 'arrdoi','doi','dsdoi'));
+        return view('admin.thanhvien.dsthanhvien', compact('giaidau', 'thanhvien', 'arrdoi','doi','dsdoi','tendoi'));
     }
     public function xoathanhvien($MaTV)
     {
@@ -77,20 +76,7 @@ class ThanhvienController extends Controller
             
             return redirect()->back()->withErrors($errors);
            
-             //     
-           
-            // if(count($errors)>0)
-            // {
-            //     foreach($errors->all() as $err)
-            //     {
-            //         var_dump($err);
-            //     }
-            //     echo "test"; exit();
-            //     return redirect()->back()
-            //     
-            // }else{
-            //    
-            // }
+          
         }
       
     }
@@ -100,16 +86,16 @@ class ThanhvienController extends Controller
         {
             $giaidau= giaidau::find($MaGD);
             $doi=doi::where('MaGD',$MaGD)->get(['MaDoi','TenDoi']);// lay doi co trong giai dau co MaGD
-            
+            $tendoi="";
             $dsdoi=[];
             $arrdoi=[];
             foreach($doi as $d){
+                $tv=thanhvien::where('MaDoi', $d->MaDoi)->get();
                 array_push($dsdoi,$d->MaDoi); 
-                $arrdoi[$d->MaDoi]=$d->TenDoi;//Arraydoi cos key = MaDoi, Value=Tendoi
+                $arrdoi[$d->MaDoi]=[$d->TenDoi,$tv->count()];//Arraydoi cos key = MaDoi, Value=Tendoi
             }
             $thanhvien=thanhvien::whereIn('MaDoi',$dsdoi )->orderBy('MaDoi','asc')->get();
-           
-            return view('admin.thanhvien.dsthanhvien', compact('giaidau', 'thanhvien', 'arrdoi','doi'));
+            return view('admin.thanhvien.dsthanhvien', compact('giaidau', 'thanhvien', 'arrdoi','doi','tendoi'));
         }
         else
         {
@@ -117,10 +103,10 @@ class ThanhvienController extends Controller
             $doi=doi::where('MaGD',$MaGD)->get(['MaDoi','TenDoi']);// lay doi co trong giai dau co MaGD
             $dsdoi=[];
             $arr=doi::find($request->locdoi);
+            $tendoi=$arr->TenDoi;
             $arrdoi[$arr->MaDoi]=$arr->TenDoi;
             $thanhvien=thanhvien::where('MaDoi',$request->locdoi )->get();
-           
-            return view('admin.thanhvien.dsthanhvien', compact('giaidau', 'thanhvien', 'arrdoi','doi'));
+            return view('admin.thanhvien.dsthanhvien', compact('giaidau', 'thanhvien', 'arrdoi','doi','tendoi'));
         }
         
             
