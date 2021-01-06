@@ -10,6 +10,8 @@ use App\giaidau;
 use Auth;
 use App\doi;
 use App\thanhvien;
+use App\lichthidau;
+use App\bangxephang;
 use Illuminate\Support\Facades\Storage;
 class GiaidauController extends Controller
 {
@@ -93,6 +95,7 @@ class GiaidauController extends Controller
         $errors = new MessageBag();
         $DemSoGD = giaidau::where('MaGD', $id)->count();
         $giaidau = giaidau::find($id);
+        // var_dump($giaidau->TGBD); exit();
         //lay danh sach thanh vien cua tat ca cac doi
         $doi=doi::where('MaGD',$id)->get();// lay doi co trong giai dau co MaGD
         $dsdoi=[];
@@ -102,9 +105,8 @@ class GiaidauController extends Controller
             $sltv=thanhvien::where('MaDoi',$d->MaDoi)->count();
             $arrSl[$d->MaDoi]=$sltv;//Arraydoi cos key = MaDoi, Value=Tendoi
         }
-        
-        // $thanhvien=thanhvien::whereIn('MaDoi',$dsdoi )->orderBy('MaDoi','asc')->get();
-        return view('admin.giaidau.chitietgiaidau', compact('giaidau', 'arrSl','doi'));
+        $bxh=bangxephang::where('MaGD',$id)->orderBy('Diem', 'desc')->orderBy('HieuSo', 'desc')->get();
+        return view('admin.giaidau.chitietgiaidau', compact('giaidau', 'arrSl','doi','bxh'));
         
     }
     public function postLoDoi(Request $request, $MaGD)
@@ -210,4 +212,5 @@ class GiaidauController extends Controller
         }
 
     }
+    
 }

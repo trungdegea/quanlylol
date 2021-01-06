@@ -49,33 +49,48 @@
          {!! session('success')!!}
        </div>
        @endif
-       
+     
        
         <div class="form-them">
           <h3>Thêm thành viên mới:</h3>
+          
           <form  method="post" action="{{route('them-thanhvien.post')}}">
             <input type="hidden" name="_token" value="{{csrf_token()}}">
             <div class=" row">
-              <div class="col-md-4">
-                <label for="inputEmail3" class="col-sm-4 col-form-label">Tên thành viên:</label>
-                <input type="text" class="" name="tentv" placeholder="Tên thành viên">
+              <div class="col-md-7">
+                <table id="ThemTV">
+                  <thead>
+                    <th>Ten thanh vien</th>
+                     <th>Vi tri</th>
+                  </thead>
+                  <tbody>
+                    <tr>
+                      <td>
+                        <input type="text" class="" name="tentv[]" placeholder="Tên thành viên">
+                      </td>
+                      <td>
+                        <select name="vitri[]" id="">
+                          <option value="Top">Top</option>
+                          <option value="Jungle">Jungle</option>
+                          <option value="Mid">Mid</option>
+                          <option value="ADC">ADC</option>
+                          <option value="Support">Support</option>
+                        </select>
+                      </td>
+                      <td>
+                        <input type="button" value="+1" onclick="myFucntion()">
+                      </td>
+                    </tr>
+                  </tbody>
+                </table>
               </div>
+              
               <div class="col-md-3">
                 <label for="inputEmail3" class="col-sm-3 col-form-label">Đội:</label>
-               <select name="doi" id="">
+               <select name="doi" id="doi">
                   @foreach ($doi as $d)
                   <option value="{{$d->MaDoi}}">{{$d->TenDoi}}</option>
                   @endforeach
-               </select>
-              </div>
-              <div class="col-md-3">
-                <label for="inputEmail3" class="col-sm-3 col-form-label">Vị trí:</label>
-               <select name="vitri" id="">
-                 <option value="Top">Top</option>
-                 <option value="Jungle">Jungle</option>
-                 <option value="Mid">Mid</option>
-                 <option value="ADC">ADC</option>
-                 <option value="Support">Support</option>
                </select>
               </div>
               <div class="col-md-2">
@@ -104,9 +119,8 @@
                     </div>
                     <div class="col-md-4">
                       <label for="inputEmail3" class="col-sm-3 col-form-label">Đội:</label>
-                     <select name="locdoi" id="">
+                     <select name="locdoi"  >
                        <option value="#">All</option>
-                      
                         @foreach ($doi as $d)
                         <option value="{{$d->MaDoi}}">{{$d->TenDoi}}</option>
                         @endforeach
@@ -121,7 +135,7 @@
                   <input type="hidden" name="_token" value="{{csrf_token()}}">
                 <div class="card-box table-responsive dvData">
                   <table id="datatable-responsive" class="table table-striped table-bordered dt-responsive nowrap" cellspacing="0" width="100%">
-                    <thead>
+                    
                       <tr>
                         <th>STT</th>
                         <th>Họ tên</th>
@@ -129,9 +143,9 @@
                         <th>Đội</th>
                         <th>Hanh dong</th>
                       </tr>
-                    </thead>
+                   
         
-                    <tbody>
+                    
                       @foreach($thanhvien as $i => $tv)
                       <tr>
                         <td>{{$i+1}}
@@ -151,7 +165,7 @@
                           </select>
                         </td>
                         <td>
-                          {{$arrdoi[$tv->MaDoi]}}
+                          {{$arrdoi[$tv->MaDoi][0]}}
                         </td>
                         <td>
                           <a href="{{route('delete-thanhvien.get',[$tv->MaTV])}}" class="button delete-confirm">Delete</a>
@@ -159,7 +173,7 @@
                         </td>
                       </tr>
                       @endforeach
-                    </tbody>
+                    
                   </table>
                 </div>
                 <div class="col-md-2 float-right">
@@ -198,6 +212,37 @@
         }
     });
 });
+  var dem=0;
+  function myFucntion()
+  {
+    var MaD=document.getElementById('doi').value;
+    
+    var doi=<?php echo $doi;?>;
+    const d = doi.find( ({ MaDoi }) => MaDoi == MaD );
+    const sltv=d.SLTV;
+    
+    if(dem<sltv-1){
+      var table = document.getElementById("ThemTV");
+      var td1 = document.createElement("td");
+      var td2 = document.createElement("td");
+      var row= table.insertRow(-1);
+      var td1 = row.insertCell(0);
+      var td2 = row.insertCell(1);
+      td1.innerHTML = '<input type="text"  name="tentv[]" placeholder="Tên thành viên">';
+      td2.innerHTML  =" <select name='vitri[]' >"+
+                          '<option value="Top">Top</option>'+
+                          '<option value="Jungle">Jungle</option>'+
+                          '<option value="Mid">Mid</option>'+
+                          '<option value="ADC">ADC</option>'+
+                          '<option value="Support">Support</option>'+
+                        "</select>";
+    
+    }
+    dem++;
+   
+  }
+
+  
 </script>
 
 

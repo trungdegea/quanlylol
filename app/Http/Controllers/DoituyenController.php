@@ -9,7 +9,7 @@ use Illuminate\Support\MessageBag;
 use App\doi;
 use App\giaidau;
 use App\thanhvien;
-use app\lichthidau;
+use App\lichthidau;
 class DoituyenController extends Controller
 {
     public function getDsdoi($MaGD)
@@ -18,22 +18,23 @@ class DoituyenController extends Controller
         $giaidau=giaidau::find($MaGD);
         $SLdoi=giaidau::find($MaGD)->SLdoi;
         $doi= doi::all()->where('MaGD',$MaGD);//Lay nhung doi tham gia giai dau
+        $lichthidau=lichthidau::where('MaGD', $MaGD)->get()->count();
         
         $DemSoDoi = doi::where('MaGD', $MaGD)->count();//dem so doi trong giai dau
         
         if ($DemSoDoi == 0) {
             $errors->add('err', 'Chưa có đội tham gia giải đấu.');
-            return view('admin.doi.dsdoi', compact('doi','giaidau'))->withErrors($errors);
+            return view('admin.doi.dsdoi', compact('doi','giaidau','lichthidau'))->withErrors($errors);
         } 
         else 
         {
             if($DemSoDoi==$SLdoi)
             {
-                return view('admin.doi.dsdoi', compact('doi','giaidau'))->with('success', "Đã đủ đội tham gia giải đấu, bây giờ bạn có thể xếp lịch thi đấu.");
+                return view('admin.doi.dsdoi', compact('doi','giaidau','lichthidau'))->with('success', "Đã đủ đội tham gia giải đấu, bây giờ bạn có thể xếp lịch thi đấu.");
             }
             else
             {
-                return view('admin.doi.dsdoi', compact('doi','giaidau'));
+                return view('admin.doi.dsdoi', compact('doi','giaidau','lichthidau'));
             }
         }
            
@@ -115,9 +116,7 @@ class DoituyenController extends Controller
         $doi= new doi();
         $doi->TenDoi=$request->tendoi;
         $doi->SLTV=$request->sltv;
-        $doi->Diem=0;
-        $doi->TranThang=0;
-        $doi->TranThua=0;
+       
         $doi->MaGD=$MaGD;
         $doi->img=$filenameToStore;
         $doi->save();

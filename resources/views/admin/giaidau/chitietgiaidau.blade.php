@@ -11,6 +11,8 @@
   margin: 0;
   padding: 0;
 }
+
+
  .countdown {
   align-items: center;
   background-color: #32b653;
@@ -49,16 +51,20 @@ li span {
   display: block;
   font-size: 2rem;
 }
+
 .message {
   font-size: 4rem;
 }
+
 #content {
   display: none;
   padding: 1rem;
 }
+
 .emoji {
   padding: 0 .25rem;
 }
+
 @media all and (max-width: 768px) {
   h1 {
     font-size: 1.5rem;
@@ -210,8 +216,10 @@ li span {
  
       countDown = new Date(tgbd).getTime(),
       x = setInterval(function() {    
+
         let now = new Date().getTime(),
             distance = countDown - now;
+
         document.getElementById("days").innerText = Math.floor(distance / (day)),
           document.getElementById("hours").innerText = Math.floor((distance % (day)) / (hour)),
           document.getElementById("minutes").innerText = Math.floor((distance % (hour)) / (minute)),
@@ -221,6 +229,7 @@ li span {
           let headline = document.getElementById("headline"),
               countdown = document.getElementById("countdown"),
               content = document.getElementById("content");
+
          
           countdown.style.display = "none";
           content.style.display = "block";
