@@ -141,36 +141,44 @@ class DoituyenController extends Controller
     {
         $errors = new MessageBag();
         $giaidau=giaidau::find($MaGD);
-        $doi=doi::find($MaDoi);
-        
-        $rules=[
-            'tentv'=>'required|min:2|max:100',
-            'vitri'=>'required', 
-        ];
-        $messages=[
-            'tentv.required'=>"Bạn chưa nhập tên đội.",
-            'tendoi.min'=>"Tên thành viên cần dài hơn 2 ký tự",
-            'tendoi.max'=>"Tên thành viên không quá 100 ký tự",
-            'vitri.required'=>"Bạn chưa nhập tên vị trí.",
-            
-           
-        ];
-        $errors = Validator::make($request->all(), $rules, $messages);
-        if ($errors->fails()) {
-            return redirect()->route('chitiet-doi.get',[$MaGD,$MaDoi])
-                        ->withErrors($errors)
-                        ->withInput();
-        }
-        else
+        $sltv=doi::find($MaDoi)->SLTV;
+        $sltvCo=doi::find($MaDoi)->thanhvien()->count(); 
+        if($sltv>$sltvCo)
         {
-         
-            $thanhvien=new thanhvien();
-            $thanhvien->TenTV=$request->tentv;
-            $thanhvien->ViTri=$request->vitri;
-            $thanhvien->MaDoi=$MaDoi;
-            $thanhvien->save();
-            return redirect()->route('chitiet-doi.get',[$MaGD,$MaDoi])->with('success', "Thêm thành viên vào đội thành công."); 
+            $rules=[
+                'tentv'=>'required|min:2|max:100',
+                'vitri'=>'required', 
+            ];
+            $messages=[
+                'tentv.required'=>"Bạn chưa nhập tên đội.",
+                'tendoi.min'=>"Tên thành viên cần dài hơn 2 ký tự",
+                'tendoi.max'=>"Tên thành viên không quá 100 ký tự",
+                'vitri.required'=>"Bạn chưa nhập tên vị trí.",
+                
+               
+            ];
+            $errors = Validator::make($request->all(), $rules, $messages);
+            if ($errors->fails()) {
+                return redirect()->route('chitiet-doi.get',[$MaGD,$MaDoi])
+                            ->withErrors($errors)
+                            ->withInput();
+            }
+            else
+            {
+             
+                $thanhvien=new thanhvien();
+                $thanhvien->TenTV=$request->tentv;
+                $thanhvien->ViTri=$request->vitri;
+                $thanhvien->MaDoi=$MaDoi;
+                $thanhvien->save();
+                return redirect()->route('chitiet-doi.get',[$MaGD,$MaDoi])->with('success', "Thêm thành viên vào đội thành công."); 
+            }
         }
+        else{
+            return redirect()->back()->with('error', 'Không thể thêm thành viên, đội đã đủ thành viên ');
+        }
+        
+        
     }
     public function postsuaDSThanhVien(Request $request,$MaGD,$MaDoi)
     {
@@ -185,7 +193,7 @@ class DoituyenController extends Controller
             $vitri="vitri";
             $vitri.=$TV->MaTV;
             $tentv.=$TV->MaTV;
-            thanhvien::where('MaTV',$thanhvien[$i]->MaTV )->update(['TenTV'=>$request->$tentv,'ViTri'=>$request->$vitri]);
+            thanhvien::where('MaTV',$thanhvien[$key]->MaTV )->update(['TenTV'=>$request->$tentv,'ViTri'=>$request->$vitri]);
         }
         return redirect()->route('chitiet-doi.get',[$MaGD,$MaDoi])->with('success', "Update thành công."); 
        

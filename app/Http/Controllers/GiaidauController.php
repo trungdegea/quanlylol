@@ -95,18 +95,20 @@ class GiaidauController extends Controller
         $errors = new MessageBag();
         $DemSoGD = giaidau::where('MaGD', $id)->count();
         $giaidau = giaidau::find($id);
-        // var_dump($giaidau->TGBD); exit();
-        //lay danh sach thanh vien cua tat ca cac doi
+        $lichthidau=lichthidau::where('MaGD', $id)->orderBy('ThoiGian', 'asc')->get();
         $doi=doi::where('MaGD',$id)->get();// lay doi co trong giai dau co MaGD
         $dsdoi=[];
         $arrSl=[];
+        $tenDoi=[];
         foreach($doi as $d){
             array_push($dsdoi,$d->MaDoi); 
             $sltv=thanhvien::where('MaDoi',$d->MaDoi)->count();
             $arrSl[$d->MaDoi]=$sltv;//Arraydoi cos key = MaDoi, Value=Tendoi
+            $tenDoi[$d->MaDoi]=$d->TenDoi;//Arraydoi cos key = MaDoi, Value=Tendoi
         }
+        
         $bxh=bangxephang::where('MaGD',$id)->orderBy('Diem', 'desc')->orderBy('HieuSo', 'desc')->get();
-        return view('admin.giaidau.chitietgiaidau', compact('giaidau', 'arrSl','doi','bxh'));
+        return view('admin.giaidau.chitietgiaidau', compact('giaidau', 'arrSl','doi','bxh','tenDoi','lichthidau'));
         
     }
     public function postLoDoi(Request $request, $MaGD)
@@ -151,6 +153,7 @@ class GiaidauController extends Controller
     }
     public function postsuaGiaidau(Request $request, $id)
     {
+        $giaidau=giaidau::find($id);
         $DemSoGD = giaidau::where('MaGD', $id)->count();
         if ($DemSoGD == 0) {
             $errors->add('err', 'Giải đấu không không tồn tại.');
@@ -172,8 +175,14 @@ class GiaidauController extends Controller
             }
             else
             {   
-                //lấy ảnh hồ sơ giải đấu mặc định
-                $filenameToStore="giaidau3.jpg";
+                if($giaidau->img!=='giaidau3.jpg')
+                {
+                    $filenameToStore=$giaidau->img;
+                }else{
+                     //lấy ảnh hồ sơ giải đấu mặc định
+                      $filenameToStore="giaidau3.jpg";
+                }
+               
             }   
             $rules=[
                 'tengiai'=>'required|min:10|max:100',
@@ -212,5 +221,5 @@ class GiaidauController extends Controller
         }
 
     }
-    
+   
 }

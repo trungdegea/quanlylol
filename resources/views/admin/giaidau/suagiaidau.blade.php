@@ -78,7 +78,7 @@
                   <div class="form-group row">
                     <label for="inputPassword3" class="col-sm-3 col-form-label">Thời Gian Bắt Đầu:</label>
                     <div class="col-sm-4">
-                      <input type="datetime-local" class="form-control" name="tgbd" value="" placeholder="Thời gian bắt đầu">
+                      <input type="datetime" class="form-control" name="tgbd" value="{{old('tgbd',$giaidau->TGBD)}}" placeholder="Thời gian bắt đầu">
                     </div>
 
                   </div>
@@ -87,7 +87,7 @@
                 <div class="form-group row">
                   <label for="inputPassword3" class="col-sm-3 col-form-label">Thời Gian Kết thúc:</label>
                   <div class="col-sm-4">
-                    <input type="datetime-local" class="form-control" name="tgkt" value="{{old('tgkt',$giaidau->TGKT)}}" placeholder="Thời gian kết thúc">
+                    <input type="datetime" class="form-control" name="tgkt" value="{{old('tgkt',$giaidau->TGKT)}}" placeholder="Thời gian kết thúc">
                   </div>
 
                 </div>
@@ -97,7 +97,7 @@
               <div style="border:2px solid rgb(206, 203, 203);; height:400px; width:500px; text-align: center;" class="float-right">
                 <label for="inputEmail3" class="col-sm-8 col-form-label">Chọn ảnh giải đấu</label>
                 <div style="height: 300px; width:450px; text-align: center;"><img src="{{asset('img/'.$giaidau->img)}}" id="avatar" height="200" alt="Image preview..."></div>
-              <input type="file" name="imageshs"  onchange="previewFile()">
+                <input type="file" name="imageshs"  onchange="previewFile()">
                 </div>
                 
                 

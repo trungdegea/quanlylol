@@ -14,7 +14,7 @@ class LichthidauController extends Controller
 {
     public function getLichThiDau($MaGD)
     {
-        $lichthidau=lichthidau::where('MaGD', $MaGD)->get();
+        $lichthidau=lichthidau::where('MaGD', $MaGD)->orderBy('ThoiGian', 'asc')->get();
         $errors = new MessageBag();
         $giaidau= giaidau::find($MaGD);
         
@@ -147,18 +147,32 @@ class LichthidauController extends Controller
     }
     public function postCapNhatKetQua($MaGD, Request $request)
     {
-        
-        $lichthidau=lichthidau::where('MaGD', $MaGD)->get();
-        foreach($lichthidau as $lich)
+        date_default_timezone_set('Asia/Ho_Chi_Minh');
+        $now = date('Y-m-d H:i:s'); 
+        $giaidau=giaidau::find($MaGD); 
+        $tgbd=$giaidau->TGBD;
+       
+        if($now>$tgbd)
         {
-            $Ma=$lich->MaLTD;
-            $lich->KQ1=$request->$Ma[0];
-            $lich->KQ2=$request->$Ma[1];
-            $lich->save();
-        } 
-        app()->call('App\Http\Controllers\LichThiDauController@TinhDiem',[$MaGD]);
-        return redirect()->back();   
-    }
+          
+            $lichthidau=lichthidau::where('MaGD', $MaGD)->get();
+            foreach($lichthidau as $lich)
+            {
+                $Ma=$lich->MaLTD;
+                $lich->KQ1=$request->$Ma[0];
+                $lich->KQ2=$request->$Ma[1];
+                $lich->save();
+            } 
+            app()->call('App\Http\Controllers\LichThiDauController@TinhDiem',[$MaGD]);
+            return redirect()->back();   
+        }
+        else{
+            return redirect()->back()->with('alert', 'Không thể cập nhật giải khi giải đấu chưa bắt đầu!');
+        }
+        }
+        
+       
+       
     public function TinhDiem($MaGD)
     {
         $lichthidau=lichthidau::where('MaGD', $MaGD)->get();
