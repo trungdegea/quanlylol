@@ -151,17 +151,20 @@ class LichthidauController extends Controller
         $now = date('Y-m-d H:i:s'); 
         $giaidau=giaidau::find($MaGD); 
         $tgbd=$giaidau->TGBD;
-       
         if($now>$tgbd)
         {
           
             $lichthidau=lichthidau::where('MaGD', $MaGD)->get();
             foreach($lichthidau as $lich)
             {
-                $Ma=$lich->MaLTD;
-                $lich->KQ1=$request->$Ma[0];
-                $lich->KQ2=$request->$Ma[1];
-                $lich->save();
+                if($now>$lich->ThoiGian)
+                {
+                    $Ma=$lich->MaLTD;
+                    $lich->KQ1=$request->$Ma[0];
+                    $lich->KQ2=$request->$Ma[1];
+                    $lich->save();
+                }
+               
             } 
             app()->call('App\Http\Controllers\LichThiDauController@TinhDiem',[$MaGD]);
             return redirect()->back();   

@@ -61,7 +61,11 @@ h3 {
   letter-spacing: .125rem;
   text-transform: uppercase;
 }
+h4{
+  color: black;
+  font-weight: 550;
 
+}
 #countdown li {
   display: inline-block;
   font-size: 1em;
@@ -103,6 +107,25 @@ li span {
     font-size: 3.375rem;
   }
 }
+#myBtn {
+  display: none;
+  position: fixed;
+  bottom: 20px;
+  right: 30px;
+  z-index: 99;
+  font-size: 18px;
+  border: none;
+  outline: none;
+  background-color: red;
+  color: white;
+  cursor: pointer;
+  padding: 15px;
+  border-radius: 4px;
+}
+
+#myBtn:hover {
+  background-color: #555;
+}
 </style>
      <!-- Content Wrapper. Contains page content -->
   <div class="content-wrapper">
@@ -126,6 +149,7 @@ li span {
     <!-- /.content-header -->
 
     <!-- Main content -->
+   
     <section class="content pl-5 pr-5">
       <div class="container-fluid">
         <div class="row">
@@ -137,8 +161,9 @@ li span {
          <div class="card">
            
          </div>
+         <button onclick="topFunction()" id="myBtn" title="Go to top">Top</button>
           <div class="col-md-5 pl-4">
-            <h2 class="m-0 pb-4"><b>Giải đấu:</b> {{$giaidau->TenGD}}</h2>
+            <h2 class="m-0 pb-4" id="top"><b>Giải đấu:</b> {{$giaidau->TenGD}}</h2>
             <h5><b>Thông tin giải đấu:</b></h5>
             <p>Số lượng đội tham gia: {{$giaidau->SLdoi}} đội.</p>
             <p>Thời gian bắt đầu: {{$giaidau->TGBD}}</p>
@@ -168,9 +193,6 @@ li span {
              
           </div>
             <br>
-            
-          
-            
             <ul style="text-align:right;">
               <a style="border: 3px solid;" href="{{route("sua-giaidau.get",[$giaidau->MaGD])}}" class="btn btn-warning waves-light waves-effect" title="Sửa">Sửa giải đấu  <i class="fas fa-pencil-alt" ></i></a>
             </ul>
@@ -178,141 +200,19 @@ li span {
           </div>
           
         </div>
-        @if ($lichthidau->count()>0)
-        <div class="card">
-          <div class="card-body">
-              
-              <div class="row mb-3">
-                  <div class="col-md-10">
-                    <h4>Lịch thi đấu:</h4>
-                  </div>
-                    
-              </div>
-              <div class="card-box table-responsive dvData">
-                <table id="datatable-responsive" class="table table-striped table-bordered dt-responsive nowrap" cellspacing="0" width="100%">
-                  <thead>
-                    <tr>
-                      <th>STT</th>
-                      <th>Đội 1</th>
-                      <th>Đội 2</th>
-                      <th>Kết Quả</th>
-                      <th>Thời gian</th>
-                    </tr>
-                </thead>
-                  @php
-                      $i=0;
-                  @endphp
-                <tbody>
-                  @foreach($lichthidau as $lich)
-                      @php
-                              $thoigian=date_parse($lich->ThoiGian);
-                      @endphp
-                    @if ($i%4==0)
-                        <tr>
-                          <td colspan="5" class="day" >{{$thoigian['day']}}/{{$thoigian['month']}}/{{$thoigian['year']}}</td>
-                        </tr>
-                    @endif
-                  <tr>
-                    <td>{{$i+1}}
-                    </td>
-                    <td>
-                     {{$tenDoi[$lich->MaDoi1]}}
-                    </td>
-                    <td>
-                      {{$tenDoi[$lich->MaDoi2]}}
-                    </td>
-                    <td>
-                      @if ($lich->KQ1===NULL)
-                        <label >______--______</label>
-                      @else
-                        {{$lich->KQ1}} -- 
-                        {{$lich->KQ2}} 
-                      
-                      @endif
-                      
-                    </td>
-                    <td>
-                        <p>{{$thoigian['hour']}}:00 h</p>
-                    </td>
-                  </tr>
-                  @php
-                      $i++;
-                  @endphp
-                  @endforeach
-                </tbody>
-              </table>
+        <div id="accordion">
+          <div class="card">
+            <div class="card-header" id="headingOne">
+              <h5 class="mb-0">
+                <button class="btn btn-link" data-toggle="collapse" data-target="#collapseOne" aria-expanded="true" aria-controls="collapseOne">
+                 <h4> Danh sách đội</h4>
+                </button>
+              </h5>
             </div>
-          
-        </div>
-      </div>
-      @endif
-        @if ($bxh->count()>0)
-        <div class="row">
-          <div class="col-sm-12">
-            <div class="card">
-              <div class="card-body">
-                <h4>Bảng xếp hạng:</h4>
-                <div class="card-box table-responsive dvData">
-                  <table id="datatable-responsive" class="table table-striped table-bordered dt-responsive nowrap" cellspacing="0" width="100%">
-                    <thead>
-                      <tr>
-                        <th>#</th>
-                        <th>Tên đội</th>
-                        <th>Điểm</th>
-                        <th>Trận thắng</th>
-                        <th>Trận thua</th>
-                        <th>Hiệu số</th>
-                       
-                        
-                      </tr>
-                    </thead>
         
-                    <tbody>
-                      @foreach($bxh as $i=>$b)
-                      <tr>
-                        <td>
-                          {{$i+1}}
-                        </td>
-                        <td>
-                          {{$tenDoi[$b->MaDoi]}}
-                        
-                        </td>
-                        <td>
-                         {{$b->Diem}}
-                         
-                        </td>
-                        <td>
-                          {{$b->TranThang}}
-                        </td>
-                        <td>
-                          {{$b->TranThua}}
-                        </td>
-                        <td>
-                          {{$b->HieuSo}}
-                        </td>
-                       
-                      </tr>
-                      @endforeach
-                    </tbody>
-                  </table>
-                </div>
-                @if ($doi->count()<$giaidau->SLdoi)
-                  <div class="col-1.5 float-right" style=" text-align: right;"> 
-                    <a href="{{route('them-doi.get',[$giaidau->MaGD])}}"><button type="submit" class="btn btn-primary btn-block ">Thêm đội</button></a>
-                  </div>
-                @endif
-                
-              </div>
-            </div>
-          </div>
-        </div>  
-        @endif
-        
-        <div class="row">
-          <div class="col-sm-12">
-            <div class="card">
+            <div id="collapseOne" class="collapse show" aria-labelledby="headingOne" data-parent="#accordion">
               <div class="card-body">
-                <h4>Danh sách đội:</h4>
+                @if ($lichthidau->count()>0)
                 <div class="card-box table-responsive dvData">
                   <table id="datatable-responsive" class="table table-striped table-bordered dt-responsive nowrap" cellspacing="0" width="100%">
                     <thead>
@@ -354,14 +254,148 @@ li span {
                   </div>
                 @endif
                 
+                @endif
+                </div>
+            </div>
+          </div>
+          <div class="card">
+            <div class="card-header" id="headingTwo">
+              <h5 class="mb-0">
+                <button class="btn btn-link collapsed" data-toggle="collapse" data-target="#collapseTwo" aria-expanded="false" aria-controls="collapseTwo">
+                  <h4>Lịch thi đấu</h4>
+                </button>
+              </h5>
+            </div>
+            <div id="collapseTwo" class="collapse" aria-labelledby="headingTwo" data-parent="#accordion">
+              <div class="card-body">
+                @if ($lichthidau->count()>0)
+                <div class="card-box table-responsive dvData">
+                  <table id="datatable-responsive" class="table table-striped table-bordered dt-responsive nowrap" cellspacing="0" width="100%">
+                    <thead>
+                      <tr>
+                        <th>STT</th>
+                        <th>Đội 1</th>
+                        <th>Đội 2</th>
+                        <th>Kết Quả</th>
+                        <th>Thời gian</th>
+                      </tr>
+                  </thead>
+                    @php
+                        $i=0;
+                    @endphp
+                  <tbody>
+                    @foreach($lichthidau as $lich)
+                        @php
+                                $thoigian=date_parse($lich->ThoiGian);
+                        @endphp
+                      @if ($i%4==0)
+                          <tr>
+                            <td colspan="5" class="day" >{{$thoigian['day']}}/{{$thoigian['month']}}/{{$thoigian['year']}}</td>
+                          </tr>
+                      @endif
+                    <tr>
+                      <td>{{$i+1}}
+                      </td>
+                      <td>
+                       {{$tenDoi[$lich->MaDoi1]}}
+                      </td>
+                      <td>
+                        {{$tenDoi[$lich->MaDoi2]}}
+                      </td>
+                      <td>
+                        @if ($lich->KQ1===NULL)
+                          <label >______--______</label>
+                        @else
+                          {{$lich->KQ1}} -- 
+                          {{$lich->KQ2}} 
+                        
+                        @endif
+                        
+                      </td>
+                      <td>
+                          <p>{{$thoigian['hour']}}:00 h</p>
+                      </td>
+                    </tr>
+                    @php
+                        $i++;
+                    @endphp
+                    @endforeach
+                  </tbody>
+                </table>
+                </div>
+                @endif
+              </div>
+            </div>
+          </div>
+          <div class="card">
+            <div class="card-header" id="headingThree">
+              <h5 class="mb-0">
+                <button class="btn btn-link collapsed" data-toggle="collapse" data-target="#collapseThree" aria-expanded="false" aria-controls="collapseThree">
+                  <h4>Bảng xếp hạng</h4>
+                </button>
+              </h5>
+            </div>
+            <div id="collapseThree" class="collapse" aria-labelledby="headingThree" data-parent="#accordion">
+              <div class="card-body">
+                  @if ($bxh->count()>0)
+                  <div class="card-box table-responsive dvData">
+                    <table id="datatable-responsive" class="table table-striped table-bordered dt-responsive nowrap" cellspacing="0" width="100%">
+                      <thead>
+                        <tr>
+                          <th>#</th>
+                          <th>Tên đội</th>
+                          <th>Điểm</th>
+                          <th>Trận thắng</th>
+                          <th>Trận thua</th>
+                          <th>Hiệu số</th>
+                         
+                          
+                        </tr>
+                      </thead>
+          
+                      <tbody>
+                        @foreach($bxh as $i=>$b)
+                        <tr>
+                          <td>
+                            {{$i+1}}
+                          </td>
+                          <td>
+                            {{$tenDoi[$b->MaDoi]}}
+                          
+                          </td>
+                          <td>
+                           {{$b->Diem}}
+                           
+                          </td>
+                          <td>
+                            {{$b->TranThang}}
+                          </td>
+                          <td>
+                            {{$b->TranThua}}
+                          </td>
+                          <td>
+                            {{$b->HieuSo}}
+                          </td>
+                         
+                        </tr>
+                        @endforeach
+                      </tbody>
+                    </table>
+                  </div>
+                  @if ($doi->count()<$giaidau->SLdoi)
+                    <div class="col-1.5 float-right" style=" text-align: right;"> 
+                      <a href="{{route('them-doi.get',[$giaidau->MaGD])}}"><button type="submit" class="btn btn-primary btn-block ">Thêm đội</button></a>
+                    </div>
+                  @endif
+                  @endif
               </div>
             </div>
           </div>
         </div>
-      </div>
     </section>
-
+    
   </div>
+  
  <script>
   (function () {
   const second = 1000,
@@ -396,6 +430,24 @@ li span {
         //seconds
       }, 0)
   }());
+  var mybutton = document.getElementById("myBtn");
+
+// When the user scrolls down 20px from the top of the document, show the button
+window.onscroll = function() {scrollFunction()};
+
+function scrollFunction() {
+  if (document.body.scrollTop > 20 || document.documentElement.scrollTop > 20) {
+    mybutton.style.display = "block";
+  } else {
+    mybutton.style.display = "none";
+  }
+}
+
+// When the user clicks on the button, scroll to the top of the document
+function topFunction() {
+  document.body.scrollTop = 0;
+  document.documentElement.scrollTop = 0;
+}
  </script>
 
 @endsection
