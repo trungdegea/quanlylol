@@ -84,7 +84,7 @@
         <form action="{{route('capnhatketqua.post',[$giaidau->MaGD])}}" method="post">
           <input type="hidden" name="_token" value="{{csrf_token()}}">
           <div class="row mb-3">
-            <div class="col-md-10">
+            <div class="col-md-10"> 
               <h4>Lịch thi đấu:</h4>
             </div>
             <div class="col-md-2">
