@@ -34,10 +34,10 @@
 
  .countdown {
   align-items: center;
-  background-color: #32b653;
+  background-color: #ffffff;
   display: flex;
   border-radius: 2em;
-  border: 4mm ridge rgba(50, 188, 223, 0.6);
+  border: 2mm solid #000000;
   font-family: -apple-system, 
     BlinkMacSystemFont, 
     "Segoe UI", 
@@ -65,6 +65,7 @@ h3 {
 #countdown li {
   display: inline-block;
   font-size: 1em;
+  font-weight: 600;
   list-style-type: none;
   padding: 1em;
   text-transform: uppercase;
@@ -150,6 +151,7 @@ li span {
               <div class="container">
                 
                 <div id="countdown">
+                  <h1 style="color:red;font-weight: 600; font-size:30px;" >GIẢI ĐẤU KHỞI TRANH SAU: </h1>
                   <ul>
                     <li><span id="days"></span>days</li>
                     <li><span id="hours"></span>Hours</li>
@@ -159,12 +161,20 @@ li span {
                 </div>
                 <div class="message">
                   <div id="content">
-                      <b>Giải đã bắt đầu</b>
+                      <h1 style="color:red;font-weight: 600; font-size:30px;">GIẢI ĐẤU ĐÃ BẮT ĐẦU</h1>
                   </div>
                 </div>
               </div>
+             
           </div>
-            <a href="{{route("sua-giaidau.get",[$giaidau->MaGD])}}" class="btn btn-warning waves-light waves-effect" title="Sửa"><i class="fas fa-pencil-alt"></i></a>
+            <br>
+            
+          
+            
+            <ul style="text-align:right;">
+              <a style="border: 3px solid;" href="{{route("sua-giaidau.get",[$giaidau->MaGD])}}" class="btn btn-warning waves-light waves-effect" title="Sửa">Sửa giải đấu  <i class="fas fa-pencil-alt" ></i></a>
+            </ul>
+            
           </div>
           
         </div>
