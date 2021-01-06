@@ -128,8 +128,8 @@
             </div>
         </nav>
     </header>
-
-    <div class="gap-md"></div>
+    <div class="container mt-5">
+    
     <div id="carouselExampleCaptions" class="carousel slide" data-ride="carousel">
         <div class="carousel-inner">
             <div class="carousel-item active" data-interval="3000">
@@ -194,7 +194,7 @@
             </div>
         </div>
     </div>
-
+  </div>
 
     <footer class="fixed-bottom">
         <div class="row">
