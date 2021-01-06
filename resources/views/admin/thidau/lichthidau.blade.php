@@ -125,7 +125,7 @@
                         {{$arrdoi[$lich->MaDoi2]}}
                       </td>
                       <td>
-                        @if ($lich->KQ1==NULL)
+                        @if ($lich->KQ1===NULL)
                           <input type="number" name="{{$lich->MaLTD}}[]" id="">-- 
                           <input type="number" name="{{$lich->MaLTD}}[]" id=""> 
                         @else

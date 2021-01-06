@@ -70,7 +70,7 @@
                   <br>
                  {{-- nút chi tiết của một giải đấu, sau khi click chuyển đến trang chi tiết của giải đấu đó --}}
                  <a href="{{route("chitiet-doi.get",[$giaidau->MaGD,$d->MaDoi])}}" class="btn btn-warning waves-light waves-effect" title="chi tiet">Thông tin Đội</i></a>
-                 @if (date_parse ($giaidau->TGBD)>date_parse(date('Y-m-d H:i:s')))
+                 @if (date_parse ($giaidau->TGBD)>date_parse(date('Y-m-d H:i:s'))&&$lichthidau==0)
                  <a href="{{route('delete-doi.get',[$d->MaDoi])}}" onclick="del({{$d->MaDoi}})" class="btn btn-danger waves-light waves-effect delete-confirm " title="Xóa"> <i class="fas fa-trash-alt" style="color:white"></i></a>
                  @endif
                   </div>
