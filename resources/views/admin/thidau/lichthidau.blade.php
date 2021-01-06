@@ -75,21 +75,20 @@
       <div class="col-md-2">
         <a href="{{route('ds-thanhvien.get',[$giaidau->MaGD])}}"><button type="submit" class="btn btn-primary btn-block" name="themdoi">Thêm thành viên mới</button></a>
       </div>
-    </div>
-
-    @else
-    @if ($lichthidau->count()>0)
-    <div class="card">
-      <div class="card-body">
-        <form action="{{route('capnhatketqua.post',[$giaidau->MaGD])}}" method="post">
-          <input type="hidden" name="_token" value="{{csrf_token()}}">
-          <div class="row mb-3">
-            <div class="col-md-10">
-              <h4>Lịch thi đấu:</h4>
-            </div>
-            <div class="col-md-2">
-              <button type="submit" class="btn btn-primary btn-block" name="update">Cập Nhật</button>
-            </div>
+      @if (session('alert'))
+      <div class="alert alert-success">
+          {{ session('alert') }}
+      </div>
+  @endif
+    
+    <section class="content">
+      @if (count($errors) > 0 || session('error'))
+        <div class="alert alert-warning" role="alert">
+          <strong>Cảnh báo!</strong><br>
+          @foreach($errors->all() as $err)
+          {{$err}}<br />
+          @endforeach
+          {{session('error')}}
           </div>
           <div class="card-box table-responsive dvData">
             <table id="datatable-responsive" class="table table-striped table-bordered dt-responsive nowrap" cellspacing="0" width="100%">

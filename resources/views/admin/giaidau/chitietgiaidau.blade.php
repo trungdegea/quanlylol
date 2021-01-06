@@ -12,6 +12,25 @@
   padding: 0;
 }
 
+  input[type=number] {
+    width: 50px;
+    border: none;
+    border-bottom: 2px solid rgb(0, 0, 0);
+    background-color:transparent;
+    text-align: center;
+    
+}
+    .day{
+      text-align: center;
+      background-color: indianred;
+      color: white;
+      font-size: 20px;
+      font-weight: 600;
+    }
+    td{
+      text-align: center;
+    }
+    
 
  .countdown {
   align-items: center;
@@ -120,8 +139,6 @@ li span {
          </div>
           <div class="col-md-5 pl-4">
             <h2 class="m-0 pb-4"><b>Giải đấu:</b> {{$giaidau->TenGD}}</h2>
-            
-           
             <h5><b>Thông tin giải đấu:</b></h5>
             <p>Số lượng đội tham gia: {{$giaidau->SLdoi}} đội.</p>
             <p>Thời gian bắt đầu: {{$giaidau->TGBD}}</p>
@@ -161,14 +178,139 @@ li span {
           </div>
           
         </div>
-        <br>
-        <div class="row">
+        @if ($lichthidau->count()>0)
+        <div class="card">
+          <div class="card-body">
+              
+              <div class="row mb-3">
+                  <div class="col-md-10">
+                    <h4>Lịch thi đấu:</h4>
+                  </div>
+                    
+              </div>
+              <div class="card-box table-responsive dvData">
+                <table id="datatable-responsive" class="table table-striped table-bordered dt-responsive nowrap" cellspacing="0" width="100%">
+                  <thead>
+                    <tr>
+                      <th>STT</th>
+                      <th>Đội 1</th>
+                      <th>Đội 2</th>
+                      <th>Kết Quả</th>
+                      <th>Thời gian</th>
+                    </tr>
+                </thead>
+                  @php
+                      $i=0;
+                  @endphp
+                <tbody>
+                  @foreach($lichthidau as $lich)
+                      @php
+                              $thoigian=date_parse($lich->ThoiGian);
+                      @endphp
+                    @if ($i%4==0)
+                        <tr>
+                          <td colspan="5" class="day" >{{$thoigian['day']}}/{{$thoigian['month']}}/{{$thoigian['year']}}</td>
+                        </tr>
+                    @endif
+                  <tr>
+                    <td>{{$i+1}}
+                    </td>
+                    <td>
+                     {{$tenDoi[$lich->MaDoi1]}}
+                    </td>
+                    <td>
+                      {{$tenDoi[$lich->MaDoi2]}}
+                    </td>
+                    <td>
+                      @if ($lich->KQ1===NULL)
+                        <label >______--______</label>
+                      @else
+                        {{$lich->KQ1}} -- 
+                        {{$lich->KQ2}} 
+                      
+                      @endif
+                      
+                    </td>
+                    <td>
+                        <p>{{$thoigian['hour']}}:00 h</p>
+                    </td>
+                  </tr>
+                  @php
+                      $i++;
+                  @endphp
+                  @endforeach
+                </tbody>
+              </table>
+            </div>
           
+        </div>
+      </div>
+      @endif
+        @if ($bxh->count()>0)
+        <div class="row">
           <div class="col-sm-12">
-           
             <div class="card">
-       
-             
+              <div class="card-body">
+                <h4>Bảng xếp hạng:</h4>
+                <div class="card-box table-responsive dvData">
+                  <table id="datatable-responsive" class="table table-striped table-bordered dt-responsive nowrap" cellspacing="0" width="100%">
+                    <thead>
+                      <tr>
+                        <th>#</th>
+                        <th>Tên đội</th>
+                        <th>Điểm</th>
+                        <th>Trận thắng</th>
+                        <th>Trận thua</th>
+                        <th>Hiệu số</th>
+                       
+                        
+                      </tr>
+                    </thead>
+        
+                    <tbody>
+                      @foreach($bxh as $i=>$b)
+                      <tr>
+                        <td>
+                          {{$i+1}}
+                        </td>
+                        <td>
+                          {{$tenDoi[$b->MaDoi]}}
+                        
+                        </td>
+                        <td>
+                         {{$b->Diem}}
+                         
+                        </td>
+                        <td>
+                          {{$b->TranThang}}
+                        </td>
+                        <td>
+                          {{$b->TranThua}}
+                        </td>
+                        <td>
+                          {{$b->HieuSo}}
+                        </td>
+                       
+                      </tr>
+                      @endforeach
+                    </tbody>
+                  </table>
+                </div>
+                @if ($doi->count()<$giaidau->SLdoi)
+                  <div class="col-1.5 float-right" style=" text-align: right;"> 
+                    <a href="{{route('them-doi.get',[$giaidau->MaGD])}}"><button type="submit" class="btn btn-primary btn-block ">Thêm đội</button></a>
+                  </div>
+                @endif
+                
+              </div>
+            </div>
+          </div>
+        </div>  
+        @endif
+        
+        <div class="row">
+          <div class="col-sm-12">
+            <div class="card">
               <div class="card-body">
                 <h4>Danh sách đội:</h4>
                 <div class="card-box table-responsive dvData">
@@ -228,7 +370,6 @@ li span {
         day = hour * 24;
 
   let tgbd = "<?php echo $giaidau->TGBD;?>";
- 
       countDown = new Date(tgbd).getTime(),
       x = setInterval(function() {    
 
