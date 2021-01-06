@@ -1,0 +1,66 @@
+header {
+    text-align: center;
+    padding: 50px;
+}
+
+footer {
+    text-align: center;
+    background-color: #333;
+    color: #fff;
+    padding: 20px;
+    position: absolute;
+    bottom: 0;
+    width: 100%;
+}
+
+.gap-md {
+    display: block;
+    height: 50px;
+    margin: 0;
+    padding: 0;
+}
+
+body {
+    font-family: Verdana, sans-serif;
+    margin: 0;
+}
+
+.mySlides {
+    display: none;
+}
+
+img {
+    vertical-align: middle;
+}
+
+/* Slideshow container */
+
+.container {
+    position: relative;
+    margin: auto;
+}
+
+.carousel-item {
+    height: calc(100vw * 0.3);
+}
+
+.carousel-item img {
+    height: 100%;
+}
+
+.text {
+    color: red;
+    font-size: 40px !important;
+    padding: 8px 12px;
+    position: absolute;
+    bottom: 8px;
+    width: 100%;
+    text-align: center;
+}
+
+.gap-md {
+    display: block;
+    height: 50px;
+    margin: 0;
+    padding: 0;
+}

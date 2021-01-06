@@ -1,130 +1,136 @@
 @extends('admin.layouts.index')
 
 @section('title')
-    <title>Chi tiết giải đấu</title>
+<title>Chi tiết giải đấu</title>
 @endsection
 
 @section('content')
-     <!-- Content Wrapper. Contains page content -->
-  <div class="content-wrapper">
-    <!-- Content Header (Page header) -->
-    <div class="content-header">
-      <div class="container-fluid">
-        <div class="row mb-2">
-          <div class="col-sm-6">
-            
-          </div><!-- /.col -->
-          <div class="col-sm-6">
-            <ol class="breadcrumb float-sm-right">
-             <li class="breadcrumb-item"><a href="{{route('ds-giaidau.get')}}">Trang chủ</a></li>
-             
-              <li class="breadcrumb-item active">Chi tiết</li>
-            </ol>
-          </div><!-- /.col -->
-        </div><!-- /.row -->
-      </div><!-- /.container-fluid -->
-    </div>
-    <!-- /.content-header -->
+<!-- Content Wrapper. Contains page content -->
+<div class="content-wrapper">
+  <!-- Content Header (Page header) -->
+  <div class="content-header">
+    <div class="container-fluid">
+      <div class="row mb-2">
+        <div class="col-sm-6">
 
-    <!-- Main content -->
-    <section class="content">
-      <div class="container-fluid">
-        <div class="row">
-         <div class="card">
+        </div><!-- /.col -->
+        <div class="col-sm-6">
+          <ol class="breadcrumb float-sm-right">
+            <li class="breadcrumb-item"><a href="{{route('ds-giaidau.get')}}">Trang chủ</a></li>
+
+            <li class="breadcrumb-item active">Chi tiết</li>
+          </ol>
+        </div><!-- /.col -->
+      </div><!-- /.row -->
+    </div><!-- /.container-fluid -->
+  </div>
+  <!-- /.content-header -->
+
+  <!-- Main content -->
+  <section class="content">
+    <div class="container-fluid">
+      <div class="row">
+        <div class="card">
           <div class="col-md-6">
             <img src="{{asset('img/'.$giaidau->img)}}" height="400" width="600" alt=""><br>
           </div>
-         </div>
-         <div class="card">
-           
-         </div>
-          <div class="col-md-6">
-            <h3 class="m-0 pb-5">Giải đấu: {{$giaidau->TenGD}}</h3>
-            <b><p>Thông tin giải đấu:</p></b>
-            <p>Số lượng đội tham gia: {{$giaidau->SLdoi}} đội.</p>
-            <p>Thời gian bắt đầu: {{$giaidau->TGBD}}</p>
-            <p>Thời gian kết thúc:{{$giaidau->TGKT}} </p>
-            <div class="row">
-              <div class="col-md-3"> Giá vé: <label for="" style="background-color: rgb(224, 44, 44); color:white"> 50.000 vnd</label></div>
-              <div class="col-md-3"> Số vé còn lại: <label for="" style="background-color: rgb(83, 241, 123); color:white"> {{$giaidau->SLve}}</label></div>
-            </div>
-            <?php
-                $date=new DateTime('NOW');
-                echo $date->format('c');
-            ?>
-            
-            <a href="{{route("sua-giaidau.get",[$giaidau->MaGD])}}" class="btn btn-warning waves-light waves-effect" title="Sửa"><i class="fas fa-pencil-alt"></i></a>
-          </div>
-          
         </div>
-        
-       
-   
-        
-        <div class="row">
-          
-          <div class="col-sm-12">
-           
-            <div class="card">
-       
-              
-              <div class="card-body">
-                <div class="card-box table-responsive dvData">
-                  <table id="datatable-responsive" class="table table-striped table-bordered dt-responsive nowrap" cellspacing="0" width="100%">
-                    <thead>
-                      <tr>
-                        <th>STT</th>
-                        <th>Tên đội</th>
-                        <th>Số lượng</th>
-                        <th>Chi tiết</th>
-                        
-                      </tr>
-                    </thead>
-        
-                    <tbody>
-                      @foreach($doi as $i=>$d)
-                      <tr>
-                        <td>
-                          {{$i+1}}
-                        </td>
-                        <td>
-                          {{$d->TenDoi}}
-                        
-                        </td>
-                        <td>
-                         {{$arrSl[$d->MaDoi]}}
-                         
-                        </td>
-                        <td>
-                          <a href="{{route("chitiet-doi.get",[$giaidau->MaGD,$d->MaDoi])}}" class="btn btn-warning waves-light waves-effect" title="chi tiet"><i class="ion-eye"></i></i></a>
-                        </td>
-                       
-                      </tr>
-                      @endforeach
-                    </tbody>
-                  </table>
-                </div>
-                @if ($doi->count()<$giaidau->SLdoi)
-                  <div class="col-1.5 float-right" style=" text-align: right;"> 
-                    <a href="{{route('them-doi.get',[$giaidau->MaGD])}}"><button type="submit" class="btn btn-primary btn-block ">Thêm đội</button></a>
-                  </div>
-                @endif
-                
+        <div class="card">
+
+        </div>
+        <div class="col-md-6">
+          <h3 class="m-0 pb-5">Giải đấu: {{$giaidau->TenGD}}</h3>
+          <b>
+            <p>Thông tin giải đấu:</p>
+          </b>
+          <p>Số lượng đội tham gia: {{$giaidau->SLdoi}} đội.</p>
+          <p>Thời gian bắt đầu: {{$giaidau->TGBD}}</p>
+          <p>Thời gian kết thúc:{{$giaidau->TGKT}} </p>
+          <div class="row">
+            <div class="col-md-3"> Giá vé: <label for="" style="background-color: rgb(224, 44, 44); color:white"> 50.000 vnd</label></div>
+            <div class="col-md-3"> Số vé còn lại: <label for="" style="background-color: rgb(83, 241, 123); color:white"> {{$giaidau->SLve}}</label></div>
+          </div>
+          <?php
+          $date = new DateTime('NOW');
+          echo $date->format('c');
+          ?>
+
+          <a href="{{route("sua-giaidau.get",[$giaidau->MaGD])}}" class="btn btn-warning waves-light waves-effect" title="Sửa"><i class="fas fa-pencil-alt"></i></a>
+        </div>
+
+      </div>
+
+
+
+
+      <div class="row">
+
+        <div class="col-sm-12">
+
+          <div class="card">
+
+
+            <div class="card-body">
+              <div class="card-box table-responsive dvData">
+                <table id="datatable-responsive" class="table table-striped table-bordered dt-responsive nowrap" cellspacing="0" width="100%">
+                  <thead>
+                    <tr>
+                      <th>STT</th>
+                      <th>Tên đội</th>
+                      <th>Số lượng</th>
+                      <th>Chi tiết</th>
+
+                    </tr>
+                  </thead>
+
+                  <tbody>
+                    @foreach($doi as $i=>$d)
+                    <tr>
+                      <td>
+                        {{$i+1}}
+                      </td>
+                      <td>
+                        {{$d->TenDoi}}
+
+                      </td>
+                      <td>
+                        {{$arrSl[$d->MaDoi]}}
+
+                      </td>
+                      <td>
+                        <a href="{{route("chitiet-doi.get",[$giaidau->MaGD,$d->MaDoi])}}" class="btn btn-warning waves-light waves-effect" title="chi tiet"><i class="ion-eye"></i></i></a>
+                      </td>
+
+                    </tr>
+                    @endforeach
+                  </tbody>
+                </table>
               </div>
+              @if ($doi->count()<$giaidau->SLdoi)
+                <div class="col-1.5 float-right" style=" text-align: right;">
+                  <a href="{{route('them-doi.get',[$giaidau->MaGD])}}"><button type="submit" class="btn btn-primary btn-block ">Thêm đội</button></a>
+                </div>
+                @endif
+
             </div>
           </div>
         </div>
       </div>
-    </section>
+    </div>
+  </section>
 
-  </div>
- 
+</div>
+
 
 @endsection
 
 @section('siderbar')
-<li class="nav-header" style="text-align: center;"><h5>HỒ SƠ GIẢI ĐẤU</h5></li>
-<li class="nav-item " style="color"><hr style="width:200px; background-color:white; height:1.5; "></li>
+<li class="nav-header" style="text-align: center;">
+  <h5>HỒ SƠ GIẢI ĐẤU</h5>
+</li>
+<li class="nav-item " style="color">
+  <hr style="width:200px; background-color:white; height:1.5; ">
+</li>
 <li class="nav-item pl-1">
   <a href="{{route('chitiet-giaidau.get',[$giaidau->MaGD])}}" class="nav-link ">
     <i class="nav-icon ion-android-home"></i>
@@ -161,7 +167,7 @@
     <i class="nav-icon ion-android-person"></i>
     <p>
       Tuyển thủ
-    
+
     </p>
   </a>
 
@@ -171,7 +177,7 @@
     <i class="nav-icon far fa-calendar-alt"></i>
     <p>
       Lịch thi đấu - kết quả
-   
+
     </p>
   </a>
 </li>
