@@ -17,7 +17,7 @@ class LichthidauController extends Controller
         $lichthidau=lichthidau::where('MaGD', $MaGD)->get();
         $errors = new MessageBag();
         $giaidau= giaidau::find($MaGD);
-       
+        
         if($lichthidau->count()>0)
         {
            
@@ -134,7 +134,8 @@ class LichthidauController extends Controller
                 foreach ($doi as $key => $d) {
                     $bxh=new bangxephang();
                     $bxh->MaDoi=$d->MaDoi;
-                    $bxh->XepHang=0;
+                    $bxh->Diem=0;
+                    $bxh->HieuSo=0;
                     $bxh->MaGD=$MaGD;
                     $bxh->save();
                 }
@@ -146,6 +147,7 @@ class LichthidauController extends Controller
     }
     public function postCapNhatKetQua($MaGD, Request $request)
     {
+        
         $lichthidau=lichthidau::where('MaGD', $MaGD)->get();
         foreach($lichthidau as $lich)
         {
@@ -154,9 +156,72 @@ class LichthidauController extends Controller
             $lich->KQ2=$request->$Ma[1];
             $lich->save();
         } 
+        app()->call('App\Http\Controllers\LichThiDauController@TinhDiem',[$MaGD]);
         return redirect()->back();   
     }
-  
+    public function TinhDiem($MaGD)
+    {
+        $lichthidau=lichthidau::where('MaGD', $MaGD)->get();
+        if($lichthidau->count()>0)
+        {
+            $bxhDoi=bangxephang::where('MaGD',$MaGD)->get();
+            foreach($bxhDoi as $d)
+            {   
+                
+                $lich1=lichthidau::where('MaDoi1', $d->MaDoi)->get();
+                $lich2=lichthidau::where('MaDoi2', $d->MaDoi)->get();
+                $diem=0;
+                $hieuSo=0;
+                $tranthang=0;
+                $tranthua=0;
+                foreach ($lich1 as $key => $l) {
+                   if($l->KQ1!==NULL&&$l->KQ2!==NULL)
+                   {
+                            if($l->KQ1>$l->KQ2)
+                            {
+                                $diem++;
+                                $hieuSo+=$l->KQ1-$l->KQ2;
+                                $tranthang++;
+                            }
+                            else
+                            {
+                                $hieuSo+=$l->KQ1-$l->KQ2;
+                                $tranthua++;
+                            }
+                        
+                    }
+                }
+                foreach ($lich2 as $key => $l) {
+                    if($l->KQ1!==NULL&&$l->KQ2!==NULL)
+                    {
+                             if($l->KQ1<$l->KQ2)
+                             {
+                                 $diem++;
+                                 $hieuSo+=$l->KQ2-$l->KQ1;
+                                 $tranthang++;
+                             }
+                             else
+                             {
+                                 $hieuSo+=$l->KQ2-$l->KQ1;
+                                 $tranthua++;
+                             }
+                         
+                     }
+                 }
+                 $d->Diem=$diem;
+                 $d->HieuSo=$hieuSo;
+                 $d->TranThang=$tranthang;
+                 $d->TranThua=$tranthua;
+                 $d->save();
+               
+              
+                
+            }
+           
+            
+        }
+       
+    }
     
     
 }

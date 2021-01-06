@@ -14,16 +14,18 @@ class ThanhvienController extends Controller
     {   
        
         $giaidau= giaidau::find($MaGD);
-        $doi=doi::where('MaGD',$MaGD)->get(['MaDoi','TenDoi']);// lay doi co trong giai dau co MaGD
+        $doi=doi::where('MaGD',$MaGD)->get(['MaDoi','TenDoi','SLTV']);// lay doi co trong giai dau co MaGD
+        $dsSL=[];
         $dsdoi=[];
         $arrdoi=[];
         foreach($doi as $d){
+            $tv=thanhvien::where('MaDoi', $d->MaDoi)->get();
             array_push($dsdoi,$d->MaDoi); 
-            $arrdoi[$d->MaDoi]=$d->TenDoi;//Arraydoi cos key = MaDoi, Value=Tendoi
+            $arrdoi[$d->MaDoi]=[$d->TenDoi,$tv->count()];//Arraydoi cos key = MaDoi, Value=Tendoi
         }
         
         $thanhvien=thanhvien::whereIn('MaDoi',$dsdoi )->orderBy('MaDoi','asc')->get();
-     
+        // var_dump($arrdoi); exit();
         return view('admin.thanhvien.dsthanhvien', compact('giaidau', 'thanhvien', 'arrdoi','doi','dsdoi'));
     }
     public function xoathanhvien($MaTV)
@@ -34,49 +36,62 @@ class ThanhvienController extends Controller
     }
     public function postthemthanhvien(Request $request)
     {
-             $errors = new MessageBag();
-            if($_POST['tentv']!=='')
-            {
-                
-                $sltv=doi::where('MaDoi', $request->doi)->get(['SLTV'])->toArray();// số lượng thành viên mặc định
-                $slCo=thanhvien::where('MaDoi',$request->doi)->count();//số lượng thành viên hiện tại
-                $tentv=$request->tentv; // ten thành viên
-                $KtTen=thanhvien::where('TenTV', 'LIKE',$tentv);
-        
-                if($slCo>=$sltv[0]['SLTV']) // kiem tra so luong thanh vien hien co voi so luong thanh vien quy dinh
-                {
-                    $errors->add('err', 'Không thể thêm thành viên, đội đã đủ thành viên.');
-                }
-                if($KtTen->count()!=0)
-                {
-                    $errors->add('err', 'Đặt lại tên thành viên bị trùng.');
-                    return redirect()->back()->withErrors($errors);
-                }
-                if(count($errors)>0)
-                {
-                    return redirect()->back()
-                    ->withErrors($errors)
-                    ->withInput();
-                }
-                else
-                {
-                    $thanhvien=new thanhvien();
-                    $thanhvien->TenTV=$tentv;
-                    $thanhvien->ViTri=$request->vitri;
-                    $thanhvien->MaDoi=$request->doi;
-                    $thanhvien->save();
-                    return redirect()->back()->with('success', 'Thêm mới thành công một thành viên');
-                }
+        if(isset($_POST['themTV']))
+        {
+            $MaDoi=$request->doi;
+            $errors = new MessageBag();
+            $success = new MessageBag();
+            $sltv=doi::find($MaDoi)->SLTV;// số lượng thành viên mặc định
+            //số lượng thành viên hiện tại
+            $arrTen=$request->tentv;
+            foreach ($arrTen as $key => $ten) {
+               if($ten!=NULL)
+               {
+                    $slCo=thanhvien::where('MaDoi',$MaDoi)->count();
+                    if($slCo<$sltv)
+                    {
+                       
+                        $KtTen=thanhvien::where('MaDoi',$MaDoi)->where('TenTV', 'LIKE',$ten);
+                        
+                        if($KtTen->count()>0)
+                        {
+                            $errors->add('err', 'Đặt lại tên. Tên thành viên '.$ten.' bị trùng.');
+                        }
+                        else{
+                            $thanhvien=new thanhvien();
+                            $thanhvien->TenTV=$ten;
+                            $thanhvien->ViTri=$request->vitri[$key];
+                            $thanhvien->MaDoi=$MaDoi;
+                            $thanhvien->save();
+                            $success->add('success','Thêm thành viên '.$ten.' thành công.');
+                        } 
+                    }
+                    else{
+                        $errors->add('err', 'Không thể thêm thành viên '.$ten.', đội đã đủ thành viên.');
+                    }
+                  
+               }
             }
-            else
-            {
-                $errors->add('err', 'Chưa nhập tên thành viên.');
-                return redirect()->back()->withErrors($errors);
-            }
-        
             
-    
-        
+            
+            
+            return redirect()->back()->withErrors($errors);
+           
+             //     
+           
+            // if(count($errors)>0)
+            // {
+            //     foreach($errors->all() as $err)
+            //     {
+            //         var_dump($err);
+            //     }
+            //     echo "test"; exit();
+            //     return redirect()->back()
+            //     
+            // }else{
+            //    
+            // }
+        }
       
     }
     public function postLoDoi(Request $request, $MaGD)
