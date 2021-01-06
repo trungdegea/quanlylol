@@ -12,7 +12,7 @@
   padding: 0;
 }
 
-
+    
  .countdown {
   align-items: center;
   background-color: #32b653;
