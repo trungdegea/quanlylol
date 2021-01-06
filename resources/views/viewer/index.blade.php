@@ -24,80 +24,81 @@
 
     <style>
         header {
-    text-align: center;
-    padding: 0;
-}
+            text-align: center;
+            padding: 0;
+        }
 
-footer {
-    text-align: center;
-    background-color: #333;
-    color: #fff;
-    padding: 20px;
-    position: absolute;
-    bottom: 0;
-    width: 100%;
-}
+        footer {
+            text-align: center;
+            background-color: #333;
+            color: #fff;
+            padding: 20px;
+            position: absolute;
+            bottom: 0;
+            width: 100%;
+        }
 
-.gap-md {
-    display: block;
-    height: 50px;
-    margin: 0;
-    padding: 0;
-}
+        .gap-md {
+            display: block;
+            height: 50px;
+            margin: 0;
+            padding: 0;
+        }
 
-body {
-    font-family: Verdana, sans-serif;
-    margin: 0;
-}
+        body {
+            font-family: Verdana, sans-serif;
+            margin: 0;
+        }
 
-.mySlides {
-    display: none;
-}
+        .mySlides {
+            display: none;
+        }
 
-img {
-    vertical-align: middle;
-}
+        img {
+            vertical-align: middle;
+        }
 
-/* Slideshow container */
+        /* Slideshow container */
 
-.container {
-    position: relative;
-    margin: auto;
-}
+        .container {
+            position: relative;
+            margin: auto;
+        }
 
-.carousel-item {
-    height: calc(100vw * 0.3);
-}
+        .carousel-item {
+            height: calc(100vw * 0.3);
+        }
 
-.carousel-item img {
-    height: 100%;
-}
+        .carousel-item img {
+            height: 100%;
+        }
 
-.text {
-    color: white;
-    font-size: 30px;
-    padding: 8px 12px;
-    position: absolute;
-    bottom: 8px;
-    width: 100%;
-    text-align: center;
-    background-color: #5d5a5a;
-}
+        .text {
+            color: white;
+            font-size: 30px;
+            padding: 8px 12px;
+            position: absolute;
+            bottom: 8px;
+            width: 100%;
+            text-align: center;
+            background-color: #5d5a5a;
+        }
 
-.gap-md {
-    display: block;
-    height: 40px;
-    margin: 0;
-    padding: 0;
-}
+        .gap-md {
+            display: block;
+            height: 40px;
+            margin: 0;
+            padding: 0;
+        }
 
-.bg {
-    border: 1px solid blue;
-}
+        .bg {
+            border: 1px solid blue;
+        }
 
-a {
-    color: inherit;
-}
+        a {
+            color: inherit;
+        }
+
     </style>
 
 </head>
@@ -139,7 +140,8 @@ a {
             @endphp
             @foreach ($giaidauCurrent as $giaidau)
                 <div class="carousel-item" data-interval="5000">
-                    <a href="#" target="_blank"><img src="{{ asset('img/' . $giaidau->img) }}" class="w-100 h-100" alt="anh giai dau" title="Click để xem chi tiết" ></a>
+                    <a href="#" target="_blank"><img src="{{ asset('img/' . $giaidau->img) }}" class="w-100 h-100"
+                            alt="anh giai dau" title="Click để xem chi tiết"></a>
                     <div class="text">
                         {{ $giaidau->TenGD }}
                     </div>
@@ -164,7 +166,8 @@ a {
             </a>
             <div class="fulture float-right">
                 <div data-target="#carouselExampleCaptions" data-slide-to="0" class="active bg">
-                    <img class="fixed-bottom" src="..\public\img\poster.png" alt="." vspace="150" hspace="600" width="100px" height="100px">
+                    <img class="fixed-bottom" src="..\public\img\poster.png" alt="." vspace="150" hspace="600"
+                        width="100px" height="100px">
                 </div>
 
                 @php
@@ -172,10 +175,11 @@ a {
                 @endphp
                 @foreach ($giaidauCurrent as $giaidau)
                     @php
-                        $tinhtoan = $dem*100 + 602;
+                    $tinhtoan = $dem*100 + 602;
                     @endphp
-                    <div data-target="#carouselExampleCaptions" data-slide-to="{{$dem}}" class="active">
-                        <img class="fixed-bottom" src="{{ asset('img/' . $giaidau->img) }}" alt="." vspace="150" hspace="{{$tinhtoan}}" width="100px" height="100px">
+                    <div data-target="#carouselExampleCaptions" data-slide-to="{{ $dem }}" class="active">
+                        <img class="fixed-bottom" src="{{ asset('img/' . $giaidau->img) }}" alt="." vspace="150"
+                            hspace="{{ $tinhtoan }}" width="100px" height="100px">
                     </div>
                     @php
                     if($dem==4)
@@ -183,10 +187,10 @@ a {
                     break;
                     }
                     $dem++;
-                @endphp
+                    @endphp
                 @endforeach
 
-}
+                }
             </div>
         </div>
     </div>
@@ -202,8 +206,10 @@ a {
                     </script>, YourLeague Ltd.</p>
             </div>
             <div class="col-md-4">
-                <a href="https://www.youtube.com/channel/UCXF4WjTCUQSmGapnNEZzbYw" target="_blank"><i class="fa fa-youtube-play fa-2x" aria-hidden="true"></i></a>
-                <a href="https://www.facebook.com/profile.php?id=100022445736782" target="_blank"><i class="fa fa-facebook-square fa-2x" aria-hidden="true"></i></a>
+                <a href="https://www.youtube.com/channel/UCXF4WjTCUQSmGapnNEZzbYw" target="_blank"><i
+                        class="fa fa-youtube-play fa-2x" aria-hidden="true"></i></a>
+                <a href="https://www.facebook.com/profile.php?id=100022445736782" target="_blank"><i
+                        class="fa fa-facebook-square fa-2x" aria-hidden="true"></i></a>
                 <a href="#" target="_blank"><i class="fa fa-instagram fa-2x" aria-hidden="true"></i></a>
                 <a href="#" target="_blank"><i class="fa fa-twitter fa-2x"></i></a>
             </div>
