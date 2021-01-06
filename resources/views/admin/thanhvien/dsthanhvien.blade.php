@@ -119,7 +119,11 @@
                     </div>
                     <div class="col-md-4">
                       <label for="inputEmail3" class="col-sm-3 col-form-label">Đội:</label>
-                     <select name="locdoi"  >
+                     <select name="locdoi" <?php if($tendoi!==""){ echo 'value="'.$tendoi.'"';}?>>
+                      
+                       @if ($tendoi!=="")
+                       <option value="{{$tendoi}}" selected>{{$tendoi}}</option>
+                       @endif
                        <option value="#">All</option>
                         @foreach ($doi as $d)
                         <option value="{{$d->MaDoi}}">{{$d->TenDoi}}</option>
@@ -165,7 +169,12 @@
                           </select>
                         </td>
                         <td>
+                          @if ($tendoi!=="")
+                          {{$arrdoi[$tv->MaDoi]}}
+                          @else
                           {{$arrdoi[$tv->MaDoi][0]}}
+                          @endif
+                          
                         </td>
                         <td>
                           <a href="{{route('delete-thanhvien.get',[$tv->MaTV])}}" class="button delete-confirm">Delete</a>

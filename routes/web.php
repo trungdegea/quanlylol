@@ -13,7 +13,6 @@ use App\Http\Middleware\Login;
 |
 */
 
-Route::get('viewer', 'pagesController@gettrangchu')->name('trangchu.get');
 
 
 Route::get('dangky', 'pagesController@getDangky')->name('dangky.get');
@@ -23,8 +22,10 @@ Route::get('/dangnhap', 'pagesController@getDangnhap')->name('dangnhap.get');
 Route::post('/dangnhap', 'pagesController@postDangnhap')->name('dangnhap.post');
 Route::get('dangxuat', 'pagesController@getLogout')->name('dangxuat.get');
 Route::get('viewer', 'pagesController@gettrangchu')->name('trangchu.get');
+Route::get('viewer/chitiet/{MaGD}', 'pagesController@getchitietGD')->name('chitietGD.get');
+Route::post('viewer/datve/{MaGD}','pagesController@postDatVe')->name('datve.post') ;
 Route::prefix('/admin')->middleware('adminlogin')->group(function () {
-    Route::get('/', 'TrangchuController@getTrangchu')->name('trangchu.get');
+   
     Route::get('/lienhe', 'pagesController@getLienhe')->name('lienhe.get');
     Route::prefix('giaidau')->group(function (){
         Route::get('/', 'GiaidauController@getDsGiaidau')->name('ds-giaidau.get');
