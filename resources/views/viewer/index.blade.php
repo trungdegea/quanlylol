@@ -86,19 +86,21 @@
 
         .gap-md {
             display: block;
-            height: 40px;
+            height: 100px;
             margin: 0;
             padding: 0;
         }
 
-        .bg {
-            border: 1px solid blue;
+        .fulture {
+            margin-top: 5px;
         }
 
         a {
             color: inherit;
         }
-
+        h1 {
+            text-align: center;
+        }
     </style>
 
 </head>
@@ -129,57 +131,22 @@
         </nav>
     </header>
     <div class="container mt-5">
-    
-    <div id="carouselExampleCaptions" class="carousel slide" data-ride="carousel">
-        <div class="carousel-inner">
-            <div class="carousel-item active" data-interval="3000">
-                <img src="..\public\img\poster.png" class="w-100 h-100" alt="anh poster">
-            </div>
-            @php
-            $dem=0;
-            @endphp
-            @foreach ($giaidauCurrent as $giaidau)
-                <div class="carousel-item" data-interval="5000">
-                    <a href="#" target="_blank"><img src="{{ asset('img/' . $giaidau->img) }}" class="w-100 h-100"
-                            alt="anh giai dau" title="Click để xem chi tiết"></a>
-                    <div class="text">
-                        {{ $giaidau->TenGD }}
-                    </div>
+        <h1>Giải Đấu đang diễn ra</h1>
+        <div id="carouselExampleCaptions" class="carousel slide" data-ride="carousel">
+            <div class="carousel-inner">
+                <div class="carousel-item active" data-interval="3000">
+                    <img src="..\public\img\poster.png" class="w-100 h-100" alt="anh poster">
                 </div>
                 @php
-                if($dem==4)
-                {
-                break;
-                }
-                $dem++;
-                @endphp
-            @endforeach
-
-
-            <a class="carousel-control-prev" href="#carouselExampleCaptions" role="button" data-slide="prev">
-                <span class="carousel-control-prev-icon" aria-hidden="true"></span>
-                <span class="sr-only">Previous</span>
-            </a>
-            <a class="carousel-control-next" href="#carouselExampleCaptions" role="button" data-slide="next">
-                <span class="carousel-control-next-icon" aria-hidden="true"></span>
-                <span class="sr-only">Next</span>
-            </a>
-            <div class="fulture float-right">
-                <div data-target="#carouselExampleCaptions" data-slide-to="0" class="active bg">
-                    <img class="fixed-bottom" src="..\public\img\poster.png" alt="." vspace="150" hspace="600"
-                        width="100px" height="100px">
-                </div>
-
-                @php
-                $dem=1;
+                $dem=0;
                 @endphp
                 @foreach ($giaidauCurrent as $giaidau)
-                    @php
-                    $tinhtoan = $dem*100 + 602;
-                    @endphp
-                    <div data-target="#carouselExampleCaptions" data-slide-to="{{ $dem }}" class="active">
-                        <img class="fixed-bottom" src="{{ asset('img/' . $giaidau->img) }}" alt="." vspace="150"
-                            hspace="{{ $tinhtoan }}" width="100px" height="100px">
+                    <div class="carousel-item" data-interval="5000">
+                        <a href="#" target="_blank"><img src="{{ asset('img/' . $giaidau->img) }}" class="w-100 h-100"
+                                alt="anh giai dau" title="Click để xem chi tiết"></a>
+                        <div class="text">
+                            {{ $giaidau->TenGD }}
+                        </div>
                     </div>
                     @php
                     if($dem==4)
@@ -190,12 +157,109 @@
                     @endphp
                 @endforeach
 
-                }
+
+                <a class="carousel-control-prev" href="#carouselExampleCaptions" role="button" data-slide="prev">
+                    <span class="carousel-control-prev-icon" aria-hidden="true"></span>
+                    <span class="sr-only">Previous</span>
+                </a>
+                <a class="carousel-control-next" href="#carouselExampleCaptions" role="button" data-slide="next">
+                    <span class="carousel-control-next-icon" aria-hidden="true"></span>
+                    <span class="sr-only">Next</span>
+                </a>
+
+
+            </div>
+            <div class="fulture">
+                <span data-target="#carouselExampleCaptions" data-slide-to="0" class="active">
+                    <img class="" src="..\public\img\poster.png" alt="." width="100px" height="100px">
+                </span>
+
+                @php
+                $dem=1;
+                @endphp
+                @foreach ($giaidauCurrent as $giaidau)
+                    <span data-target="#carouselExampleCaptions" data-slide-to="{{ $dem }}" class="active">
+                        <img class="" src="{{ asset('img/' . $giaidau->img) }}" alt="." width="100px" height="100px">
+                    </span>
+                    @php
+                    if($dem==4)
+                    {
+                    break;
+                    }
+                    $dem++;
+                    @endphp
+                @endforeach
+
+            </div>
+        </div>
+
+        <div class="gap-md"></div>
+
+        <h1>Giải Đấu sắp khởi tranh</h1>
+        <div id="carouselExampleCaptions1" class="carousel slide" data-ride="carousel">
+            <div class="carousel-inner">
+                <div class="carousel-item active" data-interval="3000">
+                    <img src="..\public\img\poster.png" class="w-100 h-100" alt="anh poster">
+                </div>
+                @php
+                $dem1=0;
+                @endphp
+                @foreach ($giaidauAlready as $giaidau)
+                    <div class="carousel-item" data-interval="5000">
+                        <a href="#" target="_blank"><img src="{{ asset('img/' . $giaidau->img) }}" class="w-100 h-100"
+                                alt="anh giai dau" title="Click để xem chi tiết"></a>
+                        <div class="text">
+                            {{ $giaidau->TenGD }} </br>Khởi tranh : {{$giaidau->TGBD}}
+                        </div>
+                    </div>
+                    @php
+                    if($dem1==4)
+                    {
+                    break;
+                    }
+                    $dem1++;
+                    @endphp
+                @endforeach
+
+
+                <a class="carousel-control-prev" href="#carouselExampleCaptions1" role="button" data-slide="prev">
+                    <span class="carousel-control-prev-icon" aria-hidden="true"></span>
+                    <span class="sr-only">Previous</span>
+                </a>
+                <a class="carousel-control-next" href="#carouselExampleCaptions1" role="button" data-slide="next">
+                    <span class="carousel-control-next-icon" aria-hidden="true"></span>
+                    <span class="sr-only">Next</span>
+                </a>
+
+
+            </div>
+            <div class="fulture">
+                <span data-target="#carouselExampleCaptions1" data-slide-to="0" class="active">
+                    <img class="" src="..\public\img\poster.png" alt="." width="100px" height="100px">
+                </span>
+
+                @php
+                $dem1=1;
+                @endphp
+                @foreach ($giaidauAlready as $giaidau)
+                    <span data-target="#carouselExampleCaptions1" data-slide-to="{{ $dem1 }}" class="active">
+                        <img class="" src="{{ asset('img/' . $giaidau->img) }}" alt="." width="100px" height="100px">
+                    </span>
+                    @php
+                    if($dem1==4)
+                    {
+                    break;
+                    }
+                    $dem1++;
+                    @endphp
+                @endforeach
+
+
             </div>
         </div>
     </div>
-  </div>
 
+    <div class="gap-md"></div>
     <footer class="fixed-bottom">
         <div class="row">
             <div class="col-md-4">Email: yourleague@gmail.com</br>Address: University of Information Technology</div>

@@ -88,8 +88,10 @@ class pagesController extends Controller
   }
   public function gettrangchu()
   {
+   
+    date_default_timezone_set('Asia/Ho_Chi_Minh');
     $time=time(); 
-    // var_dump($time); exit();
+    //  var_dump($time); exit();
     $Allgiaidau=DB::table('giaidaus')->get();//lay tat ca giai dau 
     $giaidauCurrent=[]; //mang luu giai dau dang dien ra
     $giaidauAlready=[];
@@ -105,9 +107,9 @@ class pagesController extends Controller
             array_push($giaidauAlready, $gd);
         }
     }
-    foreach ($giaidauCurrent as $key => $gd) {
-        var_dump($gd->TenGD);
-    }
+    // foreach ($giaidauAlready as $key => $gd) {
+    //     var_dump($gd->TGBD);
+    // }
     // exit();
     return view('viewer.index', compact('giaidauCurrent','giaidauAlready'));
   }
