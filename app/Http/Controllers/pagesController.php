@@ -109,7 +109,7 @@ class pagesController extends Controller
         var_dump($gd->TenGD);
     }
     // exit();
-    return view('viewer.index', compact('dsgiaidau','giaidauCurrent','giaidauAlready'));
+    return view('viewer.index', compact('giaidauCurrent','giaidauAlready'));
   }
   public function getLienhe()
   {
