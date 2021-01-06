@@ -88,9 +88,28 @@ class pagesController extends Controller
   }
   public function gettrangchu()
   {
-    
-    $dsgiaidau=DB::table('giaidaus')->get();
-    return view('viewer.index', compact('dsgiaidau'));
+    $time=time(); 
+    // var_dump($time); exit();
+    $Allgiaidau=DB::table('giaidaus')->get();//lay tat ca giai dau 
+    $giaidauCurrent=[]; //mang luu giai dau dang dien ra
+    $giaidauAlready=[];
+    foreach ($Allgiaidau as $key => $gd) {
+        $tgbd=strtotime($gd->TGBD);
+        $tgkt=strtotime($gd->TGKT);
+        if($time>$tgbd&&$time<$tgkt)
+        {
+            array_push($giaidauCurrent, $gd);
+        }
+        if($time<$tgbd)
+        {
+            array_push($giaidauAlready, $gd);
+        }
+    }
+    foreach ($giaidauCurrent as $key => $gd) {
+        var_dump($gd->TenGD);
+    }
+    // exit();
+    return view('viewer.index', compact('dsgiaidau','giaidauCurrent','giaidauAlready'));
   }
   public function getLienhe()
   {

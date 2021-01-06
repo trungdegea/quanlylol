@@ -73,7 +73,7 @@
                   <div class="card-header" > {{-- In anh ho so cua giai dau --}}
                     <img src="{{asset('img/'.$giaidau->img)}}" height="100%" width="100%" alt="">
                   </div>
-                  <div class="card-body">
+                  <div class="card-body" >
                     <h2 class="gd-name">{{$giaidau->TenGD}}</h2>
                   </div>
                   <div class="card-footer">
