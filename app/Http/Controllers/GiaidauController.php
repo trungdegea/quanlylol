@@ -27,6 +27,11 @@ class GiaidauController extends Controller
     {
         return view('admin.giaidau.themgiaidau');
     }
+    public function getdieulegiai($id)
+    {
+        $giaidau= giaidau::find($id);
+        return view('admin.giaidau.dieulegiai', compact('giaidau'));
+    }
     public function postthemGiaidau(Request $request)
     {
         //kiểm tra ảnh hồ sơ giải đấu có đc tải hay không

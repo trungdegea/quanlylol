@@ -189,7 +189,7 @@
 
 @section('siderbar')
 <li class="nav-header" style="text-align: center;"><h5>HỒ SƠ GIẢI ĐẤU</h5></li>
-<li class="nav-item " style="color"><hr style="width:200px; background-color:white; height:1.5; "></li>
+<li class="nav-item " style="color"><hr style=" width:200px; background-color:white; height:1.5; "></li>
 <li class="nav-item pl-1">
   <a href="{{route('chitiet-giaidau.get',[$giaidau->MaGD])}}" class="nav-link ">
     <i class="nav-icon ion-android-home"></i>

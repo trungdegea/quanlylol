@@ -421,13 +421,13 @@ li span {
   </a>
   <ul class="nav nav-treeview pl-3">
     <li class="nav-item ml-1">
-      <a href="{{route("ds-doi.get",[$giaidau->MaGD])}}" class="nav-link">
+      <a href="{{route('ds-doi.get',[$giaidau->MaGD])}}" class="nav-link">
         <i class="ion-android-list nav-icon"></i>
         <p>Danh sách</p>
       </a>
     </li>
     <li class="nav-item">
-      <a href="{{route("them-doi.get",[$giaidau->MaGD])}}" class="nav-link">
+      <a href="{{route('them-doi.get',[$giaidau->MaGD])}}" class="nav-link">
         <i class="far ion-android-add nav-icon"></i>
         <p>Thêm đội</p>
       </a>
@@ -454,7 +454,7 @@ li span {
   </a>
 </li>
 <li class="nav-item">
-  <a href="pages/gallery.html" class="nav-link">
+  <a href="{{route('dieulegiai.get', [$giaidau->MaGD])}}" class="nav-link">
     <i class="nav-icon fas fa-file"></i>
     <p>
       Điều lệ giải
