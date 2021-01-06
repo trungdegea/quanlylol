@@ -34,6 +34,7 @@ Route::prefix('/admin')->middleware('adminlogin')->group(function () {
         Route::post('them', 'GiaidauController@postthemGiaidau')->name('them-giaidau.post');
         Route::get('sua/{id}', 'GiaidauController@getsuaGiaidau')->name('sua-giaidau.get');
         Route::post('sua/{id}', 'GiaidauController@postsuaGiaidau')->name('sua-giaidau.post');
+        Route::get('dieulegiai/{id}', 'GiaidauController@getdieulegiai')->name('dieulegiai.get');
     });
     Route::prefix('doi')->group(function (){
         //danh sach doi tham gia giai dau
