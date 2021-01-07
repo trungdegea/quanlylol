@@ -21,7 +21,8 @@
         integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl" crossorigin="anonymous">
     </script>
     <title>Trang chủ YourLeague</title>
-    <link rel = "icon" href =  "{{ asset('adminlte/dist/img/trophy_icon_by_papillonstudio_d9dtwte-fullview.png') }}" type = "image/x-icon"> 
+    <link rel="icon" href="{{ asset('adminlte/dist/img/trophy_icon_by_papillonstudio_d9dtwte-fullview.png') }}"
+        type="image/x-icon">
     <style>
         header {
             text-align: center;
@@ -98,9 +99,16 @@
         a {
             color: inherit;
         }
+
         h1 {
             text-align: center;
         }
+
+        a:hover {
+            text-decoration: none;
+            color:yellow;
+        }
+
     </style>
 
 </head>
@@ -109,7 +117,7 @@
     <!-- Navigation -->
     <header>
         <nav class="navbar navbar-expand-lg navbar-dark bg-dark fixed-top">
-            <a class="navbar-brand" href="#">
+            <a class="navbar-brand" href="{{ route('trangchu.get') }}">
                 <img src="{{ asset('adminlte/dist/img/trophy_icon_by_papillonstudio_d9dtwte-fullview.png') }}"
                     alt="your logo" class="brand-image img-circle elevation-3" style="opacity: .8" height="40px"
                     width="40px">
@@ -136,17 +144,18 @@
         <div id="carouselExampleCaptions" class="carousel slide" data-ride="carousel">
             <div class="carousel-inner">
                 <div class="carousel-item active" data-interval="3000">
-                    <img src="..\public\img\poster.png" class="w-100 h-100" alt="anh poster">
+                    <img src="..\public\img\poster.jpg" class="w-100 h-100" alt="anh poster">
                 </div>
                 @php
                 $dem=0;
                 @endphp
                 @foreach ($giaidauCurrent as $giaidau)
                     <div class="carousel-item" data-interval="5000">
-                        <a href="{{route('chitietGD.get',[$giaidau->MaGD])}}" target="_blank"><img src="{{ asset('img/' . $giaidau->img) }}" class="w-100 h-100"
-                                alt="anh giai dau" title="Click để xem chi tiết"></a>
+                        <a href="{{ route('chitietGD.get', [$giaidau->MaGD]) }}" target="_blank"><img
+                                src="{{ asset('img/' . $giaidau->img) }}" class="w-100 h-100" alt="anh giai dau"
+                                title="Click để xem chi tiết"></a>
                         <div class="text">
-                            <a href="{{route('chitietGD.get',[$giaidau->MaGD])}}">{{ $giaidau->TenGD }}</a>
+                            <a href="{{ route('chitietGD.get', [$giaidau->MaGD]) }}">{{ $giaidau->TenGD }}</a>
                         </div>
                     </div>
                     @php
@@ -172,7 +181,7 @@
             </div>
             <div class="fulture">
                 <span data-target="#carouselExampleCaptions" data-slide-to="0" class="active">
-                    <img class="" src="..\public\img\poster.png" alt="." width="100px" height="100px">
+                    <img class="" src="..\public\img\poster.jpg" alt="." width="100px" height="100px">
                 </span>
 
                 @php
@@ -200,7 +209,7 @@
         <div id="carouselExampleCaptions1" class="carousel slide" data-ride="carousel">
             <div class="carousel-inner">
                 <div class="carousel-item active" data-interval="3000">
-                    <img src="..\public\img\poster.png" class="w-100 h-100" alt="anh poster">
+                    <img src="..\public\img\poster2.jpg" class="w-100 h-100" alt="anh poster">
                 </div>
                 @php
                 $dem1=0;
@@ -210,7 +219,7 @@
                         <a href="#" target="_blank"><img src="{{ asset('img/' . $giaidau->img) }}" class="w-100 h-100"
                                 alt="anh giai dau" title="Click để xem chi tiết"></a>
                         <div class="text">
-                            {{ $giaidau->TenGD }} </br>Khởi tranh : {{$giaidau->TGBD}}
+                            {{ $giaidau->TenGD }} </br>Khởi tranh : {{ $giaidau->TGBD }}
                         </div>
                     </div>
                     @php
@@ -236,7 +245,7 @@
             </div>
             <div class="fulture">
                 <span data-target="#carouselExampleCaptions1" data-slide-to="0" class="active">
-                    <img class="" src="..\public\img\poster.png" alt="." width="100px" height="100px">
+                    <img class="" src="..\public\img\poster2.jpg" alt="." width="100px" height="100px">
                 </span>
 
                 @php
@@ -264,11 +273,12 @@
     <div style="position: relative">
         <footer style="width: 100%">
             <div class="row">
-                <div class="col-md-4">Email: yourleague@gmail.com</br>Address: University of Information Technology</div>
+                <div class="col-md-4">Email: yourleague@gmail.com</br>Address: University of Information Technology
+                </div>
                 <div class="col-md-4">
                     <p>Copyright &copy; <script>
                             document.write(new Date().getFullYear());
-        
+
                         </script>, YourLeague Ltd.</p>
                 </div>
                 <div class="col-md-4">
@@ -280,9 +290,9 @@
                     <a href="#" target="_blank"><i class="fa fa-twitter fa-2x"></i></a>
                 </div>
             </div>
-        </footer>   
-     </div>
-    
+        </footer>
+    </div>
+
 </body>
 
 </html>
