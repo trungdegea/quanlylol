@@ -130,15 +130,17 @@ class pagesController extends Controller
     $dsdoi=[];
     $arrSl=[];
     $tenDoi=[];
+    $thanhvien=[];
     foreach($doi as $d){
         array_push($dsdoi,$d->MaDoi); 
         $sltv=thanhvien::where('MaDoi',$d->MaDoi)->count();
         $arrSl[$d->MaDoi]=$sltv;//Arraydoi cos key = MaDoi, Value=Tendoi
         $tenDoi[$d->MaDoi]=$d->TenDoi;//Arraydoi cos key = MaDoi, Value=Tendoi
+        $tv=thanhvien::where('MaDoi', $d->MaDoi)->get();
+        $thanhvien[$d->MaDoi]=$tv;
     }
-    
     $bxh=bangxephang::where('MaGD',$MaGD)->orderBy('Diem', 'desc')->orderBy('HieuSo', 'desc')->get();
-    return view('viewer.chitietGD', compact('giaidau', 'arrSl','doi','bxh','tenDoi','lichthidau'));
+    return view('viewer.chitietGD', compact('giaidau', 'arrSl','doi','bxh','tenDoi','lichthidau', 'thanhvien'));
      
   }
   public function postDatVe($MaGD, Request $request)

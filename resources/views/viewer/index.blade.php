@@ -101,6 +101,10 @@
         h1 {
             text-align: center;
         }
+        a:hover {
+            text-decoration: none;
+            color: yellow;
+        }
     </style>
 
 </head>

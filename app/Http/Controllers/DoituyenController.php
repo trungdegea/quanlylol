@@ -10,6 +10,8 @@ use App\doi;
 use App\giaidau;
 use App\thanhvien;
 use App\lichthidau;
+
+use App\bangxephang;
 class DoituyenController extends Controller
 {
     public function getDsdoi($MaGD)
@@ -129,13 +131,16 @@ class DoituyenController extends Controller
         $errors = new MessageBag();
         $giaidau=giaidau::find($MaGD);
         $doi=doi::find($MaDoi);
+        $thanhtich=bangxephang::where('MaDoi',$MaDoi)->get();
+        
+        
         $thanhvien=thanhvien::all()->where('MaDoi',$doi->MaDoi);
         if ($thanhvien->count() == 0) {
             $errors->add('err', 'Đội chưa có thành viên tham gia.');
-            return view('admin.doi.chitiet', compact('doi','giaidau','thanhvien'))->withErrors($errors);
+            return view('admin.doi.chitiet', compact('doi','giaidau','thanhvien', 'thanhtich'))->withErrors($errors);
         } 
         
-        return view('admin.doi.chitiet', compact('giaidau', 'doi','thanhvien'));
+        return view('admin.doi.chitiet', compact('giaidau', 'doi','thanhvien','thanhtich'));
     }
     public function posthemthanhvien(Request $request,$MaGD,$MaDoi)
     {

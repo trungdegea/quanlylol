@@ -33,13 +33,13 @@
         <h3>Thông tin đội: {{$doi->TenDoi}}</h3> 
         {{-- Ảnh đại diện của đội --}}
         <img src="{{asset('img/'.$doi->img)}}" alt="anh dai dien" height="200px">
-        <h5>Các thành viên:</h5>
+        
         {{-- bảng các thành viên của đội, hiện thị tên thành viên, vị trí --}}
         <table></table>
-        <h5>Lịch thi đấu của đội:</h5>
-        <h5>Trận thắng: {{$doi->TranThang}}</h5>
-        <h5>Trận thua: {{$doi->TranThua}} </h5>
-        <h5>Tổng điểm: {{$doi->Diem}}</h5>
+        
+        <h5>Trận thắng: {{$thanhtich[0]->TranThang}}</h5>
+        <h5>Trận thua: {{$thanhtich[0]->TranThua}} </h5>
+        <h5>Tổng điểm: {{$thanhtich[0]->Diem}}</h5>
         
        @if (count($errors) > 0 || session('error'))
        <div class="alert alert-danger" role="alert">
