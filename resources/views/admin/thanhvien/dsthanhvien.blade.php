@@ -18,7 +18,7 @@
           <div class="col-sm-6">
             <ol class="breadcrumb float-sm-right">
              <li class="breadcrumb-item"><a href="{{route('ds-giaidau.get')}}">Trang chủ</a></li>
-              <li class="breadcrumb-item active"><a href="{{route('ds-doi.get',[$giaidau->MaGD])}}">Đội tuyển</a></li>
+                   <li class="breadcrumb-item active"><a href="{{route('ds-doi.get',[$giaidau->MaGD])}}">Đội tuyển</a></li>
               <li class="breadcrumb-item active">Chi tiết</li>
             </ol>
           </div><!-- /.col -->
@@ -120,13 +120,16 @@
                     <div class="col-md-4">
                       <label for="inputEmail3" class="col-sm-3 col-form-label">Đội:</label>
                      <select name="locdoi" <?php if($tendoi!==""){ echo 'value="'.$tendoi.'"';}?>>
-                      
+                      <option value="#">All</option>
                        @if ($tendoi!=="")
                        <option value="{{$tendoi}}" selected>{{$tendoi}}</option>
                        @endif
-                       <option value="#">All</option>
+                       
                         @foreach ($doi as $d)
+                        @if ($d->TenDoi!==$tendoi)
                         <option value="{{$d->MaDoi}}">{{$d->TenDoi}}</option>
+                        @endif
+                       
                         @endforeach
                      </select>
                     </div>

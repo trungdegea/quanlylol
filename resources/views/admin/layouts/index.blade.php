@@ -34,7 +34,7 @@
 <link rel="stylesheet" href="{{asset('adminlte/plugins/datatables-responsive/css/responsive.bootstrap4.min.css')}}">
 <link rel="stylesheet" href="{{asset('adminlte/plugins/datatables-buttons/css/buttons.bootstrap4.min.css')}}">
 <link rel = "icon" href =  "{{ asset('adminlte/dist/img/trophy_icon_by_papillonstudio_d9dtwte-fullview.png') }}" type = "image/x-icon"> 
-    
+
 </head>
 <body class="hold-transition sidebar-mini layout-fixed">
 <div class="wrapper">

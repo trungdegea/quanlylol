@@ -21,7 +21,8 @@
         integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl" crossorigin="anonymous">
     </script>
     <title>Document</title>
-
+    <link rel = "icon" href =  "{{ asset('adminlte/dist/img/trophy_icon_by_papillonstudio_d9dtwte-fullview.png') }}" type = "image/x-icon"> 
+    
     <style>
         header {
             text-align: center;
@@ -147,8 +148,13 @@
                <h2 class="m-0 pb-4" id="top"><b>Giải đấu:</b> {{$giaidau->TenGD}}</h2>
                <h5><b>Thông tin giải đấu:</b></h5>
                <p>Số lượng đội tham gia: {{$giaidau->SLdoi}} đội.</p>
-               <p>Thời gian bắt đầu: {{$giaidau->TGBD}}</p>
-               <p>Thời gian kết thúc:{{$giaidau->TGKT}} </p>
+               @php
+                $thoigian=date_parse($giaidau->TGBD);
+                $thoigian1=date_parse($giaidau->TGKT);
+                @endphp
+
+               <p>Thời gian bắt đầu: {{$thoigian['hour']}}:{{$thoigian['minute']}}     ngày: {{$thoigian['day']}}-{{$thoigian['month']}}-{{$thoigian['year']}}  </p>
+               <p>Thời gian kết thúc: {{$thoigian1['hour']}}:{{$thoigian1['minute']}}     ngày: {{$thoigian1['day']}}-{{$thoigian1['month']}}-{{$thoigian1['year']}}   </p>
                <div class="row">
                  <div class="col-md-5"> Giá vé: <label for="" style="background-color: rgb(224, 44, 44); color:white"> 50.000 vnd</label></div>
                  <div class="col-md-3.5"> Số vé còn lại: <label for="" style="background-color: rgb(83, 241, 123); color:white"> {{$giaidau->SLve}}</label></div>
@@ -246,7 +252,6 @@
                           <th>Tên đội</th>
                           <th>Số lượng</th>
                           <th>Chi tiết</th>
-                          
                         </tr>
                       </thead>
           
@@ -265,7 +270,12 @@
                            
                           </td>
                           <td>
-                            <a href="{{route("chitiet-doi.get",[$giaidau->MaGD,$d->MaDoi])}}" class="btn btn-warning waves-light waves-effect" title="chi tiet"><i class="ion-eye"></i></i></a>
+                            <button type="button" class="btn btn-info" data-toggle="collapse" data-target="#demo{{$d->MaDoi}}">Xem thành viên</button>
+                            <div id="demo{{$d->MaDoi}}" class="collapse">
+                              @foreach ($thanhvien[$d->MaDoi] as $tv)
+                                  Tên: {{$tv->TenTV}} <label>-----</label> Vị trí: {{$tv->ViTri}} <br>
+                              @endforeach
+                            </div>
                           </td>
                          
                         </tr>
@@ -273,11 +283,7 @@
                       </tbody>
                     </table>
                   </div>
-                  @if ($doi->count()<$giaidau->SLdoi)
-                    <div class="col-1.5 float-right" style=" text-align: right;"> 
-                      <a href="{{route('them-doi.get',[$giaidau->MaGD])}}"><button type="submit" class="btn btn-primary btn-block ">Thêm đội</button></a>
-                    </div>
-                  @endif
+                 
                   
                   @endif
                   </div>
